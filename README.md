@@ -7,6 +7,7 @@ SSUMC 8기 Web 스터디 A조
 |제트|소나|잭슨|갱주|
 | :-------------------------------------------: | :---------------------------------------: | :-----------------------------------: | :-------------------------------: |
 |손기훈|전선아|이태석|김경주|
+|[S-Gihun](https://github.com/S-Gihun)|[JeonSuna](https://github.com/JeonSuna/JeonSuna)|[leetaesk](https://github.com/leetaesk/leetaesk.github.io)|[starvingorange](https://github.com/starvingorange)|
 
 
 ## ⭐️ 스터디 규칙
