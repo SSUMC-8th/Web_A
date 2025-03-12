@@ -8,7 +8,7 @@ body:
     attributes:
       label: ✨ n주차 스터디
       placeholder: |
-        > n주차 워크북 | ```Hello TypeScript```
+        n주차 워크북 | ```Hello TypeScript```
     validations:
       required: true
   - type: textarea
