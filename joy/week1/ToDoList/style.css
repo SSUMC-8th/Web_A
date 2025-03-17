@@ -23,7 +23,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 80%;
+  width: 30%;
 }
 
 .todo-container__header {
@@ -72,8 +72,8 @@ body {
 }
 
 .list-container__header {
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
 .list-container__list{
