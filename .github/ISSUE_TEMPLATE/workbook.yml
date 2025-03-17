@@ -1,19 +1,16 @@
 name: 📚 Workbook
 description: 워크북 주차 업로드
-title: '[📚 Workbook] '
-labels: ['📚 Workbook']
+title: '[📚 Chapter 0] '
 body:
   - type: textarea
     id: workbook-description
     attributes:
-      label: ✨ n주차 스터디
+      label: ✨ 스터디 내용
       placeholder: |
-        > n주차 워크북 | ```Hello TypeScript```
+        n주차 워크북 | ```Hello TypeScript```
     validations:
       required: true
   - type: textarea
     id: docs-checklist
     attributes:
       label: 📍 참고 사항
-      description: |
-        참고 사항 작성
