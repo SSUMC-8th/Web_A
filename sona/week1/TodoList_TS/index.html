@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <section class="section">
+        <h1 class="section-header">SUNA TODO</h1>
+        <form class="section-form" id="todo-form">
+          <input
+            type="text"
+            class="section-input"
+            id="todo-input"
+            placeholder="할 일을 입력해주세요."
+          />
+          <button class="btn" id="addBtn" type="button">할 일 추가</button>
+        </form>
+
+        <div class="section-container">
+          <div class="section-discription">
+            <h4 class="container-header">할 일</h4>
+            <ul class="container-item" id="todo-item">
+              <!-- <li class="container-content" id="result">
+                <p>매튜</p>
+                <button class="btn">완료</button>
+              </li> -->
+            </ul>
+          </div>
+          <div class="section-discription">
+            <h4 class="container-header">완료</h4>
+            <ul class="container-item" id="done-item"></ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+  <script src="dist/script.js"></script>
+</html>
