@@ -1,0 +1,110 @@
+/*reset*/
+body {
+  margin: unset;
+  padding: unset;
+  /* font-family: unset; */
+}
+h1,
+ul,
+h4 {
+  margin: unset;
+  padding: unset;
+  font-size: unset;
+  font-weight: unset;
+}
+
+li {
+  list-style: none;
+  padding: unset;
+}
+
+button {
+  all: unset;
+}
+
+/*css variables*/
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  --color-blue-50: rgb(150, 172, 201);
+  --color-blue-20: rgb(215, 229, 249);
+  --color-blue-10: rgb(225, 237, 253);
+  --color-blue-15: rgb(193, 213, 242);
+}
+body {
+  background-color: var(--color-blue-20);
+}
+
+/*layout*/
+.wrapper {
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: 1200px;
+}
+
+.title {
+  text-align: center;
+  max-width: 800px;
+  padding: 30px;
+  border-bottom: 1px solid var(--color-blue-50);
+  margin: 0 auto;
+  font-size: 30px;
+  font-weight: bold;
+}
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.inputBox {
+  display: flex;
+  justify-content: center;
+}
+.todo {
+  margin: 10px 0;
+  width: 500px;
+  padding: 5px;
+  background-color: var(--color-blue-10);
+}
+.todo:focus {
+  border: 2px solid steelblue;
+  outline: none;
+}
+.todo::placeholder {
+  font-size: 10px;
+  color: var(--color-blue-15);
+}
+.result {
+  margin-top: 30px;
+}
+.list {
+  display: flex;
+  gap: 150px;
+  justify-content: center;
+}
+
+.todoList {
+  border-bottom: 1px solid var(--color-blue-50);
+  width: fit-content;
+  margin: 0 auto;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 0;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  width: 150px;
+}
+.liNode {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-blue-50);
+  padding: 5px;
+}
+.btn {
+  background-color: var(--color-blue-50);
+  font-size: 12px;
+  padding: 2px 4px;
+  flex-shrink: 0;
+  height: 15px;
+}
