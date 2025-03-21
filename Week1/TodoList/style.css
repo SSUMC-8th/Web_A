@@ -1,0 +1,128 @@
+body {
+    position: relative;
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    justify-content: center;
+    text-align: center;
+    background-color: #f9f9f9;
+    font-family: 'Roboto', sans-serif;
+}
+
+.todo-container {
+    position: absolute;
+    top: 25%;
+    width: 360px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.todo-container__header {
+    font-size: 32px;
+}
+
+.todo-container__form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.todo-container__input {
+    padding: 8px;
+    flex: 1;
+    border: 1px solid grey;
+    border-radius: 6px;
+    outline: none;
+}
+
+.todo-container__input:focus {
+    border: 1px solid black;
+}
+
+.todo-container__button {
+    padding: 8px 12px;
+    color: #f9f9f9;
+    background-color: green;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.todo-container__button:hover {
+    background-color: rgb(0, 100, 0);
+}
+
+.render-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 12px;
+}
+
+.render-container__section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.render-container__section-title {
+    font-size: 18px;
+}
+
+.render-container__section-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.render-container__list-item {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.render-container__list-item-text {
+    flex: 1;
+    margin: 0;
+}
+
+.render-container__list-item-button {
+    padding: 4px 10px;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.green {
+    background-color: green;
+}
+
+.red {
+    background-color: red;
+}
+
+.green:hover {
+    background-color: rgb(0, 100, 0);
+}
+
+.red:hover {
+    background-color: rgb(180,0,0);
+}
