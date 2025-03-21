@@ -1,39 +1,45 @@
 "use strict";
-let title = document.querySelector("#title"); //input
-let todoForm = document.querySelector("#todoForm"); // form제출
-let todoResult = document.querySelector("#result1"); // 해야할 일
-let doneResult = document.querySelector("#result2"); //해낸 일
+const title = document.querySelector("#title"); //input
+const todoForm = document.querySelector("#todoForm"); // form제출
+const todoResult = document.querySelector("#todo-task"); // 해야할 일
+const doneResult = document.querySelector("#done-task"); //해낸 일
 
+const result = [];
+//제출
 todoForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  let titleValue = title.value.trim();
+  const titleValue = title.value.trim();
+  result.push(titleValue);
   if (titleValue) {
-    todoResult.innerHTML += `<li class="liNode">
-    ${titleValue}
-    <button class="btn doneBtn"  type="button">완료</button>
-  </li>`;
+    renderTask(titleValue);
     title.value = "";
   }
 });
 
-//완료 누르면
-todoResult.addEventListener("click", (e) => {
-  if (e.target.classList.contains("doneBtn")) {
-    let li = e.target.parentElement;
-    let todoText = li.firstChild.textContent.trim(); //해야할 일 content빼옴
-    // console.log(todoText);
-    doneResult.innerHTML += `<li class="liNode">
-      ${todoText}
-      <button class="btn deleteBtn" type="button">삭제</button>
-    </li>`;
-    li.remove();
-  }
-});
-//삭제 누르면
-doneResult.addEventListener("click", (e) => {
-  if (e.target.classList.contains("deleteBtn")) {
-    let li2 = e.target.parentElement;
-    // // console.log(doneText);
-    li2.remove();
-  }
-});
+//할 일
+const renderTask = (titleValue) => {
+  const liNode = document.createElement("li");
+  liNode.className = "liNode";
+  const liTxt = document.createTextNode(titleValue);
+
+  const btnNode = document.createElement("button");
+  btnNode.className = "btn doneBtn";
+  const btnTxt = document.createTextNode("완료");
+  btnNode.appendChild(btnTxt);
+  btnNode.setAttribute("type", "button");
+
+  liNode.appendChild(liTxt);
+  liNode.appendChild(btnNode);
+  todoResult.appendChild(liNode);
+
+  //완료
+  btnNode.addEventListener("click", (e) => {
+    doneResult.appendChild(liNode);
+    btnNode.textContent = "삭제";
+    btnNode.className = "btn deleteBtn";
+    //삭제
+    btnNode.addEventListener("click", () => {
+      liNode.remove();
+    });
+  });
+};
