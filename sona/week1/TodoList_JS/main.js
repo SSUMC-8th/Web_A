@@ -4,12 +4,10 @@ const todoForm = document.querySelector("#todoForm"); // form제출
 const todoResult = document.querySelector("#todo-task"); // 해야할 일
 const doneResult = document.querySelector("#done-task"); //해낸 일
 
-const result = [];
 //제출
 todoForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const titleValue = title.value.trim();
-  result.push(titleValue);
   if (titleValue) {
     renderTask(titleValue);
     title.value = "";
