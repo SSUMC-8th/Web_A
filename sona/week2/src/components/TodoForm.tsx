@@ -1,16 +1,21 @@
+import { useState } from "react";
 import Button from "./Button";
+import { useTodo } from "../context/TodoContext";
 
-interface TodoFormProps {
-  input: string;
-  setInput: (input: string) => void;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-}
+export default function TodoForm() {
+  const [input, setInput] = useState<string>("");
+  const { addTodo } = useTodo();
 
-export default function TodoForm({
-  input,
-  handleSubmit,
-  setInput,
-}: TodoFormProps) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    const title = input.trim();
+
+    if (title) {
+      addTodo(title);
+      setInput("");
+    }
+  };
+
   return (
     <form
       id="todo-form"

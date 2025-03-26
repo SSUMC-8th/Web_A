@@ -1,9 +1,12 @@
 import Todo from "./components/Todo";
+import { TodoProvider } from "./context/TodoContext";
 
 function App() {
   return (
     <>
-      <Todo></Todo>
+      <TodoProvider>
+        <Todo></Todo>
+      </TodoProvider>
     </>
   );
 }

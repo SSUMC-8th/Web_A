@@ -16,15 +16,9 @@ export default function TodoListItem({
   return (
     <li className="render-container__item">
       <span className="render-container__item-text">{item.title}</span>
-      {isDone ? (
-        <Button color={"red"} onClick={() => onClick(item)}>
-          삭제
-        </Button>
-      ) : (
-        <Button color="green" onClick={() => onClick(item)}>
-          완료
-        </Button>
-      )}
+      <Button color={isDone ? "red" : "green"} onClick={() => onClick(item)}>
+        {isDone ? "삭제" : "완료"}
+      </Button>
     </li>
   );
 }
