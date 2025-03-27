@@ -1,4 +1,7 @@
 /* ===== 기본 스타일 ===== */
+
+/* @import tailwindcss() */
+
 body {
   font-family: Arial, sans-serif;
   display: flex;
