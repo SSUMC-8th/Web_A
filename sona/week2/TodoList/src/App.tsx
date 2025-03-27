@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <TodoProvider>
-        <Todo></Todo>
+        <Todo />
       </TodoProvider>
     </>
   );
