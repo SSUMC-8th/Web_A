@@ -12,6 +12,7 @@ interface ITodoContext {
 export const TodoContext = createContext<ITodoContext | undefined>(undefined);
 
 export const TodoProvider = ({ children }: PropsWithChildren) => {
+  //상태를 하위로 전달
   const [todo, setTodo] = useState<TTodo[]>([]);
   const [done, setDone] = useState<TTodo[]>([]);
 
@@ -35,7 +36,7 @@ export const TodoProvider = ({ children }: PropsWithChildren) => {
     </TodoContext.Provider>
   );
 };
-
+// 커스텀 훅, useContext로 context값을 가져오고 undefined일때 error를 던짐
 export const useTodo = (): ITodoContext => {
   const context = useContext(TodoContext);
   if (!context) {

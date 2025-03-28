@@ -5,17 +5,19 @@ interface TodoListProps {
   title: string;
   onClick: (todo: TTodo) => void;
   todo: TTodo[];
+  isDone: boolean;
 }
-export default function TodoList({ title, todo, onClick }: TodoListProps) {
+export default function TodoList({
+  title,
+  todo,
+  onClick,
+  isDone,
+}: TodoListProps) {
   console.log(todo);
+  console.log(title);
   const todoItem = todo.map((item, idx) => {
     return (
-      <TodoListItem
-        key={idx}
-        item={item}
-        onClick={onClick}
-        isDone={title === "완료"}
-      />
+      <TodoListItem key={idx} item={item} onClick={onClick} isDone={isDone} />
     );
   });
 
