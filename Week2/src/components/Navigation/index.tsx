@@ -1,6 +1,8 @@
 import clsx from "clsx";
-import { THEME, useTheme } from "../../context/ThemeProvider";
+
 import ThemeToggleButton from "./ThemeToggleButton";
+import { useTheme } from "../../context/Theme/useTheme";
+import { THEME } from "../../context/Theme/ThemeType";
 
 const Navbar = () => {
   const { theme } = useTheme();

@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { ToDoProvider } from "./context/todoContext.tsx";
-import { ThemeProvider } from "./context/ThemeProvider.tsx";
+import { ThemeProvider } from "./context/Theme/ThemeProvider.tsx";
 
 export const AppProvider = ({ children }: PropsWithChildren) => (
   <ThemeProvider>

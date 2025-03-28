@@ -1,5 +1,6 @@
-import { THEME, useTheme } from "../../context/ThemeProvider";
 import clsx from "clsx";
+import { useTheme } from "../../context/Theme/useTheme";
+import { THEME } from "../../context/Theme/ThemeType";
 
 const ThemeToggleButton = () => {
   const { theme, toggleTheme } = useTheme();
