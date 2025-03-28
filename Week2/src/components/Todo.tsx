@@ -1,12 +1,12 @@
 import ToDoList from "./Todo/ToDoList";
 import ToDoForm from "./Todo/ToDoForm";
-import { useTodo } from "../context/todoContext";
+
 import ToDoHeader from "./Todo/ToDoHeader";
 import Navbar from "./Navigation";
+import { useTodo } from "../context/ToDo/useTodo";
 
 const Todo = () => {
   const { toDos, doneToDos, handleCompleteBtn, handleDeleteBtn } = useTodo();
-  
 
   return (
     <>
