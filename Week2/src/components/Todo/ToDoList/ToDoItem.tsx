@@ -1,16 +1,11 @@
-import { ITodo } from "../../../types/todo";
+import { ToDoItemProps } from "../../../types/todo";
 
 const ToDoItem = ({
   toDo,
   onClick,
   buttonLabel,
   buttonColor,
-}: {
-  toDo: ITodo;
-  onClick: (todo: ITodo) => void;
-  buttonLabel: string;
-  buttonColor: string;
-}) => (
+}: ToDoItemProps) => (
   <li className="render-container__item">
     <span className="render-container__item-text">{toDo.text}</span>
     <button
