@@ -1,10 +1,15 @@
+import { RouterProvider } from "react-router-dom";
 import "./App.css";
-import MoviePage from "./pages/MoviePage";
+import router from "./routes";
+
+//movie/umcoming
+//movie/popular
+//movie/playing
 
 function App() {
   return (
     <>
-      <MoviePage />
+      <RouterProvider router={router} future={{ v7_startTransition: true }} />
     </>
   );
 }

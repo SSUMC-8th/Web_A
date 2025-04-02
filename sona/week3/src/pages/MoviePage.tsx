@@ -4,18 +4,22 @@ import { Movie, MovieResponse } from "../types/movie";
 import MovieCard from "../components/MovieCard";
 import { PulseLoader } from "react-spinners";
 import PageNation from "../components/PageNation";
+import { useParams } from "react-router-dom";
 
 export default function MoviePage() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [page, setPage] = useState(1);
+  const { category } = useParams<{
+    category: string;
+  }>();
   useEffect((): void => {
     const fetchMovies = async (): Promise<void> => {
       setIsLoading(true);
       try {
         const { data } = await axios.get<MovieResponse>(
-          `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`,
+          `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=${page}`,
           {
             method: "GET",
             headers: {
@@ -38,7 +42,7 @@ export default function MoviePage() {
     };
     // console.log("TOKEN:", import.meta.env.VITE_TMDB_KEY);
     fetchMovies();
-  }, [page]);
+  }, [page, category]);
 
   // console.log(movies);
   if (isError) {

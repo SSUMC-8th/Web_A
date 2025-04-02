@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Movie } from "../types/movie";
+import { useNavigate } from "react-router-dom";
 
 interface MovieProps {
   item: Movie;
@@ -9,9 +10,12 @@ export default function MovieCard({ item }: MovieProps) {
   // console.log(item);
   // console.log(item.poster_path);
   const [isHovered, setIsHovered] = useState(false);
+
+  const navigate = useNavigate();
   // console.log(isHovered);
   return (
     <div
+      onClick={(): void | Promise<void> => navigate(`/movie/${item.id}`)}
       className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer transition-transform duration-300 hover:scale-105"
       key={item.id}
       onMouseLeave={() => {
