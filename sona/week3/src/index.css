@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@layer components {
+  .reviews-container {
+    @apply px-5 py-5 rounded-3xl shadow-lg;
+  }
+}
