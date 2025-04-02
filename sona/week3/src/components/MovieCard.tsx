@@ -6,10 +6,10 @@ interface MovieProps {
 }
 
 export default function MovieCard({ item }: MovieProps) {
-  console.log(item);
-  console.log(item.poster_path);
+  // console.log(item);
+  // console.log(item.poster_path);
   const [isHovered, setIsHovered] = useState(false);
-  console.log(isHovered);
+  // console.log(isHovered);
   return (
     <div
       className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer transition-transform duration-300 hover:scale-105"
