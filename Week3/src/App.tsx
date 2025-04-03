@@ -7,8 +7,8 @@ import Detail from "./pages/Detail";
 
 function App() {
   return (
-    <Layout>
-      <Routes>
+    <Routes>
+      <Route element={<Layout />}>
         <Route path={"/"} element={<Home />}></Route>
 
         <Route path={"movies"} element={<Movie />}>
@@ -20,8 +20,8 @@ function App() {
         </Route>
 
         <Route path="*" element={<h1>경로를 찾을 수 없습니다</h1>} />
-      </Routes>
-    </Layout>
+      </Route>
+    </Routes>
   );
 }
 
