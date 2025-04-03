@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axiosInstance from "../api/axios-instance";
 import { Movie, MovieResponse } from "../types/movie";
 import MovieCard from "../components/MovieCard";
@@ -16,9 +16,14 @@ const MoviesPage = () => {
   // 2. 에러
   const [isError, setIsError] = useState(false);
   // 3. 페이지네이션
-  const { page, handleNextPage, handlePrevPage } = usePagination();
+  const { page, setPage, handleNextPage, handlePrevPage } = usePagination();
   // 4. useParams
   const { category } = useParams<{ category: string }>();
+
+  // 5. 리랜더링 방지 useCallback
+  const onNext = useCallback(() => {
+    handleNextPage(totalPages);
+  }, [handleNextPage, totalPages]);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -40,6 +45,11 @@ const MoviesPage = () => {
     fetchMovies();
   }, [page, category]);
 
+  // 카테고리 변경시 페이지 1로 초기화 !
+  useEffect(() => {
+    setPage(1);
+  }, [category, setPage]);
+
   if (isError)
     return (
       <div className="text-center text-red-500">에러가 발생했습니다 😢</div>
@@ -49,7 +59,7 @@ const MoviesPage = () => {
     <div className="bg-black">
       <PaginationBtn
         page={page}
-        onNext={() => handleNextPage(totalPages)}
+        onNext={onNext}
         onPrev={handlePrevPage}
         totalPages={totalPages}
       />

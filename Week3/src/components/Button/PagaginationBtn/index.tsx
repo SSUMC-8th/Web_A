@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { PaginationBtnProps } from "../../../types/movie";
 
 const PaginationBtn = ({
@@ -29,4 +30,4 @@ const PaginationBtn = ({
   );
 };
 
-export default PaginationBtn;
+export default memo(PaginationBtn);
