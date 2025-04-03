@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Layout from "./components/Layout";
+import Movie from "./pages/Movie";
+import Movies from "./pages/Movies";
+import Detail from "./pages/Detail";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank" className=''>
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Layout>
+      <Routes>
+        <Route path={"/"} element={<Home />}></Route>
+
+        <Route path={"movies"} element={<Movie />}>
+          <Route path=":category" element={<Movies />} />
+
+          <Route path="detail/:id" element={<Detail />} />
+
+          <Route path="*" element={<h1>영화 경로를 찾을 수 없습니다</h1>} />
+        </Route>
+
+        <Route path="*" element={<h1>경로를 찾을 수 없습니다</h1>} />
+      </Routes>
+    </Layout>
+  );
 }
 
-export default App
+export default App;
