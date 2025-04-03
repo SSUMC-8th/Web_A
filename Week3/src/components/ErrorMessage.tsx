@@ -1,7 +1,7 @@
-import { ReactNode } from "react";
+import { ReactElement } from "react";
 
-function ErrorMessage(): ReactNode {
-  return <h1 className="text-red-700 font-xl">에러남 ㅅㄱㅇ</h1>;
+function ErrorMessage(): ReactElement {
+  return <h1 className="text-center text-red-700 font-xl">에러남 ㅅㄱㅇ</h1>;
 }
 
 export default ErrorMessage;

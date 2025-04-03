@@ -1,13 +1,13 @@
-import { ReactNode, useState } from "react";
-import { TMovie } from "../types/movie";
-import clsx from "clsx";
+import { ReactElement, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import clsx from "clsx";
 
+import { TMovie } from "../types/movieTypes";
 interface CardTypes {
   movie: TMovie;
 }
 
-function Card({ movie }: CardTypes): ReactNode {
+function Card({ movie }: CardTypes): ReactElement {
   const navigate = useNavigate();
 
   const [isHover, setIsHover] = useState<boolean>(false);

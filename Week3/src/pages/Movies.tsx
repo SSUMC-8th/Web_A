@@ -5,9 +5,9 @@ import axios from "axios";
 import LoadingSpinner from "../components/LoadingSpinner";
 import ErrorMessage from "../components/ErrorMessage";
 import Card from "../components/Card";
-import Pagination from "../components/pagination";
+import Pagination from "../components/Pagination";
 
-import { TMovie, TMovieResponse } from "../types/movie";
+import { TMovie, TMovieResponse } from "../types/movieTypes";
 
 type CategoryType = "popular" | "upcoming" | "top-rated" | "now_playing";
 type paramsType = {

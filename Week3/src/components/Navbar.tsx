@@ -1,10 +1,17 @@
+import { ReactElement } from "react";
 import { Link, useLocation } from "react-router-dom";
+
 import clsx from "clsx";
 
-function Navbar() {
+function Navbar(): ReactElement {
   const location = useLocation();
 
-  const navItems = [
+  type TNavItems = {
+    label: string;
+    path: string;
+  };
+
+  const navItems: TNavItems[] = [
     { label: "인기 영화", path: "popular" },
     { label: "상영 중", path: "upcoming" },
     { label: "평점 높은", path: "top-rated" },
