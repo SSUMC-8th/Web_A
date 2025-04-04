@@ -1,50 +1,37 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { Movie, MovieResponse } from "../types/movie";
+import { useState } from "react";
+import { Movie } from "../types/movie";
 import MovieCard from "../components/MovieCard";
 import { PulseLoader } from "react-spinners";
 import PageNation from "../components/PageNation";
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 export default function MoviePage() {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
   const [page, setPage] = useState(1);
   const { category } = useParams<{
     category: string;
   }>();
-  useEffect((): void => {
-    const fetchMovies = async (): Promise<void> => {
-      setIsLoading(true);
-      try {
-        const { data } = await axios.get<MovieResponse>(
+  const {
+    data: MovieData,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["MovieData", page, category],
+    queryFn: () =>
+      axios
+        .get(
           `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=${page}`,
           {
-            method: "GET",
             headers: {
               Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}`,
               Accept: "application/json",
             },
           }
-        );
+        )
+        .then((res) => res.data),
+  });
 
-        setMovies(data.results);
-        // setTimeout(() => {
-        //   setIsLoading(false);
-        // }, 9000);
-      } catch (e) {
-        setIsError(true);
-        console.log(e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    // console.log("TOKEN:", import.meta.env.VITE_TMDB_KEY);
-    fetchMovies();
-  }, [page, category]);
-
-  // console.log(movies);
   if (isError) {
     return (
       <div>
@@ -52,6 +39,8 @@ export default function MoviePage() {
       </div>
     );
   }
+  console.log(MovieData);
+
   return (
     <>
       <PageNation setPage={setPage} page={page} />
@@ -61,7 +50,7 @@ export default function MoviePage() {
         </div>
       ) : (
         <div className=" p-15 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-          {movies.map((item) => {
+          {MovieData?.results?.map((item: Movie) => {
             return <MovieCard item={item} key={item.id} />;
           })}
         </div>

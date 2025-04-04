@@ -1,41 +1,28 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+
 import { PulseLoader } from "react-spinners";
 import Actor from "./Actor";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
 
 export default function MovieDetail() {
-  //   const navigator = useNavigate();
-
-  // console.log(params);
-  const [movie, setMovie] = useState<any>(null); //제성해여 시간이 읎어서 any로 일단 박아놨ㅇ어요
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
   const { movieId } = useParams<{ movieId: string }>();
-  useEffect((): void => {
-    const fetchMovieDetail = async (): Promise<void> => {
-      try {
-        const res = await axios.get(
-          `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
-          {
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}`,
-              Accept: "application/json",
-            },
-          }
-        );
-        setMovie(res.data);
-
-        console.log(res.data);
-      } catch (e) {
-        console.log(e);
-        setIsError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchMovieDetail();
-  }, [movieId]);
+  const {
+    data: datailData,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["detailData"],
+    queryFn: () =>
+      axios
+        .get(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, {
+          headers: {
+            Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}`,
+            Accept: "application/json",
+          },
+        })
+        .then((res) => res.data),
+  });
 
   if (isLoading) {
     return (
@@ -60,24 +47,24 @@ export default function MovieDetail() {
       <div className=" relative w-full text-white px-10 ">
         <img
           className="absolute object-cover z-3  top-0 left-0 w-full h-full "
-          src={`https://image.tmdb.org/t/p/w500/${movie?.backdrop_path}`}
+          src={`https://image.tmdb.org/t/p/w500/${datailData?.backdrop_path}`}
           alt=""
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/20 to-transparent z-5"></div>
         <div className="relative z-10 ">
           <p className="text-2xl font-bold">
-            {movie?.title || "사랑을 찾아서.."}
+            {datailData?.title || "사랑을 찾아서.."}
           </p>
-          <span className="">평점:{movie?.vote_average || "5.5"}</span>
-          <p>{movie?.release_date.slice(0, 4) || "2025"}</p>
-          <p className="mb-7">{movie?.runtime || "87"}분</p>
-          <p className="text-[20px]">{movie?.tagline || "설명.."}</p>
+          <span className="">평점:{datailData?.vote_average || "5.5"}</span>
+          <p>{datailData?.release_date.slice(0, 4) || "2025"}</p>
+          <p className="mb-7">{datailData?.runtime || "87"}분</p>
+          <p className="text-[20px]">{datailData?.tagline || "설명.."}</p>
           <p className="max-w-96 pb-5 border-b-white border-b-2">
-            {movie?.overview}
+            {datailData?.overview}
           </p>
         </div>
       </div>
-      <Actor movie={movie} />
+      <Actor datailData={datailData} />
     </>
   );
 }
