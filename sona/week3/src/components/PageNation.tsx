@@ -5,7 +5,7 @@ type PageProps = {
 export default function PageNation({ setPage, page }: PageProps) {
   // console.log(page);
   return (
-    <div className="flex items-center justify-center gap-4 mt-5 ">
+    <div className="flex items-center justify-center gap-4 mt-5 text-white">
       <button
         className=" button-custom disabled:cursor-not-allowed"
         disabled={page === 1}
