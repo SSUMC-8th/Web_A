@@ -57,14 +57,14 @@ export default function MovieDetail() {
 
   return (
     <>
-      <div className=" relative w-full text-white ">
+      <div className=" relative w-full text-white px-10 ">
         <img
           className="absolute object-cover z-3  top-0 left-0 w-full h-full "
           src={`https://image.tmdb.org/t/p/w500/${movie?.backdrop_path}`}
           alt=""
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/20 to-transparent z-5"></div>
-        <div className="relative z-10">
+        <div className="relative z-10 ">
           <p className="text-2xl font-bold">
             {movie?.title || "사랑을 찾아서.."}
           </p>
