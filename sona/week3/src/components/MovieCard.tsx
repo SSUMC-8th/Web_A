@@ -12,6 +12,7 @@ export default function MovieCard({ item }: MovieProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   const navigate = useNavigate();
+  // console.log(item);
   // console.log(isHovered);
   return (
     <div

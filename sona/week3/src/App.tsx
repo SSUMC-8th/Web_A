@@ -9,7 +9,9 @@ import router from "./routes";
 function App() {
   return (
     <>
-      <RouterProvider router={router} future={{ v7_startTransition: true }} />
+      <div className=" bg-black min-h-screen  overflow-y-auto ">
+        <RouterProvider router={router} future={{ v7_startTransition: true }} />
+      </div>
     </>
   );
 }

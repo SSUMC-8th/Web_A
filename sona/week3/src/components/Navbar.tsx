@@ -9,13 +9,13 @@ const LINKS = [
 ];
 export default function NavBar() {
   return (
-    <div className="flex gap-3 p-4">
+    <div className="flex gap-3 p-4 relative z-30 bg-black ">
       {LINKS.map(({ to, label }) => (
         <NavLink
           key={to}
           to={to}
           className={({ isActive }): any => {
-            return isActive ? "text-gray-600 font-bold" : "text-gray-500";
+            return isActive ? "text-amber-600 font-bold" : "text-gray-500";
           }}
         >
           {label}

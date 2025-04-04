@@ -3,7 +3,7 @@ type PageProps = {
   page: number;
 };
 export default function PageNation({ setPage, page }: PageProps) {
-  console.log(page);
+  // console.log(page);
   return (
     <div className="flex items-center justify-center gap-4 mt-5 ">
       <button
