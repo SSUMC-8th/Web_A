@@ -1,52 +1,40 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axiosInstance from "../api/axios-instance";
 import { CreditDetail, MovieDetail } from "../types/movie";
 import MovieDetailInfo from "../components/MovieInfo/MovieInfo";
 import MovieDetailPeople from "../components/MovieInfo/MovieCreditInfo";
 import LoadingSpinner from "../components/LoadingSpinner";
+import useCustomFetch from "../hook/useCustomFetch";
+import { API } from "../constants/api";
+import { Language } from "../constants/language";
 
 const MovieDetailPage = () => {
-  const [movie, setMovie] = useState<MovieDetail>();
-  const [credit, setCredit] = useState<CreditDetail>();
-  const [isPending, setIsPending] = useState(false);
-  const [isError, setIsError] = useState(false);
-
   const { movieId } = useParams<{ movieId: string }>();
 
-  useEffect(() => {
-    const fetchDetailMovie = async () => {
-      setIsPending(true);
-      setIsError(false);
+  // non-null 단언
+  // !를 붙여줌으로써 해당 값은 undefined가 아님을 명시적으로 선언 ex) movieId!
+  // 주의 : 무조건 값이 존재할 변수에만 선언해주어야한다.
 
-      try {
-        const { data: movieData } = await axiosInstance.get<MovieDetail>(
-          `${movieId}?language=ko-KR`
-        );
+  // URL 선언
+  const MovieDataURL = API.MOVIE_DETAIL(movieId!);
+  const CreditDataURL = API.MOVIE_CREDITS(movieId!);
 
-        const { data: creditData } = await axiosInstance.get<CreditDetail>(
-          `${movieId}/credits?language=ko-KR`
-        );
+  const {
+    data: MovieDetailData,
+    isError: MovieDetailError,
+    isPending: MoviePending,
+  } = useCustomFetch<MovieDetail>(MovieDataURL, Language.Korean);
+  const {
+    data: CreditData,
+    isError: CreditError,
+    isPending: CreditPending,
+  } = useCustomFetch<CreditDetail>(CreditDataURL, Language.Korean);
 
-        setMovie(movieData);
-        setCredit(creditData);
-      } catch (error) {
-        console.error("영화 상세 불러오기 실패:", error);
-        setIsError(true);
-      } finally {
-        setIsPending(false);
-      }
-    };
+  const isPending = MoviePending || CreditPending;
 
-    if (movieId) fetchDetailMovie();
-  }, [movieId]);
-
-  if (isError)
+  if (MovieDetailError || CreditError)
     return (
       <div className="text-red-500 p-4">데이터를 불러오는 중 오류 발생</div>
     );
-
-  console.log(movie);
 
   return (
     <div className="text-white p-8 min-h-screen bg-black">
@@ -56,10 +44,10 @@ const MovieDetailPage = () => {
         </div>
       )}
 
-      {!isPending && movie && credit && (
+      {!isPending && MovieDetailData && CreditData && (
         <>
-          <MovieDetailInfo movie={movie} />
-          <MovieDetailPeople people={credit.cast} />
+          <MovieDetailInfo movie={MovieDetailData} />
+          <MovieDetailPeople people={CreditData.cast} />
         </>
       )}
     </div>

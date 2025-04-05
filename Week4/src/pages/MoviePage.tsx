@@ -1,54 +1,38 @@
-import { useCallback, useEffect, useState } from "react";
-import axiosInstance from "../api/axios-instance";
-import { Movie, MovieResponse } from "../types/movie";
+import { useCallback, useEffect } from "react";
+import { MovieResponse } from "../types/movie";
 import MovieCard from "../components/MovieCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 import usePagination from "../hook/usePagination";
 import PaginationBtn from "../components/Button/PagaginationBtn";
 import { useParams } from "react-router-dom";
+import useCustomFetch from "../hook/useCustomFetch";
+import { API } from "../constants/api";
 
 const MoviesPage = () => {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
-
-  // 1. 로딩
-  const [isPending, setIsPending] = useState(false);
-  // 2. 에러
-  const [isError, setIsError] = useState(false);
-  // 3. 페이지네이션
+  // 1. 페이지네이션
   const { page, setPage, handleNextPage, handlePrevPage } = usePagination();
-  // 4. useParams
+  // 2. useParams
   const { category } = useParams<{ category: string }>();
+  // 3. URL
+  const MovieURL = API.MOVIES(category!, page);
 
-  // 5. 리랜더링 방지 useCallback
-  const onNext = useCallback(() => {
-    handleNextPage(totalPages);
-  }, [handleNextPage, totalPages]);
+  const {
+    data: movieData,
+    isPending,
+    isError,
+  } = useCustomFetch<MovieResponse>(MovieURL);
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      setIsPending(true);
-      try {
-        const { data } = await axiosInstance.get<MovieResponse>(
-          `/${category}?language=en-US&page=${page}`
-        );
-
-        setMovies(data.results);
-        setTotalPages(data.total_pages);
-      } catch {
-        setIsError(true);
-      } finally {
-        setIsPending(false);
-      }
-    };
-
-    fetchMovies();
-  }, [page, category]);
-
-  // 카테고리 변경시 페이지 1로 초기화 !
+  // 4. 카테고리 변경시 페이지 1로 초기화 !
   useEffect(() => {
     setPage(1);
   }, [category, setPage]);
+
+  // 5. 리랜더링 방지 useCallback
+  const onNext = useCallback(() => {
+    if (movieData) {
+      handleNextPage(movieData.total_pages);
+    }
+  }, [handleNextPage, movieData]);
 
   if (isError)
     return (
@@ -61,7 +45,7 @@ const MoviesPage = () => {
         page={page}
         onNext={onNext}
         onPrev={handlePrevPage}
-        totalPages={totalPages}
+        totalPages={movieData?.total_pages || 1}
       />
       {/** 삼항 연산자로 해도 동일 */}
       {isPending && (
@@ -69,10 +53,11 @@ const MoviesPage = () => {
           <LoadingSpinner />
         </div>
       )}
-      {!isPending && (
+      {!isPending && movieData && (
         <div className="grid gap-4 p-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {movies &&
-            movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
+          {movieData?.results.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
         </div>
       )}
     </div>
