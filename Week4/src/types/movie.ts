@@ -1,19 +1,41 @@
-export type Movie = {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
+//공통 속성 정의
+export interface BaseMovie {
   id: number;
+  title: string;
+  overview: string;
+  poster_path: string;
+  backdrop_path: string;
+  release_date: string;
   original_language: string;
   original_title: string;
-  overview: string;
   popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
   vote_average: number;
   vote_count: number;
-};
+  adult: boolean;
+  video: boolean;
+}
+
+// Movie
+export interface Movie extends BaseMovie {
+  genre_ids: number[];
+}
+
+// MovieDetail
+export interface MovieDetail extends BaseMovie {
+  belongs_to_collection: BelongsToCollection;
+  budget: number;
+  genres: Genre[];
+  homepage: string;
+  imdb_id: string;
+  origin_country: string[];
+  production_companies: ProductionCompany[];
+  production_countries: ProductionCountry[];
+  revenue: number;
+  runtime: number;
+  spoken_languages: SpokenLanguage[];
+  status: string;
+  tagline: string;
+}
 
 export type MovieResponse = {
   page: number;
@@ -27,47 +49,6 @@ export type MovieResponse = {
 export interface MovieCardProps {
   movie: Movie;
 }
-
-// Pagination Props
-
-export type PaginationBtnProps = {
-  page: number;
-  totalPages: number;
-  onNext: () => void;
-  onPrev: () => void;
-};
-
-// Movie Detail
-
-export interface MovieDetail {
-  adult: boolean;
-  backdrop_path: string;
-  belongs_to_collection: BelongsToCollection;
-  budget: number;
-  genres: Genre[];
-  homepage: string;
-  id: number;
-  imdb_id: string;
-  origin_country: string[];
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  production_companies: ProductionCompany[];
-  production_countries: ProductionCountry[];
-  release_date: string;
-  revenue: number;
-  runtime: number;
-  spoken_languages: SpokenLanguage[];
-  status: string;
-  tagline: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
-
 export interface BelongsToCollection {
   id: number;
   name: string;
@@ -134,3 +115,12 @@ export interface Crew {
   department: string;
   job: string;
 }
+
+// Pagination Props
+
+export type PaginationBtnProps = {
+  page: number;
+  totalPages: number;
+  onNext: () => void;
+  onPrev: () => void;
+};
