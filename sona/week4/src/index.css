@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@layer components {
+  .button-custom {
+    @apply bg-amber-950 size-8 rounded-xl text-white font-bold cursor-pointer hover:bg-amber-600 transition-all duration-150;
+  }
+}
