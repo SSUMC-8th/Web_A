@@ -1,26 +1,24 @@
 import axios from "axios";
-import { useState } from "react";
-import { Movie } from "../types/movie";
+import { useEffect, useState } from "react";
+import { Movie, MovieResponse } from "../types/movie";
 import MovieCard from "../components/MovieCard";
 import { PulseLoader } from "react-spinners";
 import PageNation from "../components/PageNation";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 
 export default function MoviePage() {
   const [page, setPage] = useState(1);
+  const [movie, setMovie] = useState<Movie[]>([]);
+  const [isError, setISError] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { category } = useParams<{
     category: string;
   }>();
-  const {
-    data: MovieData,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["MovieData", page, category],
-    queryFn: () =>
-      axios
-        .get(
+
+  useEffect((): void => {
+    const fetchMovie = async (): Promise<void> => {
+      try {
+        const { data } = await axios.get<MovieResponse>(
           `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=${page}`,
           {
             headers: {
@@ -28,10 +26,18 @@ export default function MoviePage() {
               Accept: "application/json",
             },
           }
-        )
-        .then((res) => res.data),
-  });
-
+        );
+        setMovie(data.results);
+      } catch (e) {
+        console.log(e);
+        setISError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchMovie();
+  }, [category, page]);
+  console.log(movie);
   if (isError) {
     return (
       <div>
@@ -39,7 +45,6 @@ export default function MoviePage() {
       </div>
     );
   }
-  console.log(MovieData);
 
   return (
     <>
@@ -50,7 +55,7 @@ export default function MoviePage() {
         </div>
       ) : (
         <div className=" p-15 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-          {MovieData?.results?.map((item: Movie) => {
+          {movie.map((item: Movie) => {
             return <MovieCard item={item} key={item.id} />;
           })}
         </div>
