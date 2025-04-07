@@ -1,43 +1,23 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Movie, MovieResponse } from "../types/movie";
 import MovieCard from "../components/MovieCard";
 import { PulseLoader } from "react-spinners";
 import PageNation from "../components/PageNation";
 import { useParams } from "react-router-dom";
+import useCustomFetch from "../hooks/useCustomFetch";
 
 export default function MoviePage() {
-  const [page, setPage] = useState(1);
-  const [movie, setMovie] = useState<Movie[]>([]);
-  const [isError, setISError] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { category } = useParams<{
     category: string;
   }>();
+  const [page, setPage] = useState(1);
+  const url = `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=${page}`;
+  const {
+    data: movie,
+    isLoading,
+    isError,
+  } = useCustomFetch<MovieResponse>(url);
 
-  useEffect((): void => {
-    const fetchMovie = async (): Promise<void> => {
-      try {
-        const { data } = await axios.get<MovieResponse>(
-          `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=${page}`,
-          {
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}`,
-              Accept: "application/json",
-            },
-          }
-        );
-        setMovie(data.results);
-      } catch (e) {
-        console.log(e);
-        setISError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchMovie();
-  }, [category, page]);
-  console.log(movie);
   if (isError) {
     return (
       <div>
@@ -55,7 +35,7 @@ export default function MoviePage() {
         </div>
       ) : (
         <div className=" p-15 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-          {movie.map((item: Movie) => {
+          {movie?.results.map((item: Movie) => {
             return <MovieCard item={item} key={item.id} />;
           })}
         </div>
