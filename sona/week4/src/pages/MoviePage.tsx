@@ -4,7 +4,7 @@ import MovieCard from "../components/MovieCard";
 import { PulseLoader } from "react-spinners";
 import PageNation from "../components/PageNation";
 import { useParams } from "react-router-dom";
-import useCustomFetch from "../hooks/useCustomFetch";
+import useCustomFetch from "../hooks/useApiEffect";
 
 export default function MoviePage() {
   const { category } = useParams<{

@@ -1,7 +1,7 @@
 import { PulseLoader } from "react-spinners";
 import Actor from "./Actor";
 import { useParams } from "react-router-dom";
-import useCustomFetch from "../hooks/useCustomFetch";
+import useCustomFetch from "../hooks/useApiEffect";
 import { SimpleMovieDetail } from "../types/movie";
 
 export default function MovieDetail() {
