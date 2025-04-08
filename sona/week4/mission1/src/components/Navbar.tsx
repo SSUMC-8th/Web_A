@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const LINKS = [
   { to: "/", label: "홈" },
@@ -9,18 +9,32 @@ const LINKS = [
 ];
 export default function NavBar() {
   return (
-    <div className="flex gap-3 p-4 relative z-30 bg-black ">
-      {LINKS.map(({ to, label }) => (
-        <NavLink
-          key={to}
-          to={to}
-          className={({ isActive }): any => {
-            return isActive ? "text-amber-600 font-bold" : "text-gray-500";
-          }}
-        >
-          {label}
-        </NavLink>
-      ))}
-    </div>
+    <>
+      <div className="flex justify-between items-center">
+        <div className="flex gap-3 p-4 relative z-30 bg-black">
+          {LINKS.map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }): any => {
+                return isActive ? "text-amber-600 font-bold" : "text-gray-500";
+              }}
+            >
+              {label}
+            </NavLink>
+          ))}
+        </div>
+        <div className="flex gap-3">
+          <Link to={"/login"}>
+            <div className="text-white bg-amber-500 px-2 rounded-2xl pb-1 h-8 ">
+              Login
+            </div>
+          </Link>
+          <button className="text-white bg-amber-500 px-2 rounded-2xl pb-1 h-8 ">
+            signUp
+          </button>
+        </div>
+      </div>
+    </>
   );
 }
