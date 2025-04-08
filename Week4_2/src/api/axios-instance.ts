@@ -1,18 +1,17 @@
 import axios from "axios";
 import { LOCAL_STORAGE_KEY } from "../constants/key";
-import { useLocalStorage } from "../hook/useLocalStorage";
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_SERVER_API_URL,
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const { getItem } = useLocalStorage(LOCAL_STORAGE_KEY.accessToken);
-  const token = getItem();
+  const token = localStorage.getItem(LOCAL_STORAGE_KEY.accessToken);
 
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${JSON.parse(token)}`;
   }
+
   return config;
 });
 
