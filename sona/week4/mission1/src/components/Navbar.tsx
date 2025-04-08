@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const LINKS = [
   { to: "/", label: "홈" },
@@ -23,16 +23,6 @@ export default function NavBar() {
               {label}
             </NavLink>
           ))}
-        </div>
-        <div className="flex gap-3">
-          <Link to={"/login"}>
-            <div className="text-white bg-amber-500 px-2 rounded-2xl pb-1 h-8 ">
-              Login
-            </div>
-          </Link>
-          <button className="text-white bg-amber-500 px-2 rounded-2xl pb-1 h-8 ">
-            signUp
-          </button>
         </div>
       </div>
     </>
