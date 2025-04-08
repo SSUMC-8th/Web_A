@@ -10,6 +10,8 @@ import { uploadAvatar } from "../api/upload";
 import LoginTitle from "../components/Titles/LoginTitle";
 import GoogleLoginButton from "../components/Buttons/GoogleLoginButton";
 import Divider from "../components/Divider";
+import { useNavigate } from "react-router-dom";
+import RoutePaths from "../router/routePaths";
 
 const schema = z
   .object({
@@ -32,6 +34,7 @@ const schema = z
 export type FormFields = z.infer<typeof schema>;
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [avatar, setAvatar] = useState<File | null>(null);
   const methods = useForm<FormFields>({
@@ -66,6 +69,8 @@ const SignUpPage = () => {
     const response = await postSignUp(requestBody);
 
     console.log("회원가입 성공:", response);
+
+    navigate(`${RoutePaths.LOGIN}`);
   };
 
   // trigger -> 유효성 검사

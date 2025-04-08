@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { postSignIn } from "../api/auth";
 import GoogleLoginButton from "../components/Buttons/GoogleLoginButton";
 import Divider from "../components/Divider";
@@ -7,8 +8,10 @@ import { LOCAL_STORAGE_KEY } from "../constants/key";
 import useForm from "../hook/useForm";
 import { useLocalStorage } from "../hook/useLocalStorage";
 import { UserSignInformation, validateLogin } from "../utils/validate";
+import RoutePaths from "../router/routePaths";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const { setItem } = useLocalStorage(LOCAL_STORAGE_KEY.accessToken);
   const { values, errors, touched, getInputProps } =
     useForm<UserSignInformation>({
@@ -24,6 +27,8 @@ const LoginPage = () => {
       const { data } = await postSignIn(values);
       setItem(data.accessToken);
       console.log(data);
+      navigate(`${RoutePaths.MAIN}`);
+      window.location.reload(); // 임시방편
     } catch (error) {
       alert(error);
     }
