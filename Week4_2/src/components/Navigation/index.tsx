@@ -1,12 +1,9 @@
 import { NavLink } from "react-router-dom";
 import RoutePaths from "../../router/routePaths";
-
-const LINKS = [
-  { to: RoutePaths.LOGIN, label: "로그인" },
-  { to: RoutePaths.SIGNUP, label: "회원가입" },
-];
+import { useAuth } from "../../hook/useAuth";
 
 const Navbar = () => {
+  const { isLoggedIn, logout } = useAuth();
   return (
     <nav className="flex justify-between items-center px-6 py-4 bg-black shadow-md">
       <NavLink to={RoutePaths.MAIN} className="text-cyan-600 font-bold text-xl">
@@ -14,23 +11,45 @@ const Navbar = () => {
       </NavLink>
 
       <div className="flex gap-3">
-        {LINKS.map(({ to, label }) => (
-          <NavLink
-            key={to}
-            to={to}
-            className={({ isActive }) =>
-              `px-4 py-2 rounded-md text-sm font-medium ${
-                isActive
-                  ? "bg-white text-black"
-                  : label === "회원가입"
-                  ? "bg-cyan-600 text-white"
-                  : "bg-black border border-white text-white"
-              }`
-            }
-          >
-            {label}
-          </NavLink>
-        ))}
+        {!isLoggedIn ? (
+          <>
+            <NavLink
+              to={RoutePaths.LOGIN}
+              className={({ isActive }) =>
+                `px-4 py-2 rounded-md text-sm font-medium ${
+                  isActive
+                    ? "bg-white text-black"
+                    : "bg-black border border-white text-white"
+                }`
+              }
+            >
+              로그인
+            </NavLink>
+
+            <NavLink
+              to={RoutePaths.SIGNUP}
+              className="px-4 py-2 rounded-md text-sm font-medium bg-cyan-600 text-white"
+            >
+              회원가입
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink
+              to={RoutePaths.MYPAGE}
+              className="px-4 py-2 rounded-md text-sm font-medium bg-white text-black"
+            >
+              마이페이지
+            </NavLink>
+
+            <button
+              onClick={logout}
+              className="px-4 py-2 rounded-md text-sm font-medium bg-red-500 text-white"
+            >
+              로그아웃
+            </button>
+          </>
+        )}
       </div>
     </nav>
   );
