@@ -27,7 +27,7 @@ export default function Login() {
   return (
     <div className="flex flex-col items-center justify-center  max-w-[300px]  m-auto px-2">
       <div className="py-4 flex w-full">
-        <p className="cursor-point " onClick={() => navigate("-1")}>
+        <p className="cursor-point " onClick={() => navigate(-1)}>
           {"<"}
         </p>
         <h1 className="font-bold text-center w-full pr-3">로그인</h1>
@@ -74,7 +74,7 @@ export default function Login() {
         )}
       </div>
       <button
-        className="text-sm bg-gray-800 w-full rounded-sm"
+        className="text-sm bg-gray-900 w-full rounded-sm"
         type="button"
         onClick={handleSubmit}
       >

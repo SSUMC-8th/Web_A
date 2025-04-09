@@ -3,15 +3,11 @@ import { Link } from "react-router-dom";
 export default function NavBar() {
   return (
     <>
-      <div className="flex gap-3 justify-end">
+      <div className="flex gap-2 justify-end mt-2 pr-2">
         <Link to={"/login"}>
-          <div className="text-white bg-amber-500 px-2 rounded-2xl pb-1 h-8 ">
-            Login
-          </div>
+          <div className="custom-btn pt-[2px]">login</div>
         </Link>
-        <button className="text-white bg-amber-500 px-2 rounded-2xl pb-1 h-8 ">
-          signUp
-        </button>
+        <div className="custom-btn pt-[2px]">sign up</div>
       </div>
     </>
   );
