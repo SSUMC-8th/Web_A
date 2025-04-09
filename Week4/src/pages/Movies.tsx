@@ -1,13 +1,13 @@
-import { useState, useEffect, ReactNode } from "react";
+import { useState, ReactNode } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 
 import LoadingSpinner from "../components/LoadingSpinner";
 import ErrorMessage from "../components/ErrorMessage";
 import Card from "../components/Card";
 import Pagination from "../components/Pagination";
 
-import { TMovie, TMovieResponse } from "../types/movieTypes";
+import { TMovieResponse } from "../types/movieTypes";
+import useFetch from "../hooks/useFetch";
 
 type CategoryType = "popular" | "upcoming" | "top-rated" | "now_playing";
 type paramsType = {
@@ -18,9 +18,6 @@ function Movies(): ReactNode {
   const { category } = useParams<paramsType>();
 
   const [page, setPage] = useState<number>(1);
-  const [movies, setMovies] = useState<TMovie[]>([]);
-  const [isPending, setIsPending] = useState(false);
-  const [isError, setIsError] = useState(false);
 
   const urlMap: Record<CategoryType, string> = {
     popular: import.meta.env.VITE_TMDB_URL_POPULAR,
@@ -29,38 +26,9 @@ function Movies(): ReactNode {
     now_playing: import.meta.env.VITE_TMDB_URL_NOWPLAYING,
   };
 
-  //로딩 및 에러처리
-  useEffect(() => {
-    if (!category) return;
+  const url = category ? urlMap[category] : undefined;
 
-    const fetchMovies = async (): Promise<void> => {
-      setIsPending(true);
-      setIsError(false);
-
-      try {
-        const { data } = await axios.get<TMovieResponse>(
-          `${urlMap[category]}&page=${page}`,
-          {
-            headers: {
-              Authorization: `${import.meta.env.VITE_TMDB_KEY}`,
-            },
-          }
-        );
-        setMovies(data.results);
-      } catch {
-        setIsError(true);
-      } finally {
-        setIsPending(false);
-      }
-    };
-
-    fetchMovies();
-  }, [category, page]);
-
-  //카테고리 변경 시 페이지 초기화
-  useEffect(() => {
-    setPage(1);
-  }, [category]);
+  const { data, isPending, isError } = useFetch<TMovieResponse>(url, page);
 
   //로딩/에러 처리
   if (isPending || isError) {
@@ -77,7 +45,7 @@ function Movies(): ReactNode {
       <Pagination page={page} setPage={setPage} />
 
       <div className="grid grid-cols-6 gap-4 p-4">
-        {movies.map((movie) => (
+        {data?.results.map((movie) => (
           <Card key={movie.id} movie={movie} />
         ))}
       </div>

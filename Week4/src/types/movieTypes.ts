@@ -1,7 +1,6 @@
-export type TMovie = {
+interface TMovieBase {
   adult: boolean;
   backdrop_path: string;
-  genre_ids: number[];
   id: number;
   original_language: string;
   original_title: string;
@@ -13,7 +12,40 @@ export type TMovie = {
   video: boolean;
   vote_average: number;
   vote_count: number;
-};
+}
+export interface TMovie extends TMovieBase {
+  genre_ids: number[];
+}
+export interface TMovieDetail extends TMovieBase {
+  belongs_to_collection: null;
+  budget: number;
+  genres: {
+    id: number;
+    name: string;
+  }[];
+  homepage: string;
+  imdb_id: string;
+  origin_country: string[];
+  production_companies: {
+    id: number;
+    logo_path: string | null;
+    name: string;
+    origin_country: string;
+  }[];
+  production_countries: {
+    iso_3166_1: string;
+    name: string;
+  }[];
+  revenue: number;
+  runtime: number;
+  spoken_languages: {
+    english_name: string;
+    iso_639_1: string;
+    name: string;
+  }[];
+  status: string;
+  tagline: string;
+}
 
 export type TMovieResponse = {
   page: number;
@@ -21,3 +53,24 @@ export type TMovieResponse = {
   total_pages: number;
   total_results: number;
 };
+
+export interface TCastMember {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  order: number;
+}
+
+export interface TMovieCredits {
+  id: number;
+  cast: TCastMember[];
+  crew: []; // 필요하면 crew 구조도 정리 가능
+}
