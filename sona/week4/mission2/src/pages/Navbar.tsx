@@ -7,7 +7,9 @@ export default function NavBar() {
         <Link to={"/login"}>
           <div className="custom-btn pt-[2px]">login</div>
         </Link>
-        <div className="custom-btn pt-[2px]">sign up</div>
+        <Link to={"/signup"}>
+          <div className="custom-btn pt-[2px]">sign up</div>
+        </Link>
       </div>
     </>
   );

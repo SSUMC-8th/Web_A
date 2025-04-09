@@ -32,9 +32,9 @@ export default function Login() {
         </p>
         <h1 className="font-bold text-center w-full pr-3">로그인</h1>
       </div>
-      <div className="flex border-1 w-full rounded-xl py-1">
+      <div className="flex border-1 w-full rounded-xl py-1  items-center">
         <img src="/public/ggg-Photoroom.png" alt="" className="w-11" />
-        <div className="w-full text-center pr-12 text-sm">구글 로그인</div>
+        <div className="w-full text-center pr-12 text-sm ">구글 로그인</div>
       </div>
       <div className="flex items-center gap-2 w-full my-4">
         <div className="border-t border-white grow"></div>
@@ -74,7 +74,7 @@ export default function Login() {
         )}
       </div>
       <button
-        className="text-sm bg-gray-900 w-full rounded-sm"
+        className="text-sm bg-gray-900 w-full rounded-sm h-8"
         type="button"
         onClick={handleSubmit}
       >
