@@ -10,7 +10,7 @@ function Mypage() {
             try {
                 const response = await getMyInfo();
                 setMyInfo(response);
-                console.log('마이페이지 정보:', response);
+                console.log(response);
             } catch (error) {
                 console.log(error);
             }

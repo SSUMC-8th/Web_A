@@ -3,7 +3,7 @@ import useForm from '../hooks/useForm';
 import { userSignInInformation, validateSignIn } from '../utils/validate';
 import { postSignin } from '../apis/auth';
 
-function Login() {
+function LoginPage() {
     const navigate = useNavigate();
     const goBack = () => navigate(-1);
 
@@ -98,4 +98,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default LoginPage;

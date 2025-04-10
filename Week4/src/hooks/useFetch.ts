@@ -1,39 +1,27 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 function useFetch<T>(url: string | undefined, page?: number) {
-  const [data, setData] = useState<T | null>(null);
-  const [isPending, setIsPending] = useState(false);
-  const [isError, setIsError] = useState(false);
+    const fetcher = async (): Promise<T> => {
+        if (!url) throw new Error('URL is undefined');
 
-  useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      if (!url) return;
-
-      setIsPending(true);
-      setIsError(false);
-
-      try {
-        const response = await axios.get(
-          `${url}${page ? `?page=${page}` : ""}`,
-          {
+        const response = await axios.get(`${url}${`?page=${page}`}`, {
             headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}`,
+                Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}`,
             },
-          }
-        );
-        setData(response.data);
-      } catch {
-        setIsError(true);
-      } finally {
-        setIsPending(false);
-      }
+        });
+
+        return response.data;
     };
 
-    fetchData();
-  }, [url, page]);
+    const { data, isPending, isError } = useQuery({
+        queryKey: [url, page],
+        queryFn: fetcher,
+        enabled: !!url,
+        staleTime: 1000 * 60 * 3,
+    });
 
-  return { data, isPending, isError };
+    return { data, isPending, isError };
 }
 
 export default useFetch;

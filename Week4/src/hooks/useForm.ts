@@ -1,14 +1,9 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-
-//useFromProps
 interface useFormProps<T> {
     initialValue: T;
     validate: (values: T) => Record<keyof T, string>;
 }
 
-//initailValue 와 validate함수를 인자로 받아온다. value의 타입을 제네릭 <T>로 받아온다.
-//initailValue : input 항목들이 들어있는 객체
-//validate : input별 검증함수
 function useForm<T>({ initialValue, validate }: useFormProps<T>) {
     const [values, setValues] = useState<T>(initialValue);
     const [errors, setErrors] = useState<Record<string, string>>({});
