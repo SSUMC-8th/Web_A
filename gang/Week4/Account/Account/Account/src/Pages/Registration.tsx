@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { postRegister } from "../apis/auth";
+import { useNavigate } from "react-router-dom";
 const schema = z.object({
   email: z.string().email({ message: "올바른 이메일 형식이 아닙니다." }),
   password: z.string().min(8, { message: "비밀번호는 8자 이상이여야 합니다." }),
@@ -19,6 +20,7 @@ const schema = z.object({
 
 type FormFields = z.infer<typeof schema>;
 const Registration = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -37,6 +39,7 @@ const Registration = () => {
     const {passwordCheck, ...rest} = data;  
     const response = await postRegister(rest);
     console.log(response);
+    navigate("/login");
   }; 
   return (
     <div className="flex flex-col items-center justify-center h-full gap-4 bg-black">
