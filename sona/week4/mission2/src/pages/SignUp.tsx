@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
 
 type TSignUpForm = {
   email: string;
@@ -8,18 +9,6 @@ type TSignUpForm = {
 };
 
 export default function SignUp() {
-  //   const [step, setStep] = useState("email");
-
-  //   const nextStep = () => {
-  //     const emailValue = getValues("email");
-  //     const emailRegx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //     if (!emailValue || !emailRegx.test(emailValue)) return;
-
-  //     setStep("password");
-  //   };
-
-  //   const [step, setStep] = useState("email");
-
   const navigate = useNavigate();
   const {
     register,
@@ -32,7 +21,6 @@ export default function SignUp() {
     const emailValue = getValues("email");
     const emailRegx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (emailValue || emailRegx.test(emailValue))
-      // setStep("password");
       navigate("/signUpPassword", {
         state: {
           email: emailValue,
@@ -42,12 +30,7 @@ export default function SignUp() {
 
   return (
     <div className="flex flex-col items-center justify-center  max-w-[300px]  m-auto px-2">
-      <div className="py-4 flex w-full">
-        <p className="cursor-point " onClick={() => navigate(-1)}>
-          {"<"}
-        </p>
-        <h1 className="font-bold text-center w-full pr-3">회원가입</h1>
-      </div>
+      <Header />
 
       <div className="flex border-1 w-full rounded-xl py-1  items-center">
         <img src="/public/ggg-Photoroom.png" alt="" className="w-11" />

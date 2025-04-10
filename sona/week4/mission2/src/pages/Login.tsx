@@ -1,10 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import useForm from "../hooks/useForm";
 import { UserSigninInformation, validateSignin } from "../utils/validate";
+import Header from "../components/Header";
 
 export default function Login() {
-  const navigate = useNavigate();
-
   const { errors, touched, getInputProps } = useForm<UserSigninInformation>({
     initialValue: {
       email: "",
@@ -16,19 +14,13 @@ export default function Login() {
   const handleSubmit = () => {
     if (!errors.email && !errors.password) {
       alert("로그인에 성공하였습니다");
-      // navigate("/home") or 서버 요청
     }
     // console.log(values);
   };
 
   return (
     <div className="flex flex-col items-center justify-center  max-w-[300px]  m-auto px-2">
-      <div className="py-4 flex w-full">
-        <p className="cursor-point " onClick={() => navigate(-1)}>
-          {"<"}
-        </p>
-        <h1 className="font-bold text-center w-full pr-3">로그인</h1>
-      </div>
+      <Header />
       <div className="flex border-1 w-full rounded-xl py-1  items-center">
         <img src="/public/ggg-Photoroom.png" alt="" className="w-11" />
         <div className="w-full text-center pr-12 text-sm ">구글 로그인</div>

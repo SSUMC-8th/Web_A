@@ -1,12 +1,13 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
 
 type TProfile = {
   name: string;
 };
 
 export default function Profile() {
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
 
   const {
     register,
@@ -20,12 +21,7 @@ export default function Profile() {
   return (
     <>
       <div className="flex flex-col items-center justify-center  max-w-[300px]  m-auto px-2">
-        <div className="py-4 flex w-full">
-          <p className="cursor-point " onClick={() => navigate(-1)}>
-            {"<"}
-          </p>
-          <h1 className="font-bold text-center w-full pr-3">회원가입</h1>
-        </div>
+        <Header />
 
         <img src="/profileImg.png" alt="" className="rounded-full my-2" />
         <div className="relative w-full">

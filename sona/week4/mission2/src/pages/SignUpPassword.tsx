@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
+import Header from "../components/Header";
 
 type TSignUpPassword = {
   password: string;
@@ -28,12 +29,7 @@ export function SignUpPassword() {
   return (
     <>
       <div className="flex flex-col items-center justify-center  max-w-[300px]  m-auto px-2">
-        <div className="py-4 flex w-full">
-          <p className="cursor-point " onClick={() => navigate(-1)}>
-            {"<"}
-          </p>
-          <h1 className="font-bold text-center w-full pr-3">회원가입</h1>
-        </div>
+        <Header />
 
         <p className="mr-auto mb-2">{email}</p>
 
