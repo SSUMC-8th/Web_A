@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-type SignUpForm = {
+type TSignUpForm = {
   email: string;
   password: string;
   passwordConfirm: string;
@@ -26,7 +26,7 @@ export default function SignUp() {
     handleSubmit,
     formState: { errors },
     getValues,
-  } = useForm<SignUpForm>();
+  } = useForm<TSignUpForm>();
 
   const onSubmit = () => {
     const emailValue = getValues("email");

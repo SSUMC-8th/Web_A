@@ -5,23 +5,20 @@ import { UserSigninInformation, validateSignin } from "../utils/validate";
 export default function Login() {
   const navigate = useNavigate();
 
-  const { values, errors, touched, getInputProps } =
-    useForm<UserSigninInformation>({
-      initialValue: {
-        email: "",
-        password: "",
-      },
-      validate: validateSignin,
-    });
+  const { errors, touched, getInputProps } = useForm<UserSigninInformation>({
+    initialValue: {
+      email: "",
+      password: "",
+    },
+    validate: validateSignin,
+  });
 
   const handleSubmit = () => {
     if (!errors.email && !errors.password) {
       alert("로그인에 성공하였습니다");
       // navigate("/home") or 서버 요청
-    } else {
-      alert("로그인에 실패하였습니다");
     }
-    console.log(values);
+    // console.log(values);
   };
 
   return (

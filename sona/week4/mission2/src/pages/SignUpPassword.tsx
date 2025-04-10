@@ -2,6 +2,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 
+type TSignUpPassword = {
+  password: string;
+  passwordConfirm: string;
+};
+
 export function SignUpPassword() {
   const navigate = useNavigate();
   const {
@@ -9,15 +14,16 @@ export function SignUpPassword() {
     formState: { errors },
     watch,
     handleSubmit,
-  } = useForm();
+  } = useForm<TSignUpPassword>();
 
   const [showPwd, setShowPwd] = useState(false);
   const [showPwdCheck, setShowPwdCheck] = useState(false);
   const location = useLocation();
+
   const email = location.state?.email;
 
   const onSubmit = () => {
-    console.log("");
+    navigate("/profile");
   };
   return (
     <>
@@ -48,6 +54,7 @@ export function SignUpPassword() {
             src={showPwd ? "/public/eye2.svg" : "/eyeHalf2.svg"}
             className="absolute right-3 top-3 size-4 cursor-pointer"
             onClick={() => setShowPwd((pre) => !pre)}
+            alt="비밀번호 보기"
           />
           {errors.password?.message && (
             <div className="text-red-500 text-[10px] py-1 absolute top-[38px] left-1">
@@ -73,6 +80,7 @@ export function SignUpPassword() {
             src={showPwdCheck ? "/eye2.svg" : "/eyeHalf2.svg"}
             className="absolute right-3 top-3 size-4 cursor-pointer"
             onClick={() => setShowPwdCheck((pre) => !pre)}
+            alt="비밀번호 보기"
           />
           {errors.passwordConfirm?.message && (
             <div className="text-red-500 text-[10px] py-1 absolute top-[38px] left-1">
