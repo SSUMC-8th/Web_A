@@ -29,7 +29,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center  max-w-[300px]  m-auto px-2">
+    <>
       <Header />
 
       <div className="flex border-1 w-full rounded-xl py-1  items-center">
@@ -68,6 +68,6 @@ export default function SignUp() {
       >
         다음
       </button>
-    </div>
+    </>
   );
 }

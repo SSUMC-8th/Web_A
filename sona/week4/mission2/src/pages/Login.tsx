@@ -19,7 +19,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center  max-w-[300px]  m-auto px-2">
+    <>
       <Header />
       <div className="flex border-1 w-full rounded-xl py-1  items-center">
         <img src="/public/ggg-Photoroom.png" alt="" className="w-11" />
@@ -69,6 +69,6 @@ export default function Login() {
       >
         로그인
       </button>
-    </div>
+    </>
   );
 }

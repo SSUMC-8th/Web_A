@@ -20,32 +20,29 @@ export default function Profile() {
   };
   return (
     <>
-      <div className="flex flex-col items-center justify-center  max-w-[300px]  m-auto px-2">
-        <Header />
-
-        <img src="/profileImg.png" alt="" className="rounded-full my-2" />
-        <div className="relative w-full">
-          <input
-            placeholder="비밀번호를 다시 입력해주세요"
-            className="inputField relative"
-            {...register("name", {
-              required: "이름은 필수입력입니다",
-            })}
-          />
-          {errors.name?.message && (
-            <div className="text-red-500 text-[10px] py-1 absolute top-[38px] left-1">
-              {errors.name.message}
-            </div>
-          )}
-        </div>
-        <button
-          className="text-sm bg-gray-900 w-full rounded-sm h-8"
-          type="button"
-          onClick={handleSubmit(onSubmit)}
-        >
-          다음
-        </button>
+      <Header />
+      <img src="/profileImg.png" alt="" className="rounded-full my-2" />
+      <div className="relative w-full">
+        <input
+          placeholder="비밀번호를 다시 입력해주세요"
+          className="inputField relative"
+          {...register("name", {
+            required: "이름은 필수입력입니다",
+          })}
+        />
+        {errors.name?.message && (
+          <div className="text-red-500 text-[10px] py-1 absolute top-[38px] left-1">
+            {errors.name.message}
+          </div>
+        )}
       </div>
+      <button
+        className="text-sm bg-gray-900 w-full rounded-sm h-8"
+        type="button"
+        onClick={handleSubmit(onSubmit)}
+      >
+        다음
+      </button>
     </>
   );
 }

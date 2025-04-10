@@ -4,7 +4,7 @@ import router from "./routes";
 
 function App() {
   return (
-    <div className=" bg-black min-h-screen  overflow-y-auto text-white">
+    <div className=" bg-black min-h-screen  overflow-y-auto text-white ">
       <RouterProvider router={router} future={{ v7_startTransition: true }} />
     </div>
   );
