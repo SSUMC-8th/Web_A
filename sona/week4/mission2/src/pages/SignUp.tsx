@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
+import InputField from "../components/InputField";
 
 type TSignUpForm = {
   email: string;
@@ -42,23 +43,20 @@ export default function SignUp() {
         <div className="border-t border-white grow"></div>
       </div>
       <div className="relative w-full">
-        <input
+        <InputField
           type="email"
           placeholder="이메일을 입력하세요"
-          className="inputField relative"
-          {...register("email", {
-            required: "이메일은 필수입력입니다",
-            pattern: {
-              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: "유효한 값을 입력해주세요",
-            },
-          })}
-        />
-        {errors.email?.message && (
-          <div className="text-red-500 text-[10px] py-1 absolute top-[38px] left-1">
-            {errors.email.message}
-          </div>
-        )}
+          errorMsg={errors.email?.message}
+          register={{
+            ...register("email", {
+              required: "이메일은 필수입력입니다",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "유효한 값을 입력해주세요",
+              },
+            }),
+          }}
+        ></InputField>
       </div>
 
       <button
