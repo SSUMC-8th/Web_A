@@ -1,12 +1,13 @@
-import { PropsWithChildren, ReactNode } from "react";
+import { ReactNode } from "react";
 
 import Navbar from "./Navbar";
+import { Outlet } from "react-router-dom";
 
-function Layout({ children }: PropsWithChildren): ReactNode {
+function Layout(): ReactNode {
   return (
     <>
       <Navbar />
-      {children}
+      <Outlet />
     </>
   );
 }
