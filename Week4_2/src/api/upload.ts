@@ -10,5 +10,5 @@ export const uploadAvatar = async (file: File): Promise<string> => {
     },
   });
 
-  return data.data.imageUrl; // ⬅️ 이게 핵심!
+  return data.data.imageUrl; // 이게 핵심!
 };
