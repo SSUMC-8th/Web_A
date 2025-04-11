@@ -7,7 +7,6 @@ type Props = {
 
 const SignUpNextButton = ({ onNext, fieldsToValidate }: Props) => {
   const {
-    trigger,
     formState: { errors },
     watch,
   } = useFormContext();
@@ -19,10 +18,7 @@ const SignUpNextButton = ({ onNext, fieldsToValidate }: Props) => {
 
   return (
     <button
-      onClick={async () => {
-        const valid = await trigger(fieldsToValidate);
-        if (valid) onNext();
-      }}
+      onClick={onNext}
       disabled={isInvalid}
       className="bg-white text-black py-2 rounded w-[300px] disabled:bg-gray-600"
     >
