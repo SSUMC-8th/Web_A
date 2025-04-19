@@ -1,20 +1,15 @@
-import clsx from 'clsx';
 import { TMovie } from '../../../types/movieTypes';
 
 interface CardImageProps {
     movie: TMovie;
-    isHover: boolean;
 }
 
-function CardImage({ movie, isHover }: CardImageProps) {
+function CardImage({ movie }: CardImageProps) {
     return (
         <img
             src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
             alt={movie.title}
-            className={clsx(
-                'object-cover transition duration-300',
-                isHover && 'blur-sm scale-105',
-            )}
+            className="object-cover transition duration-300 pointer-events-none group-hover:blur-sm group-hover:scale-105"
         />
     );
 }
