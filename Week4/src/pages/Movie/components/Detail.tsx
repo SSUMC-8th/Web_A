@@ -17,6 +17,7 @@ function Detail() {
         isPending: isPending1,
         isError: isError1,
     } = useFetch<TMovieDetail>(detailUrl);
+
     const {
         data: creditsData,
         isPending: isPending2,

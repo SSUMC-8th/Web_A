@@ -1,13 +1,23 @@
+import clsx from 'clsx';
+import { TMovie } from '../../../types/movieTypes';
+
 interface CardCoverProps {
-    title: string;
-    overview: string | null;
+    movie: TMovie;
+    isHover: boolean;
 }
 
-function CardCover({ title, overview }: CardCoverProps) {
+function CardCover({ movie, isHover }: CardCoverProps) {
     return (
-        <div className="absolute inset-0 flex flex-col justify-center px-4 py-4 text-center transition-opacity duration-300 bg-black bg-opacity-60">
-            <h5 className="mb-4 text-xl text-white">{title}</h5>
-            <p className="overflow-hidden text-sm text-white">{overview}</p>
+        <div
+            className={clsx(
+                'absolute inset-0 flex flex-col justify-center px-4 py-4 text-center transition-opacity duration-300 bg-black',
+                isHover ? ' bg-opacity-60' : 'opacity-0',
+            )}
+        >
+            <h5 className="mb-4 text-xl text-white">{movie.title}</h5>
+            <p className="overflow-hidden text-sm text-white">
+                {movie.overview}
+            </p>
         </div>
     );
 }

@@ -34,6 +34,12 @@ function SignupPage() {
     const isStep2Valid =
         password && passwordCheck && !errors.password && !errors.passwordCheck;
     const isStep3Valid = name && !errors.name;
+    // const handleNext = async (fieldsToValidate: (keyof FormFields)[]) => {
+    //     const valid = await methods.trigger(fieldsToValidate);
+    //     if (valid) {
+    //         setStep((prev) => prev + 1);
+    //     }
+    // };
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
         const { passwordCheck, ...rest } = data;
