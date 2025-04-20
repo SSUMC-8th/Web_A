@@ -1,0 +1,30 @@
+import { NavLink } from "react-router-dom";
+
+const LINKS = [
+  { to: "/", label: "홈" },
+  { to: "/movies/popular", label: "인기영화" },
+  { to: "/movies/now_playing", label: "상영 중" },
+  { to: "/movies/top_rated", label: "평점 높은" },
+  { to: "/movies/upcoming", label: "개봉 예정" },
+];
+export default function NavBar() {
+  return (
+    <>
+      <div className="flex justify-between items-center">
+        <div className="flex gap-3 p-4 relative z-30 bg-black">
+          {LINKS.map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }): any => {
+                return isActive ? "text-amber-600 font-bold" : "text-gray-500";
+              }}
+            >
+              {label}
+            </NavLink>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
