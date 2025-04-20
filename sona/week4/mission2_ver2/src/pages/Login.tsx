@@ -1,21 +1,33 @@
 import useForm from "../hooks/useForm";
 import { UserSigninInformation, validateSignin } from "../utils/validate";
+import { postSignin } from "../apis/auth";
 import Header from "../components/Header";
+import useLocalStorage from "../hooks/useLocalStorage";
+import { LOCAL_STORAGE_KEY } from "../constants/key";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const { errors, touched, getInputProps } = useForm<UserSigninInformation>({
-    initialValue: {
-      email: "",
-      password: "",
-    },
-    validate: validateSignin,
-  });
+  const { setItem } = useLocalStorage(LOCAL_STORAGE_KEY.accessToken);
+  const navigate = useNavigate();
+  const { values, errors, touched, getInputProps } =
+    useForm<UserSigninInformation>({
+      initialValue: {
+        email: "",
+        password: "",
+      },
+      validate: validateSignin,
+    });
 
-  const handleSubmit = () => {
-    if (!errors.email && !errors.password) {
-      alert("로그인에 성공하였습니다");
+  const handleSubmit = async () => {
+    console.log(values);
+    try {
+      const response = await postSignin(values);
+      setItem(response.data.accessToken);
+      navigate("/my");
+    } catch (error) {
+      alert(error?.message);
     }
-    // console.log(values);
+    console.log(response);
   };
 
   return (

@@ -3,8 +3,7 @@ import HomePage from "./layout/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import { SignUpPassword } from "./pages/SignUpPassword";
-import Profile from "./pages/Profile";
+import MyPage from "./pages/MyPage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,12 +19,8 @@ const router = createBrowserRouter([
         element: <SignUp />,
       },
       {
-        path: "signUpPassword",
-        element: <SignUpPassword />,
-      },
-      {
-        path: "profile",
-        element: <Profile />,
+        path: "my",
+        element: <MyPage />,
       },
     ],
   },
