@@ -21,3 +21,9 @@ export const postSignIn = async (
 
   return data;
 };
+
+export const postSignOut = async () => {
+  const { data } = await axiosInstance.post("/auth/signout");
+
+  return data;
+};
