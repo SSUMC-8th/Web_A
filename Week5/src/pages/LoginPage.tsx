@@ -1,18 +1,24 @@
 import { useNavigate } from "react-router-dom";
-import { postSignIn } from "../api/auth";
 import GoogleLoginButton from "../components/Buttons/GoogleLoginButton";
 import Divider from "../components/Divider";
 import LoginForm from "../components/Login/LoginForm";
 import LoginTitle from "../components/Titles/LoginTitle";
-import { LOCAL_STORAGE_KEY } from "../constants/key";
+import { useAuth } from "../context/TokenContext/useAuth";
 import useForm from "../hook/useForm";
-import { useLocalStorage } from "../hook/useLocalStorage";
+
 import { UserSignInformation, validateLogin } from "../utils/validate";
-import RoutePaths from "../router/routePaths";
+import { useEffect } from "react";
 
 const LoginPage = () => {
+  const { login, isLoggedIn } = useAuth();
   const navigate = useNavigate();
-  const { setItem } = useLocalStorage(LOCAL_STORAGE_KEY.accessToken);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
+
   const { values, errors, touched, getInputProps } =
     useForm<UserSignInformation>({
       initialValue: {
@@ -23,15 +29,7 @@ const LoginPage = () => {
     });
 
   const handleSubmit = async () => {
-    try {
-      const { data } = await postSignIn(values);
-      setItem(data.accessToken);
-      console.log(data);
-      navigate(`${RoutePaths.MAIN}`);
-      window.location.reload(); // 임시방편
-    } catch (error) {
-      alert(error);
-    }
+    await login(values);
   };
 
   // 오류가 하나라도 있거나, 입력값이 비어 있으면 버튼을 비활성화
