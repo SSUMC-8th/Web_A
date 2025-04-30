@@ -1,9 +1,10 @@
 import { NavLink } from "react-router-dom";
 import RoutePaths from "../../router/routePaths";
-import { useAuth } from "../../hook/useAuth";
+import { useAuth } from "../../context/TokenContext/useAuth";
 
 const Navbar = () => {
-  const { isLoggedIn, logout } = useAuth();
+  const { logout, isLoggedIn } = useAuth();
+
   return (
     <nav className="flex justify-between items-center px-6 py-4 bg-black shadow-md">
       <NavLink to={RoutePaths.MAIN} className="text-cyan-600 font-bold text-xl">
