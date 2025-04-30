@@ -2,20 +2,26 @@ import RootLayout from "../layout/root-layout";
 import ErrorPage from "../pages/ErrorPage";
 import HomePage from "../pages/HomePage";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouteObject,
+  RouterProvider,
+} from "react-router-dom";
 import RoutePaths from "./routePaths";
 import LoginPage from "../pages/LoginPage";
 import SignUpPage from "../pages/SignUpPage";
 import Mypage from "../pages/Mypage";
+import { AuthProvider } from "../context/TokenContext/AuthProvider";
+import ProtectedLayout from "../layout/ProtectedLayout";
 
-const router = createBrowserRouter([
+// publicRoutes : 인증 없이 접근 가능한 경로
+const publicRoutes: RouteObject[] = [
   {
     path: "/",
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
       {
-        // index: true는 위의 path: '/' 즉, 홈 경로를 의미한다.
         index: true,
         element: <HomePage />,
       },
@@ -27,16 +33,32 @@ const router = createBrowserRouter([
         path: RoutePaths.SIGNUP,
         element: <SignUpPage />,
       },
+    ],
+  },
+];
+
+// protectedRoutes : 인증이 필요한 경로
+const protectedRoutes: RouteObject[] = [
+  {
+    path: "/",
+    element: <ProtectedLayout />,
+    errorElement: <ErrorPage />,
+    children: [
       {
         path: RoutePaths.MYPAGE,
         element: <Mypage />,
       },
     ],
   },
-]);
+];
+const router = createBrowserRouter([...publicRoutes, ...protectedRoutes]);
 
 const Router: React.FC = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 };
 
 export default Router;
