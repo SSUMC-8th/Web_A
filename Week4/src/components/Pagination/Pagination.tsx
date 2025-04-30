@@ -1,5 +1,4 @@
 import Button from './ui/Button';
-import Page from './ui/Page';
 
 interface Tpagination {
     page: number;
@@ -17,7 +16,7 @@ function Pagination({ page, setPage, maxPage }: Tpagination) {
                 ←
             </Button>
 
-            <Page page={page} maxPage={maxPage} />
+            <span className="text-xl font-semibold text-gray-800">{`${page} / ${maxPage}`}</span>
 
             <Button onClick={nextPage} disabled={page === maxPage}>
                 →

@@ -12,6 +12,12 @@ function Detail() {
     const detailUrl = `${import.meta.env.VITE_TMDB_URL_DETAIL}/${id}`;
     const creditsUrl = detailUrl + '/credits';
 
+    const getBackdropUrl = (path: string | null) =>
+        path ? `https://image.tmdb.org/t/p/original${path}` : '/backdrop.png';
+
+    const getProfileUrl = (path: string | null) =>
+        path ? `https://image.tmdb.org/t/p/original${path}` : '/profile.png';
+
     const {
         data: movieData,
         isPending: isPending1,
@@ -24,35 +30,18 @@ function Detail() {
         isError: isError2,
     } = useFetch<TMovieCredits>(creditsUrl);
 
-    if (
-        isPending1 ||
-        isPending2 ||
-        isError1 ||
-        isError2 ||
-        !movieData ||
-        !creditsData
-    ) {
-        console.log({
-            isPending1,
-            isPending2,
-            isError1,
-            isError2,
-            movieData,
-            creditsData,
-        });
+    const isLoading = isPending1 || isPending2;
+    const isError = isError1 || isError2;
+    const isEmpty = !movieData || !creditsData;
+
+    if (isLoading || isError || isEmpty) {
         return (
             <div className="flex items-center justify-center h-dvh">
-                {(isPending1 || isPending2) && <LoadingSpinner />}
-                {(isError1 || isError2) && <ErrorMessage />}
+                {isLoading && <LoadingSpinner />}
+                {isError && <ErrorMessage />}
             </div>
         );
     }
-
-    const getBackdropUrl = (path: string | null) =>
-        path ? `https://image.tmdb.org/t/p/original${path}` : '/backdrop.png';
-
-    const getProfileUrl = (path: string | null) =>
-        path ? `https://image.tmdb.org/t/p/original${path}` : '/profile.png';
 
     return (
         <main className="bg-[#343434]">

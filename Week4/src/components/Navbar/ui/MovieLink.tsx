@@ -12,10 +12,9 @@ function MovieLink({ children, to }: MovieLinkProps) {
             to={to}
             className={({ isActive }) =>
                 clsx(
-                    'hover:text-indigo-600',
-                    isActive
-                        ? 'font-bold text-indigo-700 underline underline-offset-4'
-                        : 'text-gray-700',
+                    'hover:text-indigo-600 text-gray-700',
+                    isActive &&
+                        'font-bold text-indigo-700 underline underline-offset-4',
                 )
             }
         >
