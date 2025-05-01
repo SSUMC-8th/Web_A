@@ -4,7 +4,7 @@ export type UserSigninInformation = {
 };
 
 export default function validateUser(values: UserSigninInformation) {
-  const errors: Record<keyof UserSigninInformation, string> = {
+  const errors = {
     email: "",
     password: "",
   };

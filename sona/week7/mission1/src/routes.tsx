@@ -1,10 +1,12 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, RouteObject } from "react-router-dom";
 import HomePage from "./layout/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import MyPage from "./pages/MyPage";
-const router = createBrowserRouter([
+import ProtectedLayout from "./layout/ProtectedLayout";
+//로그인 필요없는 페이지
+const publicRoutes: RouteObject[] = [
   {
     path: "/",
     element: <HomePage />,
@@ -18,11 +20,18 @@ const router = createBrowserRouter([
         path: "signup",
         element: <SignUp />,
       },
-      {
-        path: "my",
-        element: <MyPage />,
-      },
     ],
   },
-]);
+];
+//로그인 필요한 페이지
+const protectedRoutes: RouteObject[] = [
+  {
+    path: "/",
+    element: <ProtectedLayout />,
+    errorElement: <NotFoundPage />,
+    children: [{ path: "my", element: <MyPage /> }],
+  },
+];
+
+const router = createBrowserRouter([...publicRoutes, ...protectedRoutes]);
 export default router;

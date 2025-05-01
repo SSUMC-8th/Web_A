@@ -23,6 +23,12 @@ export const postSignin = async (
   return data;
 };
 
+//로그아웃
+export const postLogout = async () => {
+  const { data } = await axiosInstance.post("/v1/auth/signout");
+  return data;
+};
+
 export const getmyInfo = async (): Promise<ResponseMyInfoDto> => {
   const { data } = await axiosInstance.get("/v1/users/me");
   return data;
