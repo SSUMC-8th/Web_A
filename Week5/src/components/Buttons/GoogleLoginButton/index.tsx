@@ -1,6 +1,13 @@
-const GoogleLoginButton = () => {
+interface GoogleLoginButtonProps {
+  onClick: () => void;
+}
+
+const GoogleLoginButton = ({ onClick }: GoogleLoginButtonProps) => {
   return (
-    <button className="flex items-center justify-center w-[300px] p-[10px] max-w-sm space-x-2 border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition hover:bg-gray-100">
+    <button
+      onClick={onClick}
+      className="flex items-center justify-center w-[300px] p-[10px] max-w-sm space-x-2 border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition hover:bg-gray-100"
+    >
       <img
         src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
         alt="Google"
