@@ -1,11 +1,19 @@
 import { useNavigate } from 'react-router-dom';
 import useForm from '../hooks/useForm';
 import { userSignInInformation, validateSignIn } from '../utils/validate';
-import { postSignin } from '../apis/auth';
+import { useAuth } from '../context/AuthContext';
+import { useEffect } from 'react';
 
 function LoginPage() {
+    const { login, accessToken } = useAuth();
     const navigate = useNavigate();
     const goBack = () => navigate(-1);
+
+    useEffect(() => {
+        if (accessToken) {
+            navigate('/');
+        }
+    });
 
     const { values, errors, touched, getInputProps } =
         useForm<userSignInInformation>({
@@ -25,17 +33,14 @@ function LoginPage() {
 
         if (!isFormValid) return;
 
-        try {
-            const response = await postSignin(values);
-            console.log('로그인 성공:', response);
+        await login(values);
+        alert('로그인성공');
+        navigate('/my');
+    };
 
-            //토큰 저장
-            localStorage.setItem('accessToken', response.data.accessToken);
-            navigate('/my');
-        } catch (error) {
-            console.error('로그인 실패:', error);
-            alert('이메일 또는 비밀번호가 잘못되었습니다.');
-        }
+    const navigateToGoogleLogin = () => {
+        window.location.href =
+            import.meta.env.VITE_SERVER_API_URL + '/v1/auth/google/login';
     };
 
     return (
@@ -48,7 +53,10 @@ function LoginPage() {
                     <h2>로그인</h2>
                 </div>
 
-                <button className="box-border relative flex items-center justify-center w-full p-2 overflow-hidden border-2 rounded-md">
+                <button
+                    className="box-border relative flex items-center justify-center w-full p-2 overflow-hidden border-2 rounded-md"
+                    onClick={navigateToGoogleLogin}
+                >
                     <img
                         alt="google-logo"
                         src="/google-logo.png"
