@@ -8,6 +8,7 @@ import useForm from "../hook/useForm";
 
 import { UserSignInformation, validateLogin } from "../utils/validate";
 import { useEffect } from "react";
+import RoutePaths from "../router/routePaths";
 
 const LoginPage = () => {
   const { login, isLoggedIn } = useAuth();
@@ -32,6 +33,10 @@ const LoginPage = () => {
     await login(values);
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href = RoutePaths.GOOGLE_LOGIN;
+  };
+
   // 오류가 하나라도 있거나, 입력값이 비어 있으면 버튼을 비활성화
   // some -> 하나라도 해당하면 true 를 반환
   // every -> 전부가 해당해야 true 를 반환
@@ -52,7 +57,7 @@ const LoginPage = () => {
     <div className="flex flex-col items-center justify-center h-full gap-4 bg-black">
       <LoginTitle text="로그인" />
 
-      <GoogleLoginButton />
+      <GoogleLoginButton onClick={handleGoogleLogin} />
 
       <Divider />
 
