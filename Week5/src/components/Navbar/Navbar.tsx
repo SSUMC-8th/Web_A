@@ -13,8 +13,6 @@ function Navbar() {
 
             <div>
                 <AuthLinks />
-
-                {/* 로그인 시 변경되는 컴포넌트 */}
             </div>
         </nav>
     );
