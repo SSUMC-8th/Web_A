@@ -12,7 +12,8 @@ const MyPage = () => {
       setUserInfo(response);
       console.log(response);
     };
-    getData();
+    const token = localStorage.getItem("accessToken");
+    if (token) getData();
   }, []);
   return (
     <div className="flex items-center justify-center h-screen bg-black">

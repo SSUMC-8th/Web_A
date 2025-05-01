@@ -1,12 +1,16 @@
-const todoContainer = document.getElementById('container') as HTMLFormElement;
-const todoInput = document.getElementById('input') as HTMLInputElement;
-const todoButton = document.getElementById('input_button');
-const ongoingList= document.getElementById('ongoing_list') as HTMLUListElement;
-const doneList= document.getElementById('done_list')as HTMLUListElement;;
+const todoContainer = document.getElementById('todo-container') as HTMLFormElement;
+const todoInput = document.getElementById('todo-container_input') as HTMLInputElement;
+const todoButton = document.getElementById('todo-container_button');
+const ongoingList= document.getElementById('render-container-ongoing') as HTMLUListElement;
+const doneList= document.getElementById('render-container-done')as HTMLUListElement;;
 
+interface savedArray{
+    text: string,
+    id: number,
+}
 
-let todos: {text:string, id:number}[] = [];//할 일 저장 배열
-let donetodos: {text:string, id:number}[] = [];//완료 저장 배열
+let todos: savedArray[] = []; //할 일 저장 배열
+let donetodos: savedArray[] = [];;//완료 저장 배열
 
 
 const savedDoneList = localStorage.getItem("donetodos");//새로고침 시 저장된 목록 
@@ -39,7 +43,7 @@ function saveDone(){
 function todoListup(newTodoObj: {text:string, id: number}){
     const newtodoList = document.createElement('li');
     newtodoList.classList.add("listline");
-    newtodoList.id = newTodoObj.id.toString();
+    newtodoList.id = newTodoObj.id.toString();//newtodoList의 id는 HtmlElement의 id속성이라 string 형식만 가능하다
     const newtodoText = document.createElement('span');
     newtodoText.innerText = newTodoObj.text;
     const newtodoButton = document.createElement('button');
@@ -111,7 +115,7 @@ function createDoneList(doneObj: { text: string, id: number }) {
     doneList.appendChild(newdoneList);
 }
 
-//새로고침 시 저장된 배열 불러오기기
+//새로고침 시 저장된 배열 불러오기
 if(savedDoneList){
     const parsedDone = JSON.parse(savedDoneList);
     donetodos = parsedDone;

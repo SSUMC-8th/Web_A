@@ -30,6 +30,9 @@ export type ResponseLoginDto = CommonResponse <{
     refreshToken: string,
 }>;
 
+export type ResponseLogoutDto = CommonResponse <{
+    data:null
+}>;
 export type ResponseMyInfoDto = CommonResponse<{
     id: number,
     name: string,
@@ -39,3 +42,13 @@ export type ResponseMyInfoDto = CommonResponse<{
     createdAt: Date,
     updatedAt: Date,
 }>
+export type ResponseRefreshDTO = CommonResponse<{
+    id:number,
+    name:string,
+    accessToken:string,
+    refreshToken:string,
+}>
+
+export type RequestRefreshDTO = {
+    refresh:string,
+}

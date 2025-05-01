@@ -1,4 +1,4 @@
-#container {
+#todo-container {
     width: 600px;
     margin: 100px auto;
     padding: 20px;
@@ -9,14 +9,14 @@
 }
 
 
-#add_form {
+#todo-container-form {
     display: flex;
     gap: 10px;
     justify-content: center;
 }
 
 /*할 일 & 완료 중앙 정렬*/
-#input{
+#todo-container_input{
     flex: 1;
     padding: 8px;
     border: 1px solid #ddd;
@@ -24,7 +24,7 @@
 }
 
 /* 할 일 & 완료 리스트 */
-#list {
+#render-container {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
@@ -43,15 +43,14 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 /* 리스트 배치*/
-#ongoing_list{
+#render-container_ongoing{
     flex: 1;
     text-align: center;
 }
-#done_list{
+#render-container_done{
     flex: 1;
     text-align: center;
 }
-
 /* 버튼 스타일 */
 .greenbtn {
     background: green;

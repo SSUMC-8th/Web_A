@@ -1,4 +1,4 @@
-export type Movie = {
+export type Movies = {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -15,9 +15,9 @@ export type Movie = {
   vote_count: number;
 };
 
-export type MovieBody = {
+export type MoviesBody = {
   page: number;
-  results: Movie[];
+  results: Movies[];
   total_pages: number;
   total_results: number;
 };
@@ -33,13 +33,15 @@ export type MovieInfo = {
   tagline:string;
 };
 
-export type Credit = {
+export type CreditInfo = {
     id:number;
     name:string;
     profile_path:string;
     character:string;
+    credit_id:string;
 }
 
 export type CreditBody = {
-    cast: Credit[];  
+    cast: CreditInfo[];  
+    crew: CreditInfo[];
 }

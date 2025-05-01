@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UMC ToDoList</title>
-    <link rel="stylesheet" href="./style.css">
-    <script type= "module" src="./dist/script.js" defer></script>
+    <link rel="styleshee    t" href="./style.css">
+    <script type="module" src="./dist/script.js" defer></script>
+
 <body>
-    <div id="container">
-        <h1 id="header">GANG TODO</h1>
-        <form id="add_form">
-            <input type="text" id="input" placeholder="할 일 입력">
-            <button class= "greenbtn" type="submit">할 일 추가</button>
+    <div id="todo-container">
+        <h1 id="todo-container_header">GANG TODO</h1>
+        <form id="todo-container-form">
+            <input type="text" id="todo-container_input" placeholder="할 일 입력">
+            <button class="todo-container_button" type="submit">할 일 추가</button>
         </form>
 
-        <div id= "list" display="flex">
-            <div id="ongoing_list">
-                <h2 class="minititle">할 일</h2>
+        <div id="render-container" display="flex">    
+            <div id="render-container-ongoing">
+                <h2>할 일</h2>
                 <ul>
+                </ul>
             </div>
-            <div id ="done_list">
-                <h2 class="minititle">완료</h2>
+            <div id="render-container-done">
+                <h2>완료</h2>
                 <ul>
                 </ul>
             </div>
         </div>
     </div>
-
 </body>
+
 </html>
