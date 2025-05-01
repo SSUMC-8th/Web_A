@@ -11,7 +11,7 @@ const MyPage = () => {
   useEffect(() => {
     const getData = async () => {
       const response = await getmyInfo();
-      console.log(response);
+      // console.log(response);header
       setData(response);
     };
     getData();

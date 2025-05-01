@@ -10,6 +10,9 @@ export default function NavBar() {
         <Link to={"/signup"}>
           <div className="custom-btn pt-[2px]">sign up</div>
         </Link>
+        <Link to={"/my"}>
+          <div className="custom-btn pt-[2px]">myPage</div>
+        </Link>
       </div>
     </>
   );
