@@ -33,14 +33,21 @@ export default function Login() {
       console.log(e);
     }
   };
+  const handleGoogleLogin = () => {
+    window.location.href =
+      import.meta.env.VITE_SERVER_API_URL + "/v1/auth/google/login";
+  };
 
   return (
     <>
       <Header />
-      <div className="flex border-1 w-full rounded-xl py-1  items-center">
+      <button
+        className="flex border-1 w-full rounded-xl py-1  items-center cursor-pointer"
+        onClick={handleGoogleLogin}
+      >
         <img src="/public/ggg-Photoroom.png" alt="" className="w-11" />
         <div className="w-full text-center pr-12 text-sm ">구글 로그인</div>
-      </div>
+      </button>
       <div className="flex items-center gap-2 w-full my-4">
         <div className="border-t border-white grow"></div>
         <span className="text-white text-sm">OR</span>

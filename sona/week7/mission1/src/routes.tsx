@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import MyPage from "./pages/MyPage";
 import ProtectedLayout from "./layout/ProtectedLayout";
+import GoogleLoginRedirectPage from "./pages/GoogleLoginRedirectPage";
 //로그인 필요없는 페이지
 const publicRoutes: RouteObject[] = [
   {
@@ -20,6 +21,7 @@ const publicRoutes: RouteObject[] = [
         path: "signup",
         element: <SignUp />,
       },
+      { path: "v1/auth/google/callback", element: <GoogleLoginRedirectPage /> },
     ],
   },
 ];
