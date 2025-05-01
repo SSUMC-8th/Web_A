@@ -80,6 +80,9 @@ const SignUpPage = () => {
       setStep((prev) => prev + 1);
     }
   };
+  const handleGoogleLogin = () => {
+    window.location.href = RoutePaths.GOOGLE_LOGIN;
+  };
 
   return (
     <>
@@ -89,7 +92,7 @@ const SignUpPage = () => {
             <LoginTitle text="회원가입" />
             {step === 1 && (
               <>
-                <GoogleLoginButton />
+                <GoogleLoginButton onClick={handleGoogleLogin} />
                 <Divider />
                 <StepEmail onNext={() => handleNext(["email"])} />
               </>
