@@ -4,6 +4,7 @@ import { useLocalStorage } from "../../hook/useLocalStorage";
 import { LOCAL_STORAGE_KEY } from "../../constants/key";
 import { postSignIn, postSignOut } from "../../api/auth";
 import { AuthContext } from "./AuthContext";
+import RoutePaths from "../../router/routePaths";
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const {
@@ -44,7 +45,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         setRefreshToken(newRefreshToken);
 
         alert("로그인 성공");
-        window.location.href = "/my";
+        window.location.href = RoutePaths.MYPAGE;
       }
     } catch (error) {
       console.error("로그인 오류", error);

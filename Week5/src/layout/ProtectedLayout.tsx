@@ -2,12 +2,13 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/TokenContext/useAuth";
 import Navbar from "../components/Navigation";
 import Footer from "../components/Footer";
+import RoutePaths from "../router/routePaths";
 
 const ProtectedLayout = () => {
   const { isLoggedIn } = useAuth();
 
   if (!isLoggedIn) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to={RoutePaths.LOGIN} replace />;
   }
 
   return (
