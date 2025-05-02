@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../Pages/Layout";
 import Home from "../Pages/Home";
-import Popular from "../Pages/Popular";
+import Popular from "../Pages/MovieList";
 import NotFound from "../Pages/NotFound";
 import MovieDetailPage from "../Pages/MovieDetailPage";
 export const router = createBrowserRouter([
@@ -23,5 +23,5 @@ export const router = createBrowserRouter([
   {
     path: "movie/:movieId",
     element: <MovieDetailPage />
-  },
+  },// 선택한 영화의 상세정보를 보여주는 페이지-페이지네이션 가림
 ]);
