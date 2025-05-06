@@ -1,6 +1,5 @@
 import { createContext, PropsWithChildren, useContext, useState } from 'react';
 import { RequestSigninDto } from '../types/auth';
-import { useLocalStorage } from '../hooks/useLocalStorage';
 import { LOCAL_STORAGE_KEY } from '../constants/key';
 import { postLogout, postSignin } from '../apis/auth';
 
@@ -23,7 +22,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         getItem: getAccessTokenFromStorage,
         setItem: setAccessTokenInStorage,
         removeItem: removeAccessTokenFromStorage,
-    } = useLocalStorage(LOCAL_STORAGE_KEY.accessToken);
+    } = localStorage;
     const {
         getItem: getRefreshTokenFromStorage,
         setItem: setRefreshTokenInStorage,
