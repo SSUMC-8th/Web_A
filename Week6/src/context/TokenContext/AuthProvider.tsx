@@ -2,7 +2,7 @@ import { PropsWithChildren, useState } from "react";
 import { RequestSignInDto } from "../../types/auth";
 import { useLocalStorage } from "../../hook/useLocalStorage";
 import { LOCAL_STORAGE_KEY } from "../../constants/key";
-import { postSignIn, postSignOut } from "../../api/auth";
+import { postSignIn, postSignOut } from "../../api/Post/auth";
 import { AuthContext } from "./AuthContext";
 import RoutePaths from "../../router/routePaths";
 

@@ -3,8 +3,8 @@ import {
   RequestSignUpDto,
   ResponseSignInDto,
   ResponseSignUpDto,
-} from "../types/auth";
-import axiosInstance from "./axios-instance";
+} from "../../types/auth";
+import axiosInstance from "../axios-instance";
 
 export const postSignUp = async (
   body: RequestSignUpDto

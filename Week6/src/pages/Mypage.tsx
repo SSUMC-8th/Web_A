@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getMyInfo } from "../api/users";
+import { getMyInfo } from "../api/Get/users";
 import { ResponseMyInfoDto } from "../types/auth";
 
 const Mypage = () => {

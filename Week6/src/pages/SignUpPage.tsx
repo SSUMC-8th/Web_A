@@ -1,12 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-import { postSignUp } from "../api/auth";
+import { postSignUp } from "../api/Post/auth";
 import { useState } from "react";
 import StepEmail from "../components/SignUp/StepEmail";
 import StepPassword from "../components/SignUp/StepPassword";
 import StepProfile from "../components/SignUp/StepProfile";
-import { uploadAvatar } from "../api/upload";
+import { uploadAvatar } from "../api/Post/upload";
 import LoginTitle from "../components/Titles/LoginTitle";
 import GoogleLoginButton from "../components/Buttons/GoogleLoginButton";
 import Divider from "../components/Divider";

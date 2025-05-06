@@ -43,6 +43,13 @@ const Navbar = () => {
               마이페이지
             </NavLink>
 
+            <NavLink
+              to={RoutePaths.SEARCH}
+              className="px-4 py-2 rounded-md text-sm font-medium bg-white text-black"
+            >
+              마이페이지
+            </NavLink>
+
             <button
               onClick={logout}
               className="px-4 py-2 rounded-md text-sm font-medium bg-red-500 text-white"

@@ -1,4 +1,4 @@
-import axiosInstance from "./axios-instance";
+import axiosInstance from "../axios-instance";
 
 export const uploadAvatar = async (file: File): Promise<string> => {
   const formData = new FormData();
