@@ -1,17 +1,37 @@
 import { NavLink } from "react-router-dom";
 import RoutePaths from "../../router/routePaths";
 import { useAuth } from "../../context/TokenContext/useAuth";
+import { SearchIcon } from "lucide-react";
 
-const Navbar = () => {
+type NavbarProps = {
+  onSidebarToggle: () => void;
+};
+
+const Navbar = ({ onSidebarToggle }: NavbarProps) => {
   const { logout, isLoggedIn } = useAuth();
 
   return (
-    <nav className="flex justify-between items-center px-6 py-4 bg-black shadow-md">
-      <NavLink to={RoutePaths.MAIN} className="text-cyan-600 font-bold text-xl">
-        제트의 LP판
-      </NavLink>
-
-      <div className="flex gap-3">
+    <nav className="flex justify-between items-center px-6 py-4 bg-black shadow-md z-50">
+      <div className="flex items-center gap-3">
+        {/* 사이드바 토글 버튼 */}
+        <button
+          id="sidebar-toggle-btn"
+          onClick={onSidebarToggle}
+          className="text-white p-2 "
+        >
+          ☰
+        </button>
+        <NavLink
+          to={RoutePaths.MAIN}
+          className="text-cyan-600 font-bold text-xl"
+        >
+          제트의 LP판
+        </NavLink>
+      </div>
+      <div className="flex gap-3 items-center">
+        <NavLink to={RoutePaths.SEARCH} className="text-white text-sm">
+          <SearchIcon />
+        </NavLink>
         {!isLoggedIn ? (
           <>
             <NavLink
@@ -36,19 +56,9 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <NavLink
-              to={RoutePaths.MYPAGE}
-              className="px-4 py-2 rounded-md text-sm font-medium bg-white text-black"
-            >
-              마이페이지
-            </NavLink>
-
-            <NavLink
-              to={RoutePaths.SEARCH}
-              className="px-4 py-2 rounded-md text-sm font-medium bg-white text-black"
-            >
-              마이페이지
-            </NavLink>
+            <div className="px-4 py-2 rounded-md text-sm font-medium text-white">
+              제트님, 반갑습니다.
+            </div>
 
             <button
               onClick={logout}
