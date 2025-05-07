@@ -7,4 +7,7 @@
   .custom-btn {
     @apply text-white bg-amber-600 px-2 rounded-2xl pb-1 h-7 text-sm;
   }
+  .account {
+    @apply flex flex-col items-center justify-center    m-auto px-2;
+  }
 }

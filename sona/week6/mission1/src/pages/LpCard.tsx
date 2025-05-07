@@ -16,7 +16,7 @@ export default function LpCard({ item }: LpProps) {
       />
       <div
         className="absolute inset-0  text-white bg-gradient-to-t from-black/70 to-transparent backdrop-blur-[1px]
-        flex  items-end p-4 gap-5"
+        flex  items-end p-4 gap-3"
       >
         <div className="">
           <h2 className="text-xs font-bold">{item.title}</h2>
@@ -24,7 +24,10 @@ export default function LpCard({ item }: LpProps) {
             17 ago mis ago
           </p>
         </div>
-        <div className="">{item.likes?.length || "0"}</div>
+        <div className="flex justify-center items-center gap-3">
+          <img className="size-[10px]" src="/hart.svg" alt="" />
+          <div className="">{item.likes?.length || "0"}</div>
+        </div>
       </div>
     </div>
   );

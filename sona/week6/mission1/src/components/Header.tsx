@@ -19,11 +19,10 @@ export default function Header() {
   if (headerMatch) {
     return (
       <>
-        <div>adsasd</div>
         <div className="py-4 flex w-full">
-          <p className="cursor-point " onClick={() => navigate(-1)}>
+          <button className="cursor-pointer" onClick={() => navigate(-1)}>
             {"<"}
-          </p>
+          </button>
           <h1 className="font-bold text-center w-full pr-3">{getTitle()}</h1>
         </div>
       </>
