@@ -1,9 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import useGetProfile from "../hooks/useGetProfile";
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const { logout, accessToken } = useAuth();
+
+  const { user } = useGetProfile();
+  console.log(user);
   return (
     <>
       <nav className="flex gap-2 justify-between py-3 px-4 border-b border-gray-500">
@@ -16,13 +22,27 @@ export default function NavBar() {
           />
           <Link to={"/"}>돌려돌려 돌림판</Link>
         </div>
-        <div className="flex text-[18px] font-bold gap-2">
-          <Link to={"/login"}>
-            <div className="hover:text-amber-500 pt-[2px] ">로그인</div>
-          </Link>
-          <Link to={"/signup"}>
-            <div className="hover:text-amber-500 pt-[2px] ">회원가입</div>
-          </Link>
+        <div className="flex text-[18px] font-bold gap-2 items-center">
+          {accessToken ? (
+            <>
+              <div>{user.data.name}님 반갑습니다</div>
+              <button
+                className="hover:text-amber-500 pt-[2px] "
+                onClick={logout}
+              >
+                로그아웃
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to={"/login"}>
+                <div className="hover:text-amber-500 pt-[2px] ">로그인</div>
+              </Link>
+              <Link to={"/signup"}>
+                <div className="hover:text-amber-500 pt-[2px] ">회원가입</div>
+              </Link>
+            </>
+          )}
         </div>
       </nav>
 
