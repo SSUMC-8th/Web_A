@@ -15,7 +15,6 @@ export default function useGetInfiniteLpList(
       getLpList({ cursor: pageParam, limit, search, order }),
     initialPageParam: 0,
     getNextPageParam: (lastPage: ResponseLpListDto) => {
-      console.log("📦 lastPage:", lastPage);
       return lastPage.data.hasNext ? lastPage.data.nextCursor : undefined;
     },
   });
