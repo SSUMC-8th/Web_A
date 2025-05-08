@@ -11,6 +11,5 @@ export default function useGetProfile() {
     select: (res) => res.data.data,
     enabled: !!accessToken,
   });
-  //   const user = data?.data;
   return { user };
 }

@@ -13,7 +13,7 @@ export default function NavBar() {
   //   setISTrue((item) => !item);
   // }
   const { user } = useGetProfile();
-  console.log(user);
+  // console.log(user);
   return (
     <>
       <nav className="flex gap-2 justify-between py-3 px-4 border-b border-gray-500">

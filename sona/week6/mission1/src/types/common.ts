@@ -7,14 +7,11 @@ export type CommenResponse<T> = {
   data: T;
 };
 
-export type CursorBasedResponse<T> = {
-  status: boolean;
-  statusCode: number;
-  message: string;
+export type CursorBasedResponse<T> = CommenResponse<{
   data: T;
-  nextCursor: string;
+  nextCursor: number | null;
   hasNext: boolean;
-};
+}>;
 
 //lp목록 조회 파라미터
 export type PageDto = {
