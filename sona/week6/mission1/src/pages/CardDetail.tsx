@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../apis/axios";
 import { useParams } from "react-router-dom";
 import useGetProfile from "../hooks/useGetProfile";
+import getTimePassed from "../utils/dateCalculate";
 
 export default function CardDetail() {
   const { id } = useParams();
@@ -17,11 +18,11 @@ export default function CardDetail() {
   console.log(data);
   return (
     <>
-      <main className="max-w-3xl bg-gray-700 p-7 ">
+      <main className="max-w-3xl bg-gray-700 p-7 mx-auto">
         <div>
           <div className=" flex items-center justify-between border-b-amber-50 border-b-2">
             <div className="font-bold text-2xl">{user.data.name}</div>
-            <p>날짜</p>
+            <p> {getTimePassed(new Date(data.createdAt))}</p>
           </div>
 
           <div>{data?.author?.name}</div>

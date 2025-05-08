@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Lp } from "../types/lp";
+import getTimePassed from "../utils/dateCalculate";
 
 interface LpProps {
   item: Lp;
@@ -11,7 +12,7 @@ export default function LpCard({ item }: LpProps) {
   return (
     <div className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer transition-transform duration-300 hover:scale-120">
       <img
-        src={item.thumbnail}
+        src={item?.thumbnail}
         alt=""
         className="w-full h-60 object-cover rounded-xl"
       />
@@ -23,7 +24,7 @@ export default function LpCard({ item }: LpProps) {
           <div className="">
             <h2 className="text-xs font-bold">{item.title}</h2>
             <p className="text-sm text-gray-300 leading-relaxed overflow-hidden mt-[1px] line-clamp-5">
-              17 ago mis ago
+              {getTimePassed(new Date(item.createdAt))}
             </p>
           </div>
           <div className="flex justify-center items-center gap-3">

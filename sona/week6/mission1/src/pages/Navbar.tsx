@@ -8,7 +8,7 @@ export default function NavBar() {
 
   // const [isTrue, setISTrue] = useState(false);
 
-  const { accessToken } = useAuth();
+  const { accessToken, logout } = useAuth();
   // if (accessToken) {
   //   setISTrue((item) => !item);
   // }
@@ -30,7 +30,10 @@ export default function NavBar() {
           {accessToken ? (
             <>
               <div>{user?.data.name}님 반갑습니다</div>
-              <button className="hover:text-amber-500 pt-[2px] ">
+              <button
+                className="hover:text-amber-500 pt-[2px] cursor-pointer"
+                onClick={logout}
+              >
                 로그아웃
               </button>
             </>
