@@ -3,12 +3,15 @@ import RoutePaths from "../../router/routePaths";
 import { useAuth } from "../../context/TokenContext/useAuth";
 import { SearchIcon } from "lucide-react";
 
+import { useGetMyInfo } from "../../hook/queries/User/useGetMyInfo";
+
 type NavbarProps = {
   onSidebarToggle: () => void;
 };
 
 const Navbar = ({ onSidebarToggle }: NavbarProps) => {
   const { logout, isLoggedIn } = useAuth();
+  const { data } = useGetMyInfo();
 
   return (
     <nav className="flex justify-between items-center px-6 py-4 bg-black shadow-md z-50">
@@ -25,7 +28,7 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
           to={RoutePaths.MAIN}
           className="text-cyan-600 font-bold text-xl"
         >
-          제트의 LP판
+          {`${data?.data.name}의 LP판`}
         </NavLink>
       </div>
       <div className="flex gap-3 items-center">
@@ -57,7 +60,7 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
         ) : (
           <>
             <div className="px-4 py-2 rounded-md text-sm font-medium text-white">
-              제트님, 반갑습니다.
+              {`${data?.data.name}님, 반갑습니다.`}
             </div>
 
             <button
