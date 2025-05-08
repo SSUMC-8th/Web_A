@@ -14,6 +14,7 @@ import Mypage from "../pages/Mypage";
 import { AuthProvider } from "../context/TokenContext/AuthProvider";
 import ProtectedLayout from "../layout/ProtectedLayout";
 import GoogleLoginRedirectPage from "../pages/GoogleLoginRedirectPage";
+import LpDetailPage from "../pages/LpDetailPage";
 
 // publicRoutes : 인증 없이 접근 가능한 경로
 const publicRoutes: RouteObject[] = [
@@ -52,6 +53,10 @@ const protectedRoutes: RouteObject[] = [
       {
         path: RoutePaths.MYPAGE,
         element: <Mypage />,
+      },
+      {
+        path: RoutePaths.DETAIL,
+        element: <LpDetailPage />,
       },
     ],
   },

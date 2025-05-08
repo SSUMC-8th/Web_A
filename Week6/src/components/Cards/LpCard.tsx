@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/TokenContext/useAuth";
+import RoutePaths from "../../router/routePaths";
 
 type LpCardProps = {
   id: number;
@@ -20,7 +21,7 @@ const LpCard = ({ id, thumbnail, title, updatedAt, likes }: LpCardProps) => {
       return;
     }
 
-    navigate(`/lp/${id}`);
+    navigate(RoutePaths.DETAIL.replace(":id", String(id)));
   };
 
   return (
