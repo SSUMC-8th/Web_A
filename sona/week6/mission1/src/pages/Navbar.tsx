@@ -13,7 +13,7 @@ export default function NavBar() {
   //   setISTrue((item) => !item);
   // }
   const { user } = useGetProfile();
-  // // console.log(user);
+  console.log(user);
   return (
     <>
       <nav className="flex gap-2 justify-between py-3 px-4 border-b border-gray-500">
@@ -29,7 +29,7 @@ export default function NavBar() {
         <div className="flex text-[18px] font-bold gap-2 items-center">
           {accessToken ? (
             <>
-              <div>{user?.data.name}님 반갑습니다</div>
+              <div>{user?.name}님 반갑습니다</div>
               <button
                 className="hover:text-amber-500 pt-[2px] cursor-pointer"
                 onClick={logout}
