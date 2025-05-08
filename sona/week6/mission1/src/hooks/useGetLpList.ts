@@ -3,21 +3,6 @@ import { QUERY_KEY } from "../constants/key";
 import { getLpList } from "../apis/lp";
 import { PageDto } from "../types/common";
 
-// export default function useGetLp({ cursor, search, order, limit }: pageDto) {
-//   return useQuery({
-//     queryKey: [QUERY_KEY.lps], //querykey상수화
-//     queryFn: () => {
-//       return axiosInstance.get(`/v1/lps`, {
-//         params: { cursor, search: search, order, limit },
-//       });
-//     },
-//     select: (res) => {
-//       return res.data.item;
-//     },
-//   });
-// }
-// useGetLpList.ts
-
 export default function useGetLpList({
   cursor,
   search,
@@ -25,7 +10,7 @@ export default function useGetLpList({
   limit,
 }: PageDto) {
   return useQuery({
-    queryKey: [QUERY_KEY.lps],
+    queryKey: [QUERY_KEY.lps, order], //순서 바뀔때 캐싱
     queryFn: () =>
       getLpList({
         cursor,
