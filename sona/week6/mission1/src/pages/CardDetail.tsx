@@ -42,7 +42,7 @@ export default function CardDetail() {
           </div>
           <p>{data?.content}</p>
         </div>
-        <ul className="mx-7 my-5 flex gap-3 flex-wrap">
+        <ul className="mx-7 my-5 flex gap-3 flex-wrap justify-center items-center">
           <li className="bg-gray-400 w-fit px-2 rounded-2xl">#sdas</li>
           <li className="bg-gray-400 w-fit px-2 rounded-2xl">#sdas</li>
           <li className="bg-gray-400 w-fit px-2 rounded-2xl">#sdas</li>
