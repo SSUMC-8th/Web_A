@@ -15,7 +15,7 @@ export default function CardDetail() {
     select: (res) => res.data.data,
   });
 
-  console.log(data);
+  //   console.log(data);
   return (
     <>
       <main className="max-w-3xl bg-gray-700 p-7 mx-auto">
@@ -33,7 +33,7 @@ export default function CardDetail() {
           <div className=" flex items-center justify-center">
             <div className="drop-shadow-[0_10px_15px_rgba(0,0,0,0.8)] bg-gray-600 my-6 p-7 relative">
               <img
-                className=" animate-[spin_8s_linear_infinite] size-64 object-cover rounded-full border-4 border-black "
+                className=" animate-[spin_8s_linear_infinite] size-64 object-cover  rounded-full border-4 border-black "
                 src={data?.thumbnail}
                 alt=""
               />
