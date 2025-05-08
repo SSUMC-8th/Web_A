@@ -1,6 +1,3 @@
-// types/lp.ts
-
-/* ── 공통 하위 타입 ─────────────────────── */
 export type Tag = { id: number; name: string };
 export type Like = { id: number; userId: number; lpId: number };
 export type Author = {
@@ -13,7 +10,6 @@ export type Author = {
     updatedAt: string;
 };
 
-/* ── 리스트용 항목 ─────────────────────── */
 export type LpItem = {
     id: number;
     title: string;
@@ -27,10 +23,9 @@ export type LpItem = {
     likes: Like[];
 };
 
-/* ── 리스트 API 응답 ────────────────────── */
 export type LpDataDto = {
     data: LpItem[];
-    nextCursor: number;
+    nextCursor: number | null;
     hasNext: boolean;
 };
 
@@ -41,7 +36,6 @@ export type ResponseLpDto = {
     data: LpDataDto;
 };
 
-/* ── 상세 보기 항목 + 응답 ──────────────── */
 export type LpDetailItem = LpItem & { author: Author };
 
 export type ResponseLpDetailDto = {
@@ -49,4 +43,28 @@ export type ResponseLpDetailDto = {
     statusCode: number;
     message: string;
     data: LpDetailItem;
+};
+
+export type CommentAuthor = Author;
+export type CommentItem = {
+    id: number;
+    content: string;
+    lpId: number;
+    authorId: number;
+    createdAt: string;
+    updatedAt: string;
+    author: CommentAuthor;
+};
+
+export type CommentDataDto = {
+    data: CommentItem[];
+    nextCursor: number | null;
+    hasNext: boolean;
+};
+
+export type ResponseCommentDto = {
+    status: boolean;
+    statusCode: number;
+    message: string;
+    data: CommentDataDto;
 };

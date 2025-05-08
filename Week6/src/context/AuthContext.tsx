@@ -1,11 +1,18 @@
-import { createContext, PropsWithChildren, useContext, useState } from 'react';
-import { RequestSigninDto } from '../types/auth';
-import { LOCAL_STORAGE_KEY } from '../constants/key';
-import { postLogout, postSignin } from '../apis/auth';
+import {
+    createContext,
+    PropsWithChildren,
+    useContext,
+    useEffect,
+    useState,
+} from 'react';
+import { RequestSigninDto, ResponseMyInfoDto } from '../types/auth';
+import { postLogout, postSignin, getMyInfo } from '../apis/auth';
+import { tokenStorage } from '../utils/tokenStorage';
 
 interface AuthContextType {
     accessToken: string | null;
     refreshToken: string | null;
+    myInfo: ResponseMyInfoDto | null;
     login: (signinData: RequestSigninDto) => Promise<void>;
     logout: () => Promise<void>;
 }
@@ -13,28 +20,28 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType>({
     accessToken: null,
     refreshToken: null,
+    myInfo: null,
     login: async () => {},
     logout: async () => {},
 });
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-    const {
-        getItem: getAccessTokenFromStorage,
-        setItem: setAccessTokenInStorage,
-        removeItem: removeAccessTokenFromStorage,
-    } = localStorage;
-    const {
-        getItem: getRefreshTokenFromStorage,
-        setItem: setRefreshTokenInStorage,
-        removeItem: removeRefreshTokenFromStorage,
-    } = useLocalStorage(LOCAL_STORAGE_KEY.refreshToken);
-
     const [accessToken, setAccessToken] = useState<string | null>(
-        getAccessTokenFromStorage(),
+        tokenStorage.getAccessToken(),
     );
     const [refreshToken, setRefreshToken] = useState<string | null>(
-        getRefreshTokenFromStorage(),
+        tokenStorage.getRefreshToken(),
     );
+    const [myInfo, setMyInfo] = useState<ResponseMyInfoDto | null>(null);
+
+    const loginWithToken = async () => {
+        try {
+            const userInfo = await getMyInfo();
+            setMyInfo(userInfo);
+        } catch (error) {
+            console.error('유저 정보 불러오기 실패', error);
+        }
+    };
 
     const login = async (signinData: RequestSigninDto) => {
         try {
@@ -44,16 +51,16 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
                 const newAccessToken = data.accessToken;
                 const newRefreshToken = data.refreshToken;
 
-                setAccessTokenInStorage(newAccessToken);
-                setRefreshTokenInStorage(newRefreshToken);
+                tokenStorage.setAccessToken(newAccessToken);
+                tokenStorage.setRefreshToken(newRefreshToken);
 
                 setAccessToken(newAccessToken);
                 setRefreshToken(newRefreshToken);
 
-                alert('ㅇㅋ');
+                await loginWithToken();
             }
-        } catch {
-            alert('ㄴㄴ');
+        } catch (error) {
+            console.error('로그인 실패', error);
         }
     };
 
@@ -61,21 +68,31 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         try {
             await postLogout();
 
-            removeAccessTokenFromStorage();
-            removeRefreshTokenFromStorage();
+            tokenStorage.clear();
 
             setAccessToken(null);
             setRefreshToken(null);
-
-            alert('ㄲㅈ');
-        } catch {
-            alert('ㄴㄴ');
+            setMyInfo(null);
+        } catch (error) {
+            console.error('로그아웃 실패', error);
         }
     };
 
+    useEffect(() => {
+        if (accessToken) {
+            loginWithToken();
+        }
+    }, [accessToken]);
+
     return (
         <AuthContext.Provider
-            value={{ accessToken, refreshToken, login, logout }}
+            value={{
+                accessToken,
+                refreshToken,
+                myInfo,
+                login,
+                logout,
+            }}
         >
             {children}
         </AuthContext.Provider>
@@ -85,7 +102,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context) {
-        throw new Error('없는데용');
+        throw new Error('ㄴㄴ');
     }
 
     return context;

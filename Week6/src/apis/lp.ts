@@ -1,16 +1,53 @@
-import { ResponseLpDto, ResponseLpDetailDto } from '../types/lp';
-import { axiosInstance } from './axios';
+import { API_COMMENTS, API_LPS } from '../constants/api';
+import { SortOrder } from '../constants/sort';
+import {
+    ResponseLpDto,
+    ResponseLpDetailDto,
+    ResponseCommentDto,
+} from '../types/lp';
+import { privateAxios, publicAxios } from './axiosInstance';
 
-/* 리스트 */
-export const getLpInfo = async (): Promise<ResponseLpDto> => {
-    const { data } = await axiosInstance.get('/v1/lps');
+interface GetLpInfoParams {
+    cursor?: number | null;
+    limit?: number;
+    order?: SortOrder.LATEST | SortOrder.OLDEST;
+}
+
+export const getLpInfo = async ({
+    cursor = null,
+    limit = 12,
+    order = SortOrder.LATEST,
+}: GetLpInfoParams): Promise<ResponseLpDto> => {
+    const { data } = await publicAxios.get(API_LPS.LIST, {
+        params: {
+            cursor,
+            limit,
+            order,
+        },
+    });
     return data;
 };
 
-/* 상세 */
 export const getLpDetail = async (
     lpId: number,
 ): Promise<ResponseLpDetailDto> => {
-    const { data } = await axiosInstance.get(`/v1/lps/${lpId}`);
+    const { data } = await publicAxios.get(API_LPS.DETAIL(lpId));
+    return data;
+};
+
+interface GetCommentsParms extends GetLpInfoParams {
+    lpId: number | string;
+}
+
+export const getComments = async ({
+    lpId,
+    cursor = null,
+    limit = 10,
+    order = SortOrder.LATEST,
+}: GetCommentsParms) => {
+    const { data } = await privateAxios.get<ResponseCommentDto>(
+        API_COMMENTS.LIST(lpId),
+        { params: { cursor, limit, order } },
+    );
     return data;
 };

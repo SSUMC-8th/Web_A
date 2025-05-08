@@ -3,12 +3,7 @@ const ROUTES = {
     LOGIN: '/login',
     SIGNUP: '/signup',
     MYPAGE: '/my',
-
-    MOVIE: {
-        ROOT: '/movies',
-        CATEGORY: (category: string) => `/movies/${category}`,
-        DETAIL: (id: number | string) => `/movies/detail/${id}`,
-    },
+    LP_DETAIL: (id: string | number = ':lpId') => `/lp/${id}`,
 };
 
 export default ROUTES;

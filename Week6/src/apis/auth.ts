@@ -1,3 +1,4 @@
+import { API_AUTH, API_USERS } from '../constants/api';
 import {
     RequestSigninDto,
     RequestSignupDto,
@@ -5,12 +6,12 @@ import {
     ResponseSigninDto,
     ResponseSignupDto,
 } from '../types/auth';
-import { axiosInstance } from './axios';
+import { privateAxios, publicAxios } from './axiosInstance';
 
 export const postSignup = async (
     body: RequestSignupDto,
 ): Promise<ResponseSignupDto> => {
-    const { data } = await axiosInstance.post('/v1/auth/signup', body);
+    const { data } = await publicAxios.post(API_AUTH.SIGN_UP, body);
 
     return data;
 };
@@ -18,19 +19,19 @@ export const postSignup = async (
 export const postSignin = async (
     body: RequestSigninDto,
 ): Promise<ResponseSigninDto> => {
-    const { data } = await axiosInstance.post('/v1/auth/signin', body);
+    const { data } = await publicAxios.post(API_AUTH.SIGN_IN, body);
 
     return data;
 };
 
 export const getMyInfo = async (): Promise<ResponseMyInfoDto> => {
-    const { data } = await axiosInstance.get('/v1/users/me');
+    const { data } = await privateAxios.get(API_USERS.GET_ME);
 
     return data;
 };
 
 export const postLogout = async () => {
-    const { data } = await axiosInstance.post('/v1/auth/signout');
+    const { data } = await privateAxios.post(API_AUTH.SIGN_OUT);
 
     return data;
 };

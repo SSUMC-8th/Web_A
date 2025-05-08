@@ -25,7 +25,6 @@ function SignupPage() {
             name: '',
         },
         resolver: zodResolver(signupSchema),
-        mode: 'onBlur',
     });
 
     const { email, password, passwordCheck, name } = watch();

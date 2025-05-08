@@ -1,29 +1,14 @@
-import { useEffect, useState } from 'react';
-import { getMyInfo } from '../apis/auth';
-import { ResponseMyInfoDto } from '../types/auth';
 import { useAuth } from '../context/AuthContext';
+import ROUTES from '../constants/routes';
+import { useNavigate } from 'react-router-dom';
 
 function Mypage() {
-    const { logout } = useAuth();
-
-    const [myInfo, setMyInfo] = useState<ResponseMyInfoDto | null>(null);
-
-    useEffect(() => {
-        const getData = async () => {
-            try {
-                const response = await getMyInfo();
-                setMyInfo(response);
-                console.log(response);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        getData();
-    }, []);
+    const { myInfo, logout } = useAuth();
+    const navigate = useNavigate();
 
     const handleLogout = async () => {
         await logout();
+        navigate(ROUTES.HOME);
     };
 
     return (
