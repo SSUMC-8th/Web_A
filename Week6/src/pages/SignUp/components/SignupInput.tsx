@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { useState } from 'react';
+import { IMAGE_PATH } from '../../../constants/images';
 
 interface SignupInputProps {
     field: {
@@ -51,7 +52,11 @@ function SignupInput({
                 />
                 {type === 'password' && (
                     <img
-                        src={showPassword ? '/eyes.png' : '/closed-eyes.png'}
+                        src={
+                            showPassword
+                                ? IMAGE_PATH.EYE
+                                : IMAGE_PATH.CLOSED_EYE
+                        }
                         alt="eye"
                         onClick={togglePasswordVisibility}
                         className="absolute -translate-y-1/2 cursor-pointer top-1/2 right-2 h-3/4"

@@ -11,21 +11,27 @@ const CommentSkeleton = () => <BulletList />;
 function Comments({ lpId }: { lpId: number }) {
     const [order, setOrder] = useState<SortOrder>(SortOrder.LATEST);
 
-    const { data, isError, fetchNextPage, hasNextPage, isFetchingNextPage } =
-        useInfiniteQuery<ResponseCommentDto, Error>({
-            queryKey: ['comments', lpId, order],
-            queryFn: ({ pageParam = null }) =>
-                getComments({
-                    lpId,
-                    cursor: pageParam as number,
-                    limit: 10,
-                    order,
-                }),
-            initialPageParam: null,
-            getNextPageParam: (last) =>
-                last.data.hasNext ? last.data.nextCursor : undefined,
-            staleTime: 1000 * 60,
-        });
+    const {
+        data,
+        isPending,
+        isError,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+    } = useInfiniteQuery<ResponseCommentDto, Error>({
+        queryKey: ['comments', lpId, order],
+        queryFn: ({ pageParam = null }) =>
+            getComments({
+                lpId,
+                cursor: pageParam as number,
+                limit: 10,
+                order,
+            }),
+        initialPageParam: null,
+        getNextPageParam: (last) =>
+            last.data.hasNext ? last.data.nextCursor : undefined,
+        staleTime: 1000 * 60,
+    });
 
     const sentinelRef = useRef<HTMLDivElement | null>(null);
 
@@ -87,7 +93,7 @@ function Comments({ lpId }: { lpId: number }) {
                 </div>
             ))}
 
-            {isFetchingNextPage &&
+            {(isFetchingNextPage || isPending) &&
                 Array.from({ length: 2 }).map((_, i) => (
                     <CommentSkeleton key={i} />
                 ))}

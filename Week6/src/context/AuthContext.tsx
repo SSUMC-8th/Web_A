@@ -73,6 +73,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
             setAccessToken(null);
             setRefreshToken(null);
             setMyInfo(null);
+
+            alert('로그아웃되었습니다.');
         } catch (error) {
             console.error('로그아웃 실패', error);
         }

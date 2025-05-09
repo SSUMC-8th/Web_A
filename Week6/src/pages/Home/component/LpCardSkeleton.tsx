@@ -9,6 +9,7 @@ function LpCardSkeleton() {
                 backgroundColor="#e0e0e0"
                 foregroundColor="#bdbdbd"
                 className="w-full h-full"
+                //비율무시
                 preserveAspectRatio="none"
             >
                 <rect x="0" y="0" rx="8" ry="8" width="300" height="300" />

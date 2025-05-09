@@ -3,4 +3,6 @@ export const IMAGE_PATH = {
     PROFILE: '/my.png',
     SEARCH_ICON: '/search.png',
     LOGO: '/Logo.png',
+    EYE: '/eyes.png',
+    CLOSED_EYE: '/closed-eyes.png',
 } as const;
