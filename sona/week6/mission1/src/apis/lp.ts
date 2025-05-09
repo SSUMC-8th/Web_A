@@ -1,4 +1,5 @@
-import { PageDto } from "../types/common";
+import { ResponseCommentListDto } from "../types/comment";
+import { CommentPageDto, PageDto } from "../types/common";
 import { ResponseLpListDto } from "../types/lp";
 import axiosInstance from "./axios";
 
@@ -8,6 +9,18 @@ export const getLpList = async (
 ): Promise<ResponseLpListDto> => {
   const { data } = await axiosInstance.get("/v1/lps", {
     params: pageDto,
+  });
+  return data;
+};
+
+// //getComment.ts
+// getCommentList.ts
+export const getCommentList = async (
+  params: CommentPageDto
+): Promise<ResponseCommentListDto> => {
+  const { lpId, ...queryParams } = params;
+  const { data } = await axiosInstance.get(`/v1/lps/${lpId}/comments`, {
+    params: queryParams,
   });
   return data;
 };

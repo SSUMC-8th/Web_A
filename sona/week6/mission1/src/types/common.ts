@@ -20,3 +20,11 @@ export type PageDto = {
   search?: string;
   order?: PAGENATION_ORDER;
 };
+
+//comment 목록 조회 파라미터
+export type CommentPageDto = {
+  lpId: number;
+  cursor?: number;
+  limit?: number;
+  order?: PAGENATION_ORDER;
+};

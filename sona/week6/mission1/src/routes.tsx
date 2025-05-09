@@ -8,6 +8,7 @@ import GoogleLoginRedirectPage from "./pages/GoogleLoginRedirectPage";
 import Layout from "./layout/HomeLayout";
 import Home from "./pages/Home";
 import CardDetail from "./pages/CardDetail";
+import Comment from "./pages/Comment";
 //로그인 필요없는 페이지
 const publicRoutes: RouteObject[] = [
   {
@@ -42,6 +43,10 @@ const protectedRoutes: RouteObject[] = [
       {
         path: "lp/:id",
         element: <CardDetail />,
+      },
+      {
+        path: "lp/:id/comment",
+        element: <Comment />,
       },
     ],
   },
