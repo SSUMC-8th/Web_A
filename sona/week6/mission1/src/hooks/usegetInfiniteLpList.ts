@@ -10,7 +10,7 @@ export default function useGetInfiniteLpList(
   order: PAGENATION_ORDER
 ) {
   return useInfiniteQuery<ResponseLpListDto>({
-    queryKey: [QUERY_KEY.lps, search, order], // ✅ 식별 키
+    queryKey: [QUERY_KEY.lps, search, order],
     queryFn: ({ pageParam }) =>
       getLpList({ cursor: pageParam, limit, search, order }),
     initialPageParam: 0,

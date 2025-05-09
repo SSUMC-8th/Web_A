@@ -3,6 +3,7 @@ import axiosInstance from "../apis/axios";
 import { useParams } from "react-router-dom";
 import useGetProfile from "../hooks/useGetProfile";
 import getTimePassed from "../utils/dateCalculate";
+import { QUERY_KEY } from "../constants/key";
 
 export default function CardDetail() {
   const { id } = useParams();
@@ -10,7 +11,7 @@ export default function CardDetail() {
   const { user } = useGetProfile();
 
   const { data } = useQuery({
-    queryKey: ["LpDetail"],
+    queryKey: [QUERY_KEY.lpDetail],
     queryFn: () => axiosInstance.get(`v1/lps/${id}`),
     select: (res) => res.data.data,
   });
