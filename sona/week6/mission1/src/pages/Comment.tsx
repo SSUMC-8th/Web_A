@@ -5,6 +5,7 @@ import CommentItem from "./CommentItem";
 import useGetInfiniteCommentList from "../hooks/usegetInfiniteCommentList";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
+import CommentSkeleton from "./CommentSkeleton";
 
 type FormFields = {
   comment: string;
@@ -14,14 +15,8 @@ export default function Comment() {
   const { id } = useParams();
   const lpId = Number(id);
   // const { data: comment, isLoading, isError } = useGetCommentList({ lpId });
-  const {
-    data,
-    isLoading,
-    isError,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-  } = useGetInfiniteCommentList(lpId, "", 10, "desc"); // limit 10개씩
+  const { data, isLoading, isError, hasNextPage, fetchNextPage, isFetching } =
+    useGetInfiniteCommentList(lpId, "", 10, "desc"); // limit 10개씩
 
   // console.log(data);
   const {
@@ -39,10 +34,10 @@ export default function Comment() {
   console.log(data);
   useEffect(() => {
     // console.log("inView:", inView, "hasNext:", hasNextPage);
-    if (inView && hasNextPage && !isFetchingNextPage) {
+    if (inView && hasNextPage && !isFetching) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+  }, [inView, hasNextPage, isFetching, fetchNextPage]);
 
   if (isLoading) return <p>로딩 중...</p>;
   if (isError) return <p>에러가 발생했습니다.</p>;
@@ -87,9 +82,10 @@ export default function Comment() {
         {/* 무한스크롤 감지 div */}
         <div ref={ref} className="h-10" />
 
-        {isFetchingNextPage && (
-          <p className="text-sm text-gray-400">댓글 더 불러오는 중...</p>
-        )}
+        {isFetching &&
+          Array.from({ length: 4 }).map((_, i) => (
+            <CommentSkeleton key={`${i}`} />
+          ))}
       </div>
     </section>
   );
