@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import useGetProfile from "../hooks/useGetProfile";
 
 export default function NavBar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); //여닫이
 
   // const [isTrue, setISTrue] = useState(false);
 
