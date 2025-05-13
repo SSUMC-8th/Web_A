@@ -31,7 +31,7 @@ export default function Comment() {
 
   const { ref, inView } = useInView({ threshold: 0 });
 
-  console.log(data);
+  // console.log(data);
   useEffect(() => {
     // console.log("inView:", inView, "hasNext:", hasNextPage);
     if (inView && hasNextPage && !isFetching) {

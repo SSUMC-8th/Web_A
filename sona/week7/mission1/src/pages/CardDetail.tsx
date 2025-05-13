@@ -17,7 +17,7 @@ export default function CardDetail() {
     select: (res) => res.data.data,
   });
 
-  //   console.log(data);
+  console.log(data);
   return (
     <>
       <main className="max-w-3xl bg-gray-700 p-7 mx-auto">
