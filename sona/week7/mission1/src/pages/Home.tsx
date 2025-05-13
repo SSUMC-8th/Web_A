@@ -6,13 +6,25 @@ import { ResponseLpListDto } from "../types/lp";
 import LpCard from "./LpCard";
 import LpCardSkeleton from "./LpCardSkeleton";
 import InputField from "../components/InputField";
+import { TagItem } from "./TagItem";
 
 export default function Home() {
   const [sortOrder, setSortOrder] = useState<PAGENATION_ORDER>(
     PAGENATION_ORDER.desc
   );
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); //modal
+
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagInputValue, setTagInputValue] = useState("");
+
+  const AddTag = () => {
+    const tagNode = tagInputValue.trim();
+    if (tagNode) {
+      setTags([...tags, tagNode]);
+    }
+    setTagInputValue("");
+  };
 
   const { data, isFetching, isPending, isError, hasNextPage, fetchNextPage } =
     useGetInfiniteLpList(5, "", sortOrder);
@@ -26,8 +38,6 @@ export default function Home() {
       fetchNextPage();
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  // const AddTag = () => {};
 
   if (isPending) return <div className="mt-[20px]">로딩 중...</div>;
   if (isError) return <div className="mt-[20px] text-red-500">에러 발생</div>;
@@ -90,8 +100,8 @@ export default function Home() {
             className="fixed inset-0 bg-black/50 z-5 "
             onClick={() => setIsModalOpen(false)}
           />
-          <div className=" flex items-center justify-center mx-auto top-70 bg-gray-600 fixed  center max-w-md z-10 rounded-2xl  wrap">
-            <div className="px-5 w-full text-right">
+          <div className=" flex items-center justify-center mx-auto top-70 bg-gray-600 fixed  center w-full max-w-md z-10 rounded-2xl flex-wrap">
+            <div className="px-5 w-full ">
               <button
                 className="font-bold mt-5 cursor-pointer"
                 onClick={() => setIsModalOpen(false)}
@@ -102,19 +112,30 @@ export default function Home() {
               <InputField placeholder="LP Name" className="" />
               <InputField placeholder="LP Content" className="" />
               <div className="flex items-center justify-center  gap-2 mb-9">
-                <InputField placeholder="LP Tag" className="mb-0" />
+                <InputField
+                  placeholder="LP Tag"
+                  className="mb-0"
+                  onChange={(e) => setTagInputValue(e.target.value)}
+                  value={tagInputValue}
+                />
                 <button
                   className="bg-gray-400 px-3 py-1.5 rounded-sm"
-                  // onClick={}
+                  onClick={AddTag}
                 >
                   Add
                 </button>
               </div>
-
-              <button
-                className="w-full bg-gray-400 py-2 rounded-sm mb-10"
-                // onChange={e}
-              >
+              {/* 태그출력 */}
+              <div className="flex gap-2 flex-wrap w-full shrink-0">
+                {tags.map((item, i) => (
+                  <TagItem
+                    key={i}
+                    tag={item}
+                    onRemove={() => setTags(tags.filter((t) => t !== item))}
+                  />
+                ))}
+              </div>
+              <button className="w-full bg-gray-400 py-2 rounded-sm mb-10">
                 Add LP
               </button>
             </div>
