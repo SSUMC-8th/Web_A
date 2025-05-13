@@ -40,6 +40,7 @@ function Lp() {
                 <p className="mt-1 text-sm text-center text-gray-500">
                     {new Date(lp.createdAt).toLocaleDateString()}
                 </p>
+                <p>{lpId}</p>
 
                 <p className="mt-6 text-base leading-7 text-gray-700 whitespace-pre-line">
                     {lp.content}

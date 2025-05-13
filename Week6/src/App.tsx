@@ -6,7 +6,7 @@ import {
 import HomePage from './pages/Home/HomePage';
 import Layout from './layout/Layout';
 import SignupPage from './pages/SignUp/SignupPage';
-import Mypage from './pages/Mypage';
+import Mypage from './pages/Mypage/Mypage';
 import LoginPage from './pages/Login/LoginPage';
 import ProtectedLayout from './layout/ProtectedLayout';
 import GoogleLoginRedirectPage from './pages/Login/GoogleLoginRedirectPage';

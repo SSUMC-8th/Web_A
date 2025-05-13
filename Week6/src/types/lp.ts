@@ -68,3 +68,29 @@ export type ResponseCommentDto = {
     message: string;
     data: CommentDataDto;
 };
+
+export type CreateLpDto = {
+    title: string;
+    content: string;
+    thumbnail: string;
+    tags: string[]; // 태그는 문자열 배열로 전달됨
+    published?: boolean;
+};
+
+export type CreatedLpItem = {
+    id: number;
+    title: string;
+    content: string;
+    thumbnail: string;
+    published: boolean;
+    authorId: number;
+    createdAt: string;
+    updatedAt: string;
+};
+
+export type ResponseCreateLpDto = {
+    status: boolean;
+    message: string;
+    statusCode: number;
+    data: CreatedLpItem;
+};

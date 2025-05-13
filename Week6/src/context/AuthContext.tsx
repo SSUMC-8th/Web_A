@@ -8,6 +8,7 @@ import {
 import { RequestSigninDto, ResponseMyInfoDto } from '../types/auth';
 import { postLogout, postSignin, getMyInfo } from '../apis/auth';
 import { tokenStorage } from '../utils/tokenStorage';
+import ROUTES from '../constants/routes';
 
 interface AuthContextType {
     accessToken: string | null;
@@ -58,9 +59,13 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
                 setRefreshToken(newRefreshToken);
 
                 await loginWithToken();
+
+                alert('로그인성공');
+                window.location.replace(ROUTES.HOME);
             }
         } catch (error) {
-            console.error('로그인 실패', error);
+            alert('로그인 실패');
+            console.error(error);
         }
     };
 
@@ -76,7 +81,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
             alert('로그아웃되었습니다.');
         } catch (error) {
-            console.error('로그아웃 실패', error);
+            alert('실패');
+            console.error(error);
         }
     };
 

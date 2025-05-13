@@ -1,17 +1,24 @@
-import { useAuth } from '../context/AuthContext';
-import LogoutButton from '../components/LogoutButton';
-import { IMAGE_PATH } from '../constants/images';
+import { useAuth } from '../../context/AuthContext';
+import LogoutButton from '../../components/LogoutButton';
+import { IMAGE_PATH } from '../../constants/images';
+import LpCreateModal from './components/LpCreateModal';
+import { useState } from 'react';
 
 function Mypage() {
     const { myInfo } = useAuth();
     const user = myInfo?.data;
+    const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+
+    const toggleModal = () => {
+        setIsOpenModal((prev) => !prev);
+    };
 
     return (
         <main className="max-w-xl p-6 mx-auto">
             <h1 className="mb-6 text-2xl font-bold text-center">마이페이지</h1>
 
-            <div className="p-6 space-y-4 bg-white shadow-md rounded-2xl">
-                <div className="flex items-center space-x-4">
+            <div className="p-6 bg-white shadow-md rounded-2xl">
+                <div className="flex items-center gap-4">
                     <img
                         src={user?.avatar ?? IMAGE_PATH.PROFILE}
                         alt="사용자 아바타"
@@ -44,6 +51,9 @@ function Mypage() {
                 <div className="flex justify-end pt-4">
                     <LogoutButton />
                 </div>
+
+                <button onClick={toggleModal}>+</button>
+                {isOpenModal && <LpCreateModal setIsOpen={setIsOpenModal} />}
             </div>
         </main>
     );

@@ -4,6 +4,7 @@ import {
     ResponseLpDto,
     ResponseLpDetailDto,
     ResponseCommentDto,
+    CreateLpDto,
 } from '../types/lp';
 import { privateAxios, publicAxios } from './axiosInstance';
 
@@ -25,6 +26,7 @@ export const getLpInfo = async ({
             order,
         },
     });
+    console.log(data);
     return data;
 };
 
@@ -36,7 +38,7 @@ export const getLpDetail = async (
 };
 
 interface GetCommentsParms extends GetLpInfoParams {
-    lpId: number | string;
+    lpId: number;
 }
 
 export const getComments = async ({
@@ -49,5 +51,23 @@ export const getComments = async ({
         API_COMMENTS.LIST(lpId),
         { params: { cursor, limit, order } },
     );
+    return data;
+};
+
+export const postLp = async ({
+    title,
+    content,
+    thumbnail,
+    tags,
+    published = true,
+}: CreateLpDto) => {
+    const { data } = await privateAxios.post(API_LPS.CREATE, {
+        title,
+        content,
+        thumbnail,
+        tags,
+        published,
+    });
+
     return data;
 };
