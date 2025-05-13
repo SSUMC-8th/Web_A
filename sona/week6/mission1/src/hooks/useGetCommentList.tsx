@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEY } from "../constants/key";
-import { getCommentList } from "../apis/lp";
 import { CommentPageDto } from "../types/common";
+import { getCommentList } from "../apis/comment";
 
 export default function useGetCommentList(params: CommentPageDto) {
   const { lpId } = params;

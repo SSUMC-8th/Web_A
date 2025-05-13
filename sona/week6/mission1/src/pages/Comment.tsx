@@ -1,8 +1,10 @@
 import { useForm } from "react-hook-form";
 import InputField from "../components/InputField";
 import { useParams } from "react-router-dom";
-import useGetCommentList from "../hooks/useGetCommentList";
 import CommentItem from "./CommentItem";
+import useGetInfiniteCommentList from "../hooks/usegetInfiniteCommentList";
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
 
 type FormFields = {
   comment: string;
@@ -11,9 +13,17 @@ type FormFields = {
 export default function Comment() {
   const { id } = useParams();
   const lpId = Number(id);
-  const { data: comment, isLoading, isError } = useGetCommentList({ lpId });
+  // const { data: comment, isLoading, isError } = useGetCommentList({ lpId });
+  const {
+    data,
+    isLoading,
+    isError,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useGetInfiniteCommentList(lpId, "", 10, "desc"); // limit 10개씩
 
-  console.log(comment);
+  // console.log(data);
   const {
     formState: { errors },
     register,
@@ -24,12 +34,26 @@ export default function Comment() {
     },
   });
 
+  const { ref, inView } = useInView({ threshold: 0 });
+
+  console.log(data);
+  useEffect(() => {
+    // console.log("inView:", inView, "hasNext:", hasNextPage);
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
   if (isLoading) return <p>로딩 중...</p>;
   if (isError) return <p>에러가 발생했습니다.</p>;
+
+  const allComments = data?.pages.flatMap((page) => page.data.data) ?? [];
 
   return (
     <section>
       <p className="mb-3">댓글</p>
+
+      {/* 입력창 */}
       <div className="flex items-center gap-2 mb-4">
         <InputField
           type="text"
@@ -41,7 +65,7 @@ export default function Comment() {
               required: "댓글은 필수입력입니다",
               minLength: {
                 value: 2,
-                message: "댓글은 최소2글자 이상이어야 합니다.",
+                message: "댓글은 최소 2글자 이상이어야 합니다.",
               },
             }),
           }}
@@ -54,10 +78,18 @@ export default function Comment() {
         </button>
       </div>
 
-      <div>
-        {comment?.data.map((item) => (
+      {/* 댓글 목록 */}
+      <div className="space-y-4">
+        {allComments.map((item) => (
           <CommentItem key={item.id} comment={item} />
         ))}
+
+        {/* 무한스크롤 감지 div */}
+        <div ref={ref} className="h-10" />
+
+        {isFetchingNextPage && (
+          <p className="text-sm text-gray-400">댓글 더 불러오는 중...</p>
+        )}
       </div>
     </section>
   );

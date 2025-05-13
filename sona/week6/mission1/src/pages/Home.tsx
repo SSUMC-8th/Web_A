@@ -14,6 +14,8 @@ export default function Home() {
   const { data, isFetching, isPending, isError, hasNextPage, fetchNextPage } =
     useGetInfiniteLpList(5, "", sortOrder);
 
+  // console.log(data);
+
   const { ref, inView } = useInView({ threshold: 0 });
 
   useEffect(() => {
