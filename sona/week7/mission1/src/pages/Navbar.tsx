@@ -8,15 +8,13 @@ import axiosInstance from "../apis/axios";
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false); //여닫이
 
-  // const [isTrue, setISTrue] = useState(false);
-
   const navigate = useNavigate();
   const { accessToken, logout } = useAuth();
-  // if (accessToken) {
-  //   setISTrue((item) => !item);
-  // }
+
   const { user } = useGetProfile();
   // console.log(user);
+
+  const [isDeleteUser, setDeleteUser] = useState(false);
 
   const deleteUser = useMutation({
     mutationFn: () => {
@@ -24,6 +22,7 @@ export default function NavBar() {
     },
     onSuccess: () => {
       alert("탈퇴 되었습니다");
+      // logout(); //보류...
       navigate("/");
     },
     onError: (err) => {
@@ -104,14 +103,46 @@ export default function NavBar() {
           </li>
           <li className="flex  justify-center">
             <button
-              className="bottom-10 absolute px-4 py-2 bg-gray-800 rounded-2xl text-sm"
-              onClick={() => deleteUser.mutate()}
+              className="bottom-10 absolute px-4 py-2 bg-gray-800 rounded-2xl text-sm cursor-pointer"
+              onClick={() => setDeleteUser(true)} //모달 엶
             >
               탈퇴하기
             </button>
           </li>
         </ul>
       </div>
+      {isDeleteUser && accessToken && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex justify-center items-center">
+          <div className="bg-[#2e2f39] text-white px-8 py-6 rounded-xl text-center relative">
+            <button
+              className="absolute top-2 right-3 text-xl "
+              onClick={() => setDeleteUser(false)}
+            >
+              x
+            </button>
+            <p className="mb-6 text-lg font-medium mt-5">
+              정말 탈퇴하시겠습니까?
+            </p>
+            <div className="flex gap-4 justify-center">
+              <button
+                className="bg-gray-300 text-black px-5 py-1.5 rounded-md"
+                onClick={() => {
+                  deleteUser.mutate();
+                  setDeleteUser(false); //삭제
+                }}
+              >
+                예
+              </button>
+              <button
+                className="bg-amber-700 text-white px-5 py-1.5 rounded-md"
+                onClick={() => setDeleteUser(false)}
+              >
+                아니요
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

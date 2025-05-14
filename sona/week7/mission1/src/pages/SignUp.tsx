@@ -4,6 +4,7 @@ import { z } from "zod";
 import Header from "../components/Header";
 import InputField from "../components/InputField";
 import { postSignup } from "../apis/auth";
+import { useNavigate } from "react-router-dom";
 
 const schema = z
   .object({
@@ -45,11 +46,13 @@ export default function SignUp() {
     resolver: zodResolver(schema), //스키마 위반하면 error
     mode: "onBlur",
   });
-
+  const navigate = useNavigate();
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     const { passwordCheck, ...rest } = data;
     const response = await postSignup(rest);
     console.log(response);
+    alert("회원가입에 성공하셨습니다");
+    navigate("/");
     console.log("응");
   };
 
