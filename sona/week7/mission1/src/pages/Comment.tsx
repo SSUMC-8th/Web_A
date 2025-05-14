@@ -51,9 +51,10 @@ export default function Comment() {
 
   return (
     <section>
-      <p className="mb-3">댓글</p>
-
-      <SortComponent sortOrder={sortOrder} setSortOrder={setSortOrder} />
+      <div className="flex items-center">
+        <p className="mb-3 shrink-0">댓글</p>
+        <SortComponent sortOrder={sortOrder} setSortOrder={setSortOrder} />
+      </div>
       {/* 입력창 */}
       <div className="flex items-center gap-2 mb-4">
         <InputField
@@ -71,7 +72,7 @@ export default function Comment() {
             }),
           }}
         />
-        <button className="bg-gray-400 rounded-xl px-2 shrink-0 py-2">
+        <button className="bg-gray-400 rounded-xl px-3 shrink-0 py-2">
           작성
         </button>
       </div>

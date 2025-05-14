@@ -12,7 +12,7 @@ export default function CardDetail() {
   const { user } = useGetProfile();
 
   const { data } = useQuery({
-    queryKey: [QUERY_KEY.lpDetail],
+    queryKey: [QUERY_KEY.lpDetail, id],
     queryFn: () => axiosInstance.get(`v1/lps/${id}`),
     select: (res) => res.data.data,
   });
@@ -45,7 +45,7 @@ export default function CardDetail() {
           <p>{data?.content}</p>
         </div>
         <ul className="mx-7 my-5 flex gap-3 flex-wrap justify-center items-center">
-          {data.tags?.map((tag) => {
+          {data?.tags?.map((tag) => {
             return (
               <li key={tag.id} className="bg-gray-400 w-fit px-2 rounded-2xl">
                 #{tag.name}
