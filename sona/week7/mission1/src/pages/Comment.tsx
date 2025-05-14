@@ -4,19 +4,24 @@ import { useParams } from "react-router-dom";
 import CommentItem from "./CommentItem";
 import useGetInfiniteCommentList from "../hooks/usegetInfiniteCommentList";
 import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CommentSkeleton from "./CommentSkeleton";
+import { PAGENATION_ORDER } from "../enums/common";
+import SortComponent from "./SortComponent";
 
 type FormFields = {
   comment: string;
 };
 
 export default function Comment() {
+  const [sortOrder, setSortOrder] = useState<PAGENATION_ORDER>(
+    PAGENATION_ORDER.desc
+  );
   const { id } = useParams();
   const lpId = Number(id);
   // const { data: comment, isLoading, isError } = useGetCommentList({ lpId });
   const { data, isLoading, isError, hasNextPage, fetchNextPage, isFetching } =
-    useGetInfiniteCommentList(lpId, "", 10, "desc"); // limit 10개씩
+    useGetInfiniteCommentList(lpId, "", 10, sortOrder); // limit 10개씩
 
   // console.log(data);
   const {
@@ -48,6 +53,7 @@ export default function Comment() {
     <section>
       <p className="mb-3">댓글</p>
 
+      <SortComponent sortOrder={sortOrder} setSortOrder={setSortOrder} />
       {/* 입력창 */}
       <div className="flex items-center gap-2 mb-4">
         <InputField
@@ -65,10 +71,7 @@ export default function Comment() {
             }),
           }}
         />
-        <button
-          className="bg-gray-400 rounded-xl px-2 shrink-0 py-2"
-          // onClick={handleSubmit(onSubmit)}
-        >
+        <button className="bg-gray-400 rounded-xl px-2 shrink-0 py-2">
           작성
         </button>
       </div>

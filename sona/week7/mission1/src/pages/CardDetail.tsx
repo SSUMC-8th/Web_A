@@ -45,17 +45,13 @@ export default function CardDetail() {
           <p>{data?.content}</p>
         </div>
         <ul className="mx-7 my-5 flex gap-3 flex-wrap justify-center items-center">
-          <li className="bg-gray-400 w-fit px-2 rounded-2xl">#sdas</li>
-          <li className="bg-gray-400 w-fit px-2 rounded-2xl">#sdas</li>
-          <li className="bg-gray-400 w-fit px-2 rounded-2xl">#sdas</li>
-          <li className="bg-gray-400 w-fit px-2 rounded-2xl">#sdas</li>
-          <li className="bg-gray-400 w-fit px-2 rounded-2xl">#sdas</li>
-          <li className="bg-gray-400 w-fit px-2 rounded-2xl">#sdas</li>
-          <li className="bg-gray-400 w-fit px-2 rounded-2xl">#sdas</li>
-          <li className="bg-gray-400 w-fit px-2 rounded-2xl">#sdas</li>
-          {/* {data.tags?.map((tag) => {
-            return <li key={tag.id}>#{tag.name}</li>;
-          })} */}
+          {data.tags?.map((tag) => {
+            return (
+              <li key={tag.id} className="bg-gray-400 w-fit px-2 rounded-2xl">
+                #{tag.name}
+              </li>
+            );
+          })}
         </ul>
         <div className="flex justify-center gap-3 items-center">
           <img className="size-7" src="/detailHart.svg" alt="" />

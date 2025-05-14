@@ -8,6 +8,7 @@ import LpCardSkeleton from "./LpCardSkeleton";
 // import InputField from "../components/InputField";
 // import { TagItem } from "./TagItem";
 import LpModal from "./LpModal";
+import SortComponent from "./SortComponent";
 
 export default function Home() {
   const [sortOrder, setSortOrder] = useState<PAGENATION_ORDER>(
@@ -41,24 +42,7 @@ export default function Home() {
   return (
     <>
       <div className="flex flex-col min-h-screen w-full">
-        <div className="w-full flex justify-end px-4  py-2 text-sm">
-          <button
-            onClick={() => setSortOrder(PAGENATION_ORDER.asc)}
-            className={
-              sortOrder === PAGENATION_ORDER.asc ? "clickBtn" : "noneClickBtn"
-            }
-          >
-            오래된순
-          </button>
-          <button
-            onClick={() => setSortOrder(PAGENATION_ORDER.desc)}
-            className={
-              sortOrder === PAGENATION_ORDER.desc ? "clickBtn" : "noneClickBtn"
-            }
-          >
-            최신순
-          </button>
-        </div>
+        <SortComponent sortOrder={sortOrder} setSortOrder={setSortOrder} />
 
         <div className="px-15 py-5 min-h-[400px] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
           {allLps.map((item) => (
