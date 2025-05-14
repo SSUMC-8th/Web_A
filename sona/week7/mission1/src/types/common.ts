@@ -1,3 +1,4 @@
+import { MutationMeta } from "@tanstack/react-query";
 import { PAGENATION_ORDER } from "../enums/common";
 
 export type CommenResponse<T> = {
@@ -27,4 +28,10 @@ export type CommentPageDto = {
   cursor?: number;
   limit?: number;
   order?: PAGENATION_ORDER;
+};
+
+//lp삭제 파라미터
+export type LpDeleteDto = {
+  lpId: number;
+  commentId: number;
 };
