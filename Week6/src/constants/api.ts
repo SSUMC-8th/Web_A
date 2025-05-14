@@ -29,9 +29,9 @@ export const API_LPS = {
 export const API_COMMENTS = {
     LIST: (lpId: number) => `/v1/lps/${lpId}/comments`,
     CREATE: (lpId: number) => `/v1/lps/${lpId}/comments`,
-    UPDATE: (lpId: number, commentId: string) =>
+    UPDATE: (lpId: number, commentId: number) =>
         `/v1/lps/${lpId}/comments/${commentId}`,
-    DELETE: (lpId: number, commentId: string) =>
+    DELETE: (lpId: number, commentId: number) =>
         `/v1/lps/${lpId}/comments/${commentId}`,
 };
 

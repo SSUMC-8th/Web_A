@@ -5,6 +5,8 @@ import {
     ResponseLpDetailDto,
     ResponseCommentDto,
     CreateLpDto,
+    ResponsePostCommentDto,
+    ResponsePatchCommentDto,
 } from '../types/lp';
 import { privateAxios, publicAxios } from './axiosInstance';
 
@@ -51,6 +53,50 @@ export const getComments = async ({
         API_COMMENTS.LIST(lpId),
         { params: { cursor, limit, order } },
     );
+    return data;
+};
+
+export const postComment = async ({
+    lpId,
+    content,
+}: {
+    lpId: number;
+    content: string;
+}) => {
+    const { data } = await privateAxios.post<ResponsePostCommentDto>(
+        API_COMMENTS.CREATE(lpId),
+        { content },
+    );
+    return data;
+};
+
+export const patchComment = async ({
+    lpId,
+    commentId,
+    content,
+}: {
+    lpId: number;
+    commentId: number;
+    content: string;
+}) => {
+    const { data } = await privateAxios.patch<ResponsePostCommentDto>(
+        API_COMMENTS.UPDATE(lpId, commentId),
+        { content },
+    );
+    return data;
+};
+
+export const deleteComment = async ({
+    lpId,
+    commentId,
+}: {
+    lpId: number;
+    commentId: number;
+}) => {
+    const { data } = await privateAxios.delete<ResponsePatchCommentDto>(
+        API_COMMENTS.DELETE(lpId, commentId),
+    );
+
     return data;
 };
 

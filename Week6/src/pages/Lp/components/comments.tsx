@@ -5,11 +5,14 @@ import { CommentItem, ResponseCommentDto } from '../../../types/lp';
 import { BulletList } from 'react-content-loader';
 import ErrorMessage from '../../../components/ErrorMessage';
 import { SortOrder, SortOrderLabel } from '../../../constants/sort';
+import { useCreateComments } from '../hooks/useCreateComments';
+import Comment from './comment';
 
 const CommentSkeleton = () => <BulletList />;
 
 function Comments({ lpId }: { lpId: number }) {
     const [order, setOrder] = useState<SortOrder>(SortOrder.LATEST);
+    const [newComment, setNewComment] = useState<string>('');
 
     const {
         data,
@@ -50,6 +53,16 @@ function Comments({ lpId }: { lpId: number }) {
         setOrder(selected);
     };
 
+    const { mutate: createComment } = useCreateComments();
+
+    const handleCreateComment = () => {
+        createComment({
+            lpId,
+            content: newComment,
+        });
+        setNewComment('');
+    };
+
     if (isError) return <ErrorMessage />;
 
     const comments: CommentItem[] =
@@ -72,25 +85,30 @@ function Comments({ lpId }: { lpId: number }) {
                 </select>
             </div>
 
-            {comments.map((c) => (
-                <div key={c.id} className="flex items-start gap-3">
-                    <img
-                        src={c.author.avatar ?? '/my.png'}
-                        alt={c.author.name}
-                        className="object-cover w-10 h-10 rounded-full shrink-0"
-                    />
-                    <div className="flex-1">
-                        <div className="text-sm font-semibold">
-                            {c.author.name}
-                        </div>
-                        <p className="text-sm text-gray-700 whitespace-pre-wrap">
-                            {c.content}
-                        </p>
-                        <span className="text-xs text-gray-400">
-                            {new Date(c.createdAt).toLocaleString()}
-                        </span>
-                    </div>
-                </div>
+            <div className="flex w-full">
+                <input
+                    type="text"
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            handleCreateComment();
+                        }
+                    }}
+                    placeholder="댓글을 입력해주세요"
+                    aria-label="댓글입력"
+                    className="flex-1 p-2 text-sm border border-gray-400 rounded-md"
+                />
+                <button
+                    className="p-2 text-white bg-gray-400 border rounded-md"
+                    onClick={handleCreateComment}
+                >
+                    작성
+                </button>
+            </div>
+
+            {comments.map((comment) => (
+                <Comment lpId={lpId} comment={comment} />
             ))}
 
             {(isFetchingNextPage || isPending) &&

@@ -1,3 +1,5 @@
+import { CommonResponse } from './common';
+
 export type Tag = { id: number; name: string };
 export type Like = { id: number; userId: number; lpId: number };
 export type Author = {
@@ -69,11 +71,27 @@ export type ResponseCommentDto = {
     data: CommentDataDto;
 };
 
+export type ResponsePostCommentDto = {
+    status: boolean;
+    message: string;
+    statusCode: number;
+    data: {
+        id: number;
+        content: string;
+        lpId: number;
+        authorId: number;
+        createdAt: string;
+        updatedAt: string;
+    };
+};
+
+export type ResponsePatchCommentDto = CommonResponse<{ message: string }>;
+
 export type CreateLpDto = {
     title: string;
     content: string;
-    thumbnail: string;
-    tags: string[]; // 태그는 문자열 배열로 전달됨
+    thumbnail?: string;
+    tags: string[];
     published?: boolean;
 };
 

@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { IMAGE_PATH } from '../../../constants/images';
-import { postImagePrivate } from '../../../apis/image';
-import { UploadImageDto } from '../../../types/image';
-import { postLp } from '../../../apis/lp';
+import { useCreateLp } from '../hooks/useCreateLp';
 
 interface LpCreateModalProps {
     setIsOpen: (open: boolean) => void;
@@ -10,7 +8,6 @@ interface LpCreateModalProps {
 
 function LpCreateModal({ setIsOpen }: LpCreateModalProps) {
     const modalRef = useRef<HTMLDivElement>(null);
-    //숨겨진 인풋 제어
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     // 상태
@@ -44,28 +41,18 @@ function LpCreateModal({ setIsOpen }: LpCreateModalProps) {
         setPreviewUrl(URL.createObjectURL(selected));
     };
 
-    const handleCreateLp = async () => {
-        try {
-            let imageUrl = '';
+    const { mutate: createLp } = useCreateLp();
 
-            if (file) {
-                const { data }: { data: UploadImageDto } =
-                    await postImagePrivate(file);
-                imageUrl = data.imageUrl;
-            }
-
-            await postLp({
+    const handleCreateLp = () => {
+        createLp({
+            file,
+            lpData: {
                 title,
                 content,
-                thumbnail: imageUrl,
                 tags,
-            });
-
-            setIsOpen(false);
-            alert('LP 생성 성공!');
-        } catch (err) {
-            console.error('LP 생성 실패:', err);
-        }
+                published: true,
+            },
+        });
     };
 
     /** 태그 추가/삭제 */
