@@ -8,9 +8,11 @@ import { useEffect, useState } from "react";
 import CommentSkeleton from "./CommentSkeleton";
 import { PAGENATION_ORDER } from "../enums/common";
 import SortComponent from "./SortComponent";
+import { useMutation } from "@tanstack/react-query";
+import axiosInstance from "../apis/axios";
 
 type FormFields = {
-  comment: string;
+  content: string;
 };
 
 export default function Comment() {
@@ -28,9 +30,22 @@ export default function Comment() {
     formState: { errors },
     register,
     handleSubmit,
+    reset,
   } = useForm<FormFields>({
     defaultValues: {
-      comment: "",
+      content: "",
+    },
+  });
+
+  const addComment = useMutation({
+    mutationFn: (comment) =>
+      axiosInstance.post(`/v1/lps/${lpId}/comments`, comment),
+    onSuccess: () => {
+      alert("댓글작성 성공");
+      reset();
+    },
+    onError: () => {
+      alert("댓글작성 실패");
     },
   });
 
@@ -61,9 +76,9 @@ export default function Comment() {
           type="text"
           placeholder="댓글을 입력하세요"
           className="mb-0"
-          errorMsg={errors.comment?.message}
+          errorMsg={errors.content?.message}
           register={{
-            ...register("comment", {
+            ...register("content", {
               required: "댓글은 필수입력입니다",
               minLength: {
                 value: 2,
@@ -72,7 +87,10 @@ export default function Comment() {
             }),
           }}
         />
-        <button className="bg-gray-400 rounded-xl px-3 shrink-0 py-2">
+        <button
+          className="bg-gray-400 rounded-xl px-3 shrink-0 py-2"
+          onClick={handleSubmit(addComment.mutate)}
+        >
           작성
         </button>
       </div>
