@@ -1,19 +1,36 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { use, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import useGetProfile from "../hooks/useGetProfile";
+import { useMutation } from "@tanstack/react-query";
+import axiosInstance from "../apis/axios";
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false); //여닫이
 
   // const [isTrue, setISTrue] = useState(false);
 
+  const navigate = useNavigate();
   const { accessToken, logout } = useAuth();
   // if (accessToken) {
   //   setISTrue((item) => !item);
   // }
   const { user } = useGetProfile();
   // console.log(user);
+
+  const deleteUser = useMutation({
+    mutationFn: () => {
+      return axiosInstance.delete(`/v1/users`);
+    },
+    onSuccess: () => {
+      alert("탈퇴 되었습니다");
+      navigate("/");
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
   return (
     <>
       <nav className="flex gap-2 justify-between py-3 px-4 border-b border-gray-500">
@@ -71,7 +88,7 @@ export default function NavBar() {
             X
           </button>
         </div>
-        <ul className="p-4 space-y-3 text-white">
+        <ul className="p-4 space-y-3 text-white ">
           <li>
             <Link
               className="flex gap-1 items-center"
@@ -84,6 +101,14 @@ export default function NavBar() {
           </li>
           <li>
             <Link to={"/my"}>마이페이지</Link>
+          </li>
+          <li className="flex  justify-center">
+            <button
+              className="bottom-10 absolute px-4 py-2 bg-gray-800 rounded-2xl text-sm"
+              onClick={() => deleteUser.mutate()}
+            >
+              탈퇴하기
+            </button>
           </li>
         </ul>
       </div>
