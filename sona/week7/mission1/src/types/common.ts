@@ -35,3 +35,9 @@ export type LpDeleteDto = {
   lpId: number;
   commentId: number;
 };
+//commentDto
+export type CommentPatchDto = {
+  lpId: number;
+  commentId: number;
+  content: string;
+};
