@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Comment } from "../types/comment";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../apis/axios";
 import { CommentPatchDto, LpDeleteDto } from "../types/common";
 import InputField from "../components/InputField";
 import { useForm } from "react-hook-form";
 import useGetProfile from "../hooks/useGetProfile";
+import { QUERY_KEY } from "../constants/key";
 interface CommentProps {
   comment: Comment;
 }
@@ -14,12 +15,14 @@ interface CommentForm {
   content: string;
 }
 export default function CommentItem({ comment }: CommentProps) {
+  const queryClient = useQueryClient();
+
   // console.log(comment);
 
   const { user } = useGetProfile();
 
   const [isOpenCModeal, setOpenCModal] = useState(false);
-  console.log(comment);
+  // console.log(comment);
   //삭제
   const deleteBtn = useMutation({
     mutationFn: ({ commentId, lpId }: LpDeleteDto) => {
@@ -42,6 +45,9 @@ export default function CommentItem({ comment }: CommentProps) {
     },
     onSuccess: () => {
       alert("댓글이 수정되었습니다");
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.comment],
+      });
     },
     onError: (err) => {
       console.log(err);

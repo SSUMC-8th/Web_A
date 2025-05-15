@@ -4,18 +4,21 @@ import Comment from "./Comment";
 
 import useGetProfile from "../hooks/useGetProfile";
 import useGetLpDetail from "../hooks/useGetLpDetail";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../apis/axios";
+import { QUERY_KEY } from "../constants/key";
 
 export default function CardDetail() {
+  const queryClient = useQueryClient();
+
   const { id } = useParams();
   const lpId = Number(id);
   const { data } = useGetLpDetail(lpId);
-  console.log(data);
+  // console.log(data);
 
   const { user } = useGetProfile();
 
-  console.log(data);
+  // console.log(data);
 
   const deletePost = useMutation({
     mutationFn: (lpId) => {
@@ -34,13 +37,20 @@ export default function CardDetail() {
       return axiosInstance.post(`/v1/lps/${lpId}/likes`);
     },
     onSuccess: () => {
-      alert("좋아요가 추가되었습니다");
+      // alert("좋아요가 추가되었습니다");
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.lpDetail, lpId],
+      });
     },
     onError: (err) => {
       console.log(err);
     },
   });
-
+  console.log(user?.id);
+  console.log(data?.authorId);
+  // if (!data || !user) {
+  //   return <div>Loading</div>;
+  // }
   return (
     <>
       <main className="max-w-3xl bg-gray-700 p-7 mx-auto">
@@ -58,12 +68,12 @@ export default function CardDetail() {
 
             <div>{data?.title}</div>
             {/* 삭제 수정 */}
-            {user?.id === data?.author?.id && (
-              <div
-                className=" absolute right-0  top-8 ml-auto  mt-1  flex gap-3 w-fit pt-2 rounded-2xl z-10"
-                onClick={() => deletePost.mutate(lpId)}
-              >
-                <button className="cursor-pointer">
+            {user && data && user.id === data.authorId && (
+              <div className=" absolute right-0  top-8 ml-auto  mt-1  flex gap-3 w-fit pt-2 rounded-2xl z-10">
+                <button
+                  className="cursor-pointer"
+                  onClick={() => deletePost.mutate(lpId)}
+                >
                   <img src="/delete.svg" alt="삭제" className="w-4 h-4" />
                 </button>
                 <Link to={`/lp/${id}/edit`}>

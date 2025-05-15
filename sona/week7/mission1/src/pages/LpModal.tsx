@@ -1,10 +1,11 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import InputField from "../components/InputField";
 import { TagItem } from "./TagItem";
 import axiosInstance from "../apis/axios";
 import { LpBodyPost } from "../types/lpPost";
 import { useForm } from "react-hook-form";
 import { useRef, useState } from "react";
+import { QUERY_KEY } from "../constants/key";
 
 interface LpModalProps {
   onClose: () => void;
@@ -47,6 +48,7 @@ export default function LpModal({
     }
     setTagInputValue("");
   };
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -95,6 +97,7 @@ export default function LpModal({
       alert(isEdit ? "수정 완료" : "추가 완료");
       onSubmitSuccess?.();
       onClose();
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.lps] });
     },
     onError: (err) => console.error(err),
   });
@@ -138,7 +141,7 @@ export default function LpModal({
               <img
                 src={preview ?? "/lpImg.png"}
                 alt="LP 이미지"
-                className="size-50 mx-auto my-10"
+                className="size-50 mx-auto my-10 rounded-full"
               />
             </label>
             <div className="relative">

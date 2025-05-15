@@ -8,8 +8,9 @@ import { useEffect, useState } from "react";
 import CommentSkeleton from "./CommentSkeleton";
 import { PAGENATION_ORDER } from "../enums/common";
 import SortComponent from "./SortComponent";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../apis/axios";
+import { QUERY_KEY } from "../constants/key";
 
 type FormFields = {
   content: string;
@@ -19,6 +20,9 @@ export default function Comment() {
   const [sortOrder, setSortOrder] = useState<PAGENATION_ORDER>(
     PAGENATION_ORDER.desc
   );
+
+  const queryClient = useQueryClient();
+
   const { id } = useParams();
   const lpId = Number(id);
   // const { data: comment, isLoading, isError } = useGetCommentList({ lpId });
@@ -43,6 +47,9 @@ export default function Comment() {
     onSuccess: () => {
       alert("댓글작성 성공");
       reset();
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.comment],
+      });
     },
     onError: () => {
       alert("댓글작성 실패");
