@@ -47,6 +47,7 @@ const MyPage = () => {
     },
     onSuccess: () => {
       alert("성공하였습니다");
+      navigate("/");
     },
     onError: (err) => {
       console.log(err);
