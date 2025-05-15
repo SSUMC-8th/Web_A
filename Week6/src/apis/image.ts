@@ -6,7 +6,7 @@ export const postImagePrivate = async (
     file: File,
 ): Promise<ResponseImageDto> => {
     const formData = new FormData();
-    formData.append('file', file); // 'image'는 백엔드에서 요구하는 key 이름이어야 함
+    formData.append('file', file); // file타입
 
     const { data } = await privateAxios.post(
         API_UPLOADS.PRIVATE_UPLOAD,

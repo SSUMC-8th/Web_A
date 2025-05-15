@@ -19,11 +19,9 @@ function Comment({ lpId, comment }: CommentProps) {
     const { mutate: deleteComment } = useDeleteComments();
     const { mutate: changeComment } = usePatchComments();
 
-    /* 삭제 */
     const handleDeleteComment = () =>
         deleteComment({ lpId, commentId: comment.id });
 
-    /* 편집 저장 */
     const handleSaveEdit = () => {
         if (editedContent.trim() === comment.content) {
             setIsEditing(false);

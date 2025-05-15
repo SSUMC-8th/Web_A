@@ -10,10 +10,9 @@ import ErrorMessage from '../../components/ErrorMessage';
 import Comments from './components/comments';
 import { usePatchLp } from './hooks/usePatchLp';
 import { useDeleteLp } from './hooks/useDeleteLp';
-import { usePostLike } from './hooks/usePostLike';
-import { useDeleteLike } from './hooks/useDeleteLike';
 import { useAuth } from '../../context/AuthContext';
 import ROUTES from '../../constants/routes';
+import { useToggleLike } from './hooks/useToggleLike';
 
 function Lp() {
     /* ──────────────── 1) 기본 훅 · 파라미터 */
@@ -32,8 +31,7 @@ function Lp() {
     /* ──────────────── 3) React Query – 변이 */
     const { mutate: patchLp } = usePatchLp();
     const { mutate: deleteLp } = useDeleteLp();
-    const { mutate: postLike } = usePostLike();
-    const { mutate: deleteLike } = useDeleteLike();
+    const { mutate: toggleLike } = useToggleLike();
 
     /* ──────────────── 4) 컴포넌트 상태 (편집용) */
     const [isEditing, setIsEditing] = useState(false);
@@ -69,13 +67,14 @@ function Lp() {
     };
 
     const handleToggleLike = () => {
-        alreadyLiked ? deleteLike(lp.id) : postLike(lp.id);
+        toggleLike({ lpId: id, isLiked: alreadyLiked ?? false });
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const f = e.target.files?.[0];
         if (!f) return;
         setFile(f);
+        //미리보기 url 생성 함수. revokeObjectURL로 해제해줘야 함
         setPreviewUrl(URL.createObjectURL(f));
     };
 

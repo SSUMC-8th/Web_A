@@ -1,8 +1,8 @@
 import LogoutButton from '../../../../components/LogoutButton/LogoutButton';
-import { useAuth } from '../../../../context/AuthContext';
+import { useGetUsers } from '../../../../pages/Mypage/hooks/useGetUsers';
 
 function UserMenu() {
-    const { myInfo } = useAuth();
+    const { data: myInfo } = useGetUsers();
 
     return (
         <div>

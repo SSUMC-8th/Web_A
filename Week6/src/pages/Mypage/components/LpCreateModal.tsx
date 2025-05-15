@@ -56,7 +56,7 @@ function LpCreateModal({ setIsOpen }: LpCreateModalProps) {
         setIsOpen(false);
     };
 
-    /** 태그 추가/삭제 */
+    // 태그
     const handlePushTag = () => {
         const trimmed = tagInput.trim();
         if (!trimmed || tags.includes(trimmed)) return;
@@ -72,7 +72,6 @@ function LpCreateModal({ setIsOpen }: LpCreateModalProps) {
                 ref={modalRef}
                 className="relative w-full max-w-sm p-6 bg-white shadow-lg rounded-2xl"
             >
-                {/* 닫기 */}
                 <button
                     onClick={() => setIsOpen(false)}
                     className="absolute text-xl text-gray-500 top-3 right-3 hover:text-gray-700"
@@ -80,7 +79,6 @@ function LpCreateModal({ setIsOpen }: LpCreateModalProps) {
                     &times;
                 </button>
 
-                {/* 썸네일(이미지 클릭 → 파일 선택) */}
                 <div className="flex flex-col items-center gap-4 mb-6">
                     <img
                         src={previewUrl}
@@ -88,7 +86,6 @@ function LpCreateModal({ setIsOpen }: LpCreateModalProps) {
                         className="object-cover w-32 h-32 rounded-full cursor-pointer"
                         onClick={() => fileInputRef.current?.click()}
                     />
-                    {/* 숨겨진 input */}
                     <input
                         ref={fileInputRef}
                         type="file"
@@ -99,7 +96,6 @@ function LpCreateModal({ setIsOpen }: LpCreateModalProps) {
                     />
                 </div>
 
-                {/* 제목/내용/태그 */}
                 <input
                     type="text"
                     placeholder="LP Name"
@@ -146,7 +142,6 @@ function LpCreateModal({ setIsOpen }: LpCreateModalProps) {
                     ))}
                 </div>
 
-                {/* LP 등록 */}
                 <button
                     onClick={handleCreateLp}
                     className="w-full py-2 mt-3 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700"

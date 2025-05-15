@@ -45,56 +45,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         }
     };
 
-    // const login = async (signinData: RequestSigninDto) => {
-    //     try {
-    //         const { data } = await postSignin(signinData);
-
-    //         if (data) {
-    //             const newAccessToken = data.accessToken;
-    //             const newRefreshToken = data.refreshToken;
-
-    //             tokenStorage.setAccessToken(newAccessToken);
-    //             tokenStorage.setRefreshToken(newRefreshToken);
-
-    //             setAccessToken(newAccessToken);
-    //             setRefreshToken(newRefreshToken);
-
-    //             await loginWithToken();
-
-    //             alert('로그인성공');
-    //             window.location.replace(ROUTES.HOME);
-    //         }
-    //     } catch (error) {
-    //         alert('로그인 실패');
-    //         console.error(error);
-    //     }
-    // };
-
-    // const login = () => {
-    //     return useMutation({
-    //         mutationFn: postSignin,
-    //         onSuccess: (data) => {
-    //             const newAccessToken = data.data.accessToken;
-    //             const newRefreshToken = data.data.refreshToken;
-
-    //             tokenStorage.setAccessToken(newAccessToken);
-    //             tokenStorage.setRefreshToken(newRefreshToken);
-
-    //             setAccessToken(newAccessToken);
-    //             setRefreshToken(newRefreshToken);
-
-    //             loginWithToken();
-
-    //             alert('로그인성공');
-    //             window.location.replace(ROUTES.HOME);
-    //         },
-    //         onError: (e) => {
-    //             alert('로그인실패');
-    //             console.error(e);
-    //         },
-    //     });
-    // };
-
     const { mutateAsync: useLogin } = useMutation({
         mutationFn: postSignin,
         onSuccess: (data) => {
@@ -122,23 +72,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     const login = async (signinData: RequestSigninDto): Promise<void> => {
         await useLogin(signinData);
     };
-
-    // const logout = async () => {
-    //     try {
-    //         await postLogout();
-
-    //         tokenStorage.clear();
-
-    //         setAccessToken(null);
-    //         setRefreshToken(null);
-    //         setMyInfo(null);
-
-    //         alert('로그아웃되었습니다.');
-    //     } catch (error) {
-    //         alert('실패');
-    //         console.error(error);
-    //     }
-    // };
 
     const { mutateAsync: useLogout } = useMutation({
         mutationFn: postLogout,

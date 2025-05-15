@@ -1,19 +1,18 @@
 // src/pages/Mypage.tsx
 import { ChangeEvent, useEffect, useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
 import LogoutButton from '../../components/LogoutButton/LogoutButton';
 import { IMAGE_PATH } from '../../constants/images';
 import LpCreateModal from './components/LpCreateModal';
 import { postImagePrivate } from '../../apis/image';
 import { usePatchUsers } from './hooks/usePatchUsers';
+import { useGetUsers } from './hooks/useGetUsers';
 
 function Mypage() {
-    const { myInfo } = useAuth();
+    const { data: myInfo } = useGetUsers();
     const user = myInfo?.data; // null-safe
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
 
-    /* === form state === */
     const [name, setName] = useState(user?.name ?? '');
     const [bio, setBio] = useState(user?.bio ?? '');
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
@@ -21,13 +20,10 @@ function Mypage() {
         user?.avatar ?? IMAGE_PATH.PROFILE,
     );
 
-    /* 모달 토글 */
     const toggleModal = () => setIsOpenModal((prev) => !prev);
 
-    /* PATCH 훅 */
     const { mutate: patchUser, isPending } = usePatchUsers();
 
-    /* avatar 파일 선택 → 미리보기 */
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -35,13 +31,11 @@ function Mypage() {
         setPreviewUrl(URL.createObjectURL(file));
     };
 
-    /* 프로필 저장 */
     const handleSave = async () => {
-        if (!name.trim()) return; // 이름은 필수
+        if (!name.trim()) return;
 
         let avatarUrl = user?.avatar ?? '';
 
-        // 새 이미지 업로드가 있으면 먼저 업로드
         if (avatarFile) {
             const res = await postImagePrivate(avatarFile);
             avatarUrl = res.data.imageUrl;
@@ -57,7 +51,6 @@ function Mypage() {
         );
     };
 
-    /* ‘수정’ 버튼 진입 시 현재 값을 폼에 반영 */
     const startEdit = () => {
         setName(user?.name ?? '');
         setBio(user?.bio ?? '');
@@ -66,14 +59,12 @@ function Mypage() {
         setIsEditing(true);
     };
 
-    /* ‘취소’ */
     const cancelEdit = () => {
         setIsEditing(false);
         setAvatarFile(null);
         setPreviewUrl(user?.avatar ?? IMAGE_PATH.PROFILE);
     };
 
-    /* 로그인 상태가 바뀌면 폼 초기화 */
     useEffect(() => {
         setName(user?.name ?? '');
         setBio(user?.bio ?? '');
@@ -85,7 +76,6 @@ function Mypage() {
             <h1 className="mb-6 text-2xl font-bold text-center">마이페이지</h1>
 
             <div className="p-6 bg-white shadow-md rounded-2xl">
-                {/* 아바타 + 기본 정보 */}
                 <div className="flex items-center gap-4">
                     <img
                         src={previewUrl}
@@ -123,7 +113,6 @@ function Mypage() {
 
                 <hr className="my-4 border-gray-200" />
 
-                {/* 자기소개 */}
                 <div>
                     <p className="text-sm text-gray-400">자기소개</p>
                     {isEditing ? (
@@ -143,7 +132,6 @@ function Mypage() {
 
                 <hr className="my-4 border-gray-200" />
 
-                {/* 가입일 */}
                 <div className="flex justify-between text-sm text-gray-500">
                     <span>가입일</span>
                     <span>
@@ -153,7 +141,6 @@ function Mypage() {
                     </span>
                 </div>
 
-                {/* 우측 하단 공통 버튼 영역 */}
                 <div className="flex justify-end gap-3 pt-4">
                     {isEditing ? (
                         <>
@@ -185,7 +172,6 @@ function Mypage() {
                     )}
                 </div>
 
-                {/* LP 생성 모달 */}
                 <div className="flex justify-center mt-4">
                     <button
                         onClick={toggleModal}
