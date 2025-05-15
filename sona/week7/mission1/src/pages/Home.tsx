@@ -15,8 +15,11 @@ export default function Home() {
     PAGENATION_ORDER.desc
   );
 
-  const { data, isFetching, isPending, isError, hasNextPage, fetchNextPage } =
-    useGetInfiniteLpList(5, "", sortOrder);
+  const { data, isFetching, hasNextPage, fetchNextPage } = useGetInfiniteLpList(
+    5,
+    "",
+    sortOrder
+  );
 
   const { ref, inView } = useInView({ threshold: 0 });
 

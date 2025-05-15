@@ -4,6 +4,8 @@ import Comment from "./Comment";
 
 import useGetProfile from "../hooks/useGetProfile";
 import useGetLpDetail from "../hooks/useGetLpDetail";
+import { useMutation } from "@tanstack/react-query";
+import axiosInstance from "../apis/axios";
 
 export default function CardDetail() {
   const { id } = useParams();
@@ -14,6 +16,19 @@ export default function CardDetail() {
   const { user } = useGetProfile();
 
   console.log(data);
+
+  const deletePost = useMutation({
+    mutationFn: (lpId) => {
+      return axiosInstance.delete(`v1/lps/${lpId}`);
+    },
+    onSuccess: () => {
+      alert("게시글이 삭제되었습니다");
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
   return (
     <>
       <main className="max-w-3xl bg-gray-700 p-7 mx-auto">
@@ -32,7 +47,10 @@ export default function CardDetail() {
             <div>{data?.title}</div>
             {/* 삭제 수정 */}
             {user?.id === data?.author?.id && (
-              <div className=" absolute right-0  top-8 ml-auto  mt-1  flex gap-3 w-fit pt-2 rounded-2xl z-10">
+              <div
+                className=" absolute right-0  top-8 ml-auto  mt-1  flex gap-3 w-fit pt-2 rounded-2xl z-10"
+                onClick={() => deletePost.mutate(lpId)}
+              >
                 <button className="cursor-pointer">
                   <img src="/delete.svg" alt="삭제" className="w-4 h-4" />
                 </button>
