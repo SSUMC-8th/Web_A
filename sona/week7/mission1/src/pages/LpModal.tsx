@@ -101,7 +101,7 @@ export default function LpModal({
   return (
     <>
       <div className="fixed inset-0 bg-black/50 z-5 " onClick={onClose} />
-      <div className=" flex items-center justify-center mx-auto top-70 bg-gray-600 fixed  center w-full max-w-md z-10 rounded-2xl flex-wrap">
+      <div className=" flex items-center justify-center mx-auto top-30 bg-gray-600 fixed  center w-full max-w-md z-10 rounded-2xl flex-wrap">
         <div className="px-5 w-full ">
           <button className="font-bold mt-5 cursor-pointer" onClick={onClose}>
             X
