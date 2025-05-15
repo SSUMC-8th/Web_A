@@ -53,6 +53,7 @@ function LpCreateModal({ setIsOpen }: LpCreateModalProps) {
                 published: true,
             },
         });
+        setIsOpen(false);
     };
 
     /** 태그 추가/삭제 */

@@ -1,4 +1,4 @@
-import { API_COMMENTS, API_LPS } from '../constants/api';
+import { API_COMMENTS, API_LIKES, API_LPS } from '../constants/api';
 import { SortOrder } from '../constants/sort';
 import {
     ResponseLpDto,
@@ -7,6 +7,7 @@ import {
     CreateLpDto,
     ResponsePostCommentDto,
     ResponsePatchCommentDto,
+    patchLpDto,
 } from '../types/lp';
 import { privateAxios, publicAxios } from './axiosInstance';
 
@@ -115,5 +116,39 @@ export const postLp = async ({
         published,
     });
 
+    return data;
+};
+
+export const patchLp = async ({
+    lpId,
+    title,
+    content,
+    thumbnail,
+    tags,
+    published = true,
+}: patchLpDto) => {
+    const { data } = await privateAxios.patch(API_LPS.UPDATE(lpId), {
+        title,
+        content,
+        thumbnail,
+        tags,
+        published,
+    });
+
+    return data;
+};
+
+export const deleteLp = async (lpId: number) => {
+    const { data } = await privateAxios.delete(API_LPS.DELETE(lpId));
+    return data;
+};
+
+export const postLike = async (lpId: number) => {
+    const { data } = await privateAxios.post(API_LIKES.LIKE(lpId));
+    return data;
+};
+
+export const deleteLike = async (lpId: number) => {
+    const { data } = await privateAxios.delete(API_LIKES.UNLIKE(lpId));
     return data;
 };

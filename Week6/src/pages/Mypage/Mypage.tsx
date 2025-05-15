@@ -1,7 +1,7 @@
 // src/pages/Mypage.tsx
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import LogoutButton from '../../components/LogoutButton';
+import LogoutButton from '../../components/LogoutButton/LogoutButton';
 import { IMAGE_PATH } from '../../constants/images';
 import LpCreateModal from './components/LpCreateModal';
 import { postImagePrivate } from '../../apis/image';

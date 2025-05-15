@@ -123,10 +123,26 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         await useLogin(signinData);
     };
 
-    const logout = async () => {
-        try {
-            await postLogout();
+    // const logout = async () => {
+    //     try {
+    //         await postLogout();
 
+    //         tokenStorage.clear();
+
+    //         setAccessToken(null);
+    //         setRefreshToken(null);
+    //         setMyInfo(null);
+
+    //         alert('로그아웃되었습니다.');
+    //     } catch (error) {
+    //         alert('실패');
+    //         console.error(error);
+    //     }
+    // };
+
+    const { mutateAsync: useLogout } = useMutation({
+        mutationFn: postLogout,
+        onSuccess: () => {
             tokenStorage.clear();
 
             setAccessToken(null);
@@ -134,10 +150,15 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
             setMyInfo(null);
 
             alert('로그아웃되었습니다.');
-        } catch (error) {
-            alert('실패');
-            console.error(error);
-        }
+        },
+        onError: (e) => {
+            alert('로그아웃실패');
+            console.error(e);
+        },
+    });
+
+    const logout = async (): Promise<void> => {
+        await useLogout();
     };
 
     useEffect(() => {

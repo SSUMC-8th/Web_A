@@ -16,3 +16,9 @@ export const patchUsers = async ({ name, bio, avatar }: patchUsersProps) => {
 
     return data;
 };
+
+export const deleteUser = async () => {
+    const { data } = await privateAxios.delete(API_USERS.DELETE_USER);
+
+    return data;
+};

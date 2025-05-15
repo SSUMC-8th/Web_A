@@ -1,16 +1,20 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import ROUTES from '../../constants/routes';
+import Modal from '../../components/Modal';
+import { useDeleteUser } from '../hooks/useDeleteUser';
 
-const Sidebar = ({
-    isSidebarOpen,
-    closeSidebar,
-}: {
+interface SidebarProps {
     isSidebarOpen: boolean;
     closeSidebar: () => void;
-}) => {
+}
+
+const Sidebar = ({ isSidebarOpen, closeSidebar }: SidebarProps) => {
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const ref = useRef<HTMLDivElement>(null);
+
+    const { mutate: deleteUser } = useDeleteUser();
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
@@ -26,6 +30,9 @@ const Sidebar = ({
         return () =>
             document.removeEventListener('mousedown', handleClickOutside);
     }, [closeSidebar]);
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
 
     return (
         <div
@@ -44,6 +51,20 @@ const Sidebar = ({
                     <Link to={ROUTES.MYPAGE}>마이페이지</Link>
                 </li>
             </ul>
+            <button
+                className="p-2 text-sm text-white bg-red-600 rounded-md"
+                onClick={openModal}
+            >
+                탈퇴하기
+            </button>
+            {isModalOpen && (
+                <Modal
+                    open={isModalOpen}
+                    message="정말 탈퇴하시겠습니까?"
+                    onConfirm={deleteUser}
+                    onCancel={closeModal}
+                />
+            )}
         </div>
     );
 };

@@ -47,6 +47,8 @@ export type ResponseLpDetailDto = {
     data: LpDetailItem;
 };
 
+export type ResponsePatchLpDto = CommonResponse<LpItem>;
+
 export type CommentAuthor = Author;
 export type CommentItem = {
     id: number;
@@ -93,6 +95,10 @@ export type CreateLpDto = {
     thumbnail?: string;
     tags: string[];
     published?: boolean;
+};
+
+export type patchLpDto = CreateLpDto & {
+    lpId: number;
 };
 
 export type CreatedLpItem = {

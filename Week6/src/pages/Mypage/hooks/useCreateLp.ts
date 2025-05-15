@@ -4,12 +4,7 @@ import { postLp } from '../../../apis/lp';
 import { UploadImageDto } from '../../../types/image';
 import { CreateLpDto } from '../../../types/lp';
 
-interface UseCreateLpProps {
-    onSuccess?: () => void;
-    onError?: (err: unknown) => void;
-}
-
-export const useCreateLp = ({ onSuccess, onError }: UseCreateLpProps = {}) => {
+export const useCreateLp = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
@@ -35,11 +30,10 @@ export const useCreateLp = ({ onSuccess, onError }: UseCreateLpProps = {}) => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['lpInfo'] });
-            onSuccess?.();
+            console.log('성공!');
         },
         onError: (err) => {
             console.error('LP 생성 실패:', err);
-            onError?.(err);
         },
     });
 };

@@ -1,4 +1,4 @@
-import LogoutButton from '../../../../components/LogoutButton';
+import LogoutButton from '../../../../components/LogoutButton/LogoutButton';
 import { useAuth } from '../../../../context/AuthContext';
 
 function UserMenu() {
