@@ -4,7 +4,7 @@ interface ArrangeButtonProps {
   order: OrderEnum;
   setOrder: (order: OrderEnum) => void;
 }
-
+//최신순, 오래된순 버튼
 const ArrangeButton = ({order, setOrder}: ArrangeButtonProps) => {
   return (
     <div className="text-xs font-black border-white border-2 rounded-md">

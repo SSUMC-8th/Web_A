@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
 import { UserLoginInfo, validateLogin } from "../utils/validate";
-import GoogleButton from "../components/GoogleButton";
+import GoogleButton from "../components/Login/GoogleButton";
 import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
 
@@ -28,7 +28,7 @@ const Login = () => {
       await login(values);
       navigate("/mypage");
     } catch (error) {
-      alert(error?.message);
+      alert(error);
     }
   };
 

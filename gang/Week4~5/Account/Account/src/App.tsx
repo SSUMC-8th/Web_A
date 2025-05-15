@@ -16,6 +16,7 @@ import LpDetail from "./components/LpDetail/LpDetail";
 import LoadingSpinner from "./components/LoadingSpinner";
 import { useState } from "react";
 import AlertModal from "./components/AlertModal";
+import LpModal from "./components/NewLp/LpModal";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -82,6 +83,23 @@ function App() {
             </ProtectedRoute>
           ),
         },
+        {
+          path: "/createlp",
+          element: (
+              <ProtectedRoute
+              onReject={() =>{
+                setModalMessage(
+                  "로그인이 필요한 서비스입니다. 로그인을 해주세요!"
+                );
+                setShowModal(true);
+              }}
+              fallback={<LoadingSpinner />}
+            >
+              <LpModal/>
+            </ProtectedRoute>
+
+          )
+        }
       ],
     },
   ]);

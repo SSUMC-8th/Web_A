@@ -1,10 +1,10 @@
 import { FieldErrors, UseFormRegister } from "react-hook-form";
-import { FormFields } from "../Pages/Registration";
+import { registrationFormFields } from "../../Pages/Registration";
 
 interface IRegiBlank{
-    register: UseFormRegister<FormFields>;
-    errors: FieldErrors<FormFields>;
-    blankName: keyof FormFields;
+    register: UseFormRegister<registrationFormFields>;
+    errors: FieldErrors<registrationFormFields>;
+    blankName: keyof registrationFormFields;
     blankPlaceholder: string;
 }
 

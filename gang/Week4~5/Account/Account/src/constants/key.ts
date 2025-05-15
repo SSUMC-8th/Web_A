@@ -7,10 +7,7 @@ export const LOCAL_STORAGE_KEY = {
 
 export const QueryKeys = {
     lps: 'lps',
-}
-export const QueryKeys2 = {
-    lpDetail: 'lpDetail',
-}
-export const QueryKeys3 ={
-    lpComment: 'lpComment',
+    myInfo: 'myinfo',
+    lpComment : 'lpComment',
+    newLps: 'newLps',
 }

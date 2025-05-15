@@ -21,3 +21,8 @@ export type Author ={
     createdAt: Date;
     updatedAt: Date;    
 }
+
+export type RequestCommentDto ={
+  content : string
+}
+

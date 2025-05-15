@@ -36,7 +36,7 @@ const NavBar = ({ onMenuClick }: INavBar) => {
             <NavLink
               to="/logout"
               className="justify-end  items-end hover:bg-gray-700 transition duration-300 px-4 py-2 rounded-md"
-              onClick={logout}
+              onClick={logout}  
             >
               Logout
             </NavLink>

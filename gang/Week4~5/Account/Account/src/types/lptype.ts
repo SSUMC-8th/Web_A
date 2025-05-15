@@ -1,8 +1,14 @@
-import { CursorBasedResponse } from "./common";
+import { CommonResponse, CursorBasedResponse } from "./common";
 
 export type LpListResponse = CursorBasedResponse<Lp[]>;
 
 export type LpId = number;
+
+export type RequestLPDetailDto={
+  lpId:number;
+}
+
+export type ResponseLpDetailDto = CommonResponse<Lp>;
 
 export type Lp = {
   id: number;
