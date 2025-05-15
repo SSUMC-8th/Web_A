@@ -30,7 +30,7 @@ export default function InputField({
         // onChange={onChange}
       />
       {errorMsg && (
-        <div className="text-red-500 text-[10px] py-1 absolute top-[50px] left-1">
+        <div className="text-red-500 text-[10px] py-1 absolute top-[40px] left-1">
           {errorMsg}
         </div>
       )}

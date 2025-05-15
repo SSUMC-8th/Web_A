@@ -48,3 +48,14 @@ export type UserPatchDto = {
   bio?: string;
   avatar?: string;
 };
+
+//author
+export type Author = {
+  id: number;
+  name: string;
+  email: string;
+  bio: null;
+  avatar: null;
+  createdAt: Date;
+  updatedAt: Date;
+};

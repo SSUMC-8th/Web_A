@@ -1,29 +1,22 @@
+// 생략된 import들은 그대로 유지
 import { useEffect, useState } from "react";
-import { useInView } from "react-intersection-observer";
-import useGetInfiniteLpList from "../hooks/usegetInfiniteLpList";
-import { PAGENATION_ORDER } from "../enums/common";
 import { ResponseLpListDto } from "../types/lp";
-import LpCard from "./LpCard";
 import LpCardSkeleton from "./LpCardSkeleton";
-// import InputField from "../components/InputField";
-// import { TagItem } from "./TagItem";
 import LpModal from "./LpModal";
 import SortComponent from "./SortComponent";
+import useGetInfiniteLpList from "../hooks/usegetInfiniteLpList";
+import { useInView } from "react-intersection-observer";
+import LpCard from "./LpCard";
+import { PAGENATION_ORDER } from "../enums/common";
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState<PAGENATION_ORDER>(
     PAGENATION_ORDER.desc
   );
 
-  const [isModalOpen, setIsModalOpen] = useState(false); //modal
-
-  const [tags, setTags] = useState<string[]>([]);
-  const [tagInputValue, setTagInputValue] = useState("");
-
   const { data, isFetching, isPending, isError, hasNextPage, fetchNextPage } =
     useGetInfiniteLpList(5, "", sortOrder);
-
-  // console.log(data);
 
   const { ref, inView } = useInView({ threshold: 0 });
 
@@ -32,9 +25,6 @@ export default function Home() {
       fetchNextPage();
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  if (isPending) return <div className="mt-[20px]">로딩 중...</div>;
-  if (isError) return <div className="mt-[20px] text-red-500">에러 발생</div>;
 
   const allLps =
     data?.pages.flatMap((page: ResponseLpListDto) => page.data.data) ?? [];
@@ -48,36 +38,32 @@ export default function Home() {
           {allLps.map((item) => (
             <LpCard key={item.id} item={item} />
           ))}
-
-          {/* 로딩 중일 때 스켈레톤 */}
           {isFetching &&
-            Array.from({ length: 6 }).map((_, i) => (
-              <LpCardSkeleton key={`${i}`} />
-            ))}
+            Array.from({ length: 6 }).map((_, i) => <LpCardSkeleton key={i} />)}
         </div>
 
-        {/* 무한스크롤 */}
         <div ref={ref} className="h-10" />
       </div>
 
+      {/* lp등록 */}
       <div
-        className=" bottom-[76px] fixed bg-amber-500 size-20 rounded-full right-20 cursor-pointer"
+        className="fixed bottom-[76px] right-20 bg-amber-500 size-20 rounded-full cursor-pointer"
         onClick={() => setIsModalOpen(true)}
       >
         <img
           src="/whitePlus.svg"
           alt="더하기"
-          className="size-13 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 absolute"
+          className="size-13 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
         />
       </div>
 
+      {/* 등록 모달 */}
       {isModalOpen && (
         <LpModal
           onClose={() => setIsModalOpen(false)}
-          setTagInputValue={setTagInputValue}
-          tagInputValue={tagInputValue}
-          tags={tags}
-          setTags={setTags}
+          onSubmitSuccess={() => {
+            setIsModalOpen(false);
+          }}
         />
       )}
     </>

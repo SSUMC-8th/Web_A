@@ -67,11 +67,11 @@ export default function Comment() {
   return (
     <section>
       <div className="flex items-center">
-        <p className="mb-3 shrink-0">댓글</p>
+        <p className="shrink-0">댓글</p>
         <SortComponent sortOrder={sortOrder} setSortOrder={setSortOrder} />
       </div>
       {/* 입력창 */}
-      <div className="flex items-center gap-2 mb-4">
+      <div className="flex items-center gap-2 mb-8 mt-3 justify-center">
         <div className="relative w-full">
           <InputField
             type="text"

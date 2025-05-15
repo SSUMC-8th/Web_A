@@ -9,6 +9,11 @@ import { useMutation } from "@tanstack/react-query";
 import { UserPatchDto } from "../types/common";
 import axiosInstance from "../apis/axios";
 
+interface MyPageForm {
+  name: string;
+  bio: string;
+}
+
 const MyPage = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
@@ -31,12 +36,10 @@ const MyPage = () => {
   console.log(data);
 
   const {
-    isError,
     register,
-    reset,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<MyPageForm>();
 
   const userEditBtn = useMutation({
     mutationFn: (formData: UserPatchDto) => {

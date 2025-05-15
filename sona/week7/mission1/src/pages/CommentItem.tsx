@@ -5,15 +5,21 @@ import axiosInstance from "../apis/axios";
 import { CommentPatchDto, LpDeleteDto } from "../types/common";
 import InputField from "../components/InputField";
 import { useForm } from "react-hook-form";
+import useGetProfile from "../hooks/useGetProfile";
 interface CommentProps {
   comment: Comment;
 }
 
+interface CommentForm {
+  content: string;
+}
 export default function CommentItem({ comment }: CommentProps) {
   // console.log(comment);
 
-  const [isOpenCModeal, setOpenCModal] = useState(false);
+  const { user } = useGetProfile();
 
+  const [isOpenCModeal, setOpenCModal] = useState(false);
+  console.log(comment);
   //삭제
   const deleteBtn = useMutation({
     mutationFn: ({ commentId, lpId }: LpDeleteDto) => {
@@ -48,7 +54,7 @@ export default function CommentItem({ comment }: CommentProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<CommentForm>();
 
   const onEditSubmit = (data: { content: string }) => {
     editBtn.mutate({
@@ -114,17 +120,19 @@ export default function CommentItem({ comment }: CommentProps) {
         </div>
 
         {/* 옵션버튼임 */}
-        <div className="ml-auto">
-          <button
-            className=""
-            onClick={() => {
-              setOpenCModal((pre) => !pre);
-              // console.log(comment.id);
-            }}
-          >
-            <img src="/option.svg" alt="더보기" className="size-5" />
-          </button>
-        </div>
+        {user?.id === comment?.authorId && (
+          <div className="ml-auto">
+            <button
+              className=""
+              onClick={() => {
+                setOpenCModal((pre) => !pre);
+                // console.log(comment.id);
+              }}
+            >
+              <img src="/option.svg" alt="더보기" className="size-5" />
+            </button>
+          </div>
+        )}
         {/* 옵션메뉴 */}
         {isOpenCModeal && (
           <div className=" absolute right-2  top-8 ml-auto  mt-1  flex gap-2 bg-black w-fit p-2 rounded-2xl z-10">
