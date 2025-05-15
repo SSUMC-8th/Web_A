@@ -13,6 +13,7 @@ export const useCreateLp = () => {
             lpData,
         }: {
             file: File | null;
+            //CreateLpDto에서 thumbnail 제거
             lpData: Omit<CreateLpDto, 'thumbnail'>;
         }) => {
             let imageUrl = '';

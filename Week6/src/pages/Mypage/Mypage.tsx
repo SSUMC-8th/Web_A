@@ -9,7 +9,7 @@ import { useGetUsers } from './hooks/useGetUsers';
 
 function Mypage() {
     const { data: myInfo } = useGetUsers();
-    const user = myInfo?.data; // null-safe
+    const user = myInfo?.data;
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
 
