@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import RoutePaths from "../../router/routePaths";
 import { deleteUser } from "../../api/Delete/user";
 import ConfirmModal from "../Modal/ConfirmModal";
@@ -12,7 +12,6 @@ type SidebarProps = {
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate();
 
   // 바깥 클릭 시 닫힘 처리
   useEffect(() => {
@@ -41,7 +40,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
     try {
       await deleteUser();
       alert("탈퇴가 완료되었습니다.");
-      navigate(RoutePaths.MAIN);
+      window.location.href = "/";
     } catch (error) {
       alert(error);
     }
