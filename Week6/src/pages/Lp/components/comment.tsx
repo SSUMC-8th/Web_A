@@ -13,8 +13,8 @@ function Comment({ lpId, comment }: CommentProps) {
     const { myInfo } = useAuth();
     const isMyComment = myInfo?.data.id === comment.author.id;
 
-    const [isEditing, setIsEditing] = useState(false);
-    const [editedContent, setEditedContent] = useState(comment.content);
+    const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [editedContent, setEditedContent] = useState<string>(comment.content);
 
     const { mutate: deleteComment } = useDeleteComments();
     const { mutate: changeComment } = usePatchComments();
@@ -23,7 +23,7 @@ function Comment({ lpId, comment }: CommentProps) {
         deleteComment({ lpId, commentId: comment.id });
 
     const handleSaveEdit = () => {
-        if (editedContent.trim() === comment.content) {
+        if (editedContent.trim() === comment.content || !editedContent) {
             setIsEditing(false);
             return; // 변동 없으면 서버 호출 생략
         }

@@ -1,10 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { getMyInfo } from '../../../apis/auth';
 import { ResponseMyInfoDto } from '../../../types/auth';
-import { useAuth } from '../../../context/AuthContext';
 
 export const useGetUsers = () => {
-    const { myInfo } = useAuth();
     return useQuery<ResponseMyInfoDto>({
         queryKey: ['users'],
         queryFn: getMyInfo,

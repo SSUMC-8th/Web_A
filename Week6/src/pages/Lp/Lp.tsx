@@ -15,42 +15,35 @@ import ROUTES from '../../constants/routes';
 import { useToggleLike } from './hooks/useToggleLike';
 
 function Lp() {
-    /* ──────────────── 1) 기본 훅 · 파라미터 */
     const navigate = useNavigate();
     const { myInfo } = useAuth();
     const { lpId } = useParams<{ lpId: string }>();
     const id = Number(lpId);
 
-    /* ──────────────── 2) React Query – 데이터 */
     const { data, isPending, isError } = useQuery({
         queryKey: ['lpDetail', id],
         queryFn: () => getLpDetail(id),
         enabled: Number.isFinite(id),
     });
 
-    /* ──────────────── 3) React Query – 변이 */
     const { mutate: patchLp } = usePatchLp();
     const { mutate: deleteLp } = useDeleteLp();
     const { mutate: toggleLike } = useToggleLike();
 
-    /* ──────────────── 4) 컴포넌트 상태 (편집용) */
     const [isEditing, setIsEditing] = useState(false);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [file, setFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState('');
 
-    /* ──────────────── 5) early-return : 유효성·로딩·에러 */
     if (!Number.isFinite(id)) return <ErrorMessage />;
     if (isPending) return <LoadingSpinner />;
     if (isError || !data?.data) return <ErrorMessage />;
 
-    /* ──────────────── 6) 파싱한 LP 데이터 */
     const lp = data.data;
     const isMyLp = lp.authorId === myInfo?.data.id;
     const alreadyLiked = lp.likes.some((u) => u.userId === myInfo?.data.id);
 
-    /* 편집 상태 초기화 (첫 edit 클릭 시) */
     const startEdit = () => {
         setIsEditing(true);
         setTitle(lp.title);
@@ -59,7 +52,6 @@ function Lp() {
         setFile(null);
     };
 
-    /* ──────────────── 7) 핸들러 함수 */
     const handleDeleteLp = () => {
         deleteLp(lp.id, {
             onSuccess: () => navigate(ROUTES.HOME),

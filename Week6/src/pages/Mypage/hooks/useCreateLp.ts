@@ -29,7 +29,7 @@ export const useCreateLp = () => {
             });
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['lpInfo'] });
+            queryClient.invalidateQueries({ queryKey: ['lp'] });
             console.log('성공!');
         },
         onError: (err) => {
