@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../apis/axios";
 import { useParams } from "react-router-dom";
-import useGetProfile from "../hooks/useGetProfile";
+// import useGetProfile from "../hooks/useGetProfile";
 import getTimePassed from "../utils/dateCalculate";
 import { QUERY_KEY } from "../constants/key";
 import Comment from "./Comment";
@@ -9,7 +9,7 @@ import Comment from "./Comment";
 export default function CardDetail() {
   const { id } = useParams();
   //   console.log(id);
-  const { user } = useGetProfile();
+  // const { user } = useGetProfile();
 
   const { data } = useQuery({
     queryKey: [QUERY_KEY.lpDetail, id],
@@ -21,9 +21,9 @@ export default function CardDetail() {
   return (
     <>
       <main className="max-w-3xl bg-gray-700 p-7 mx-auto">
-        <div>
+        <div className="relative">
           <div className=" flex items-center justify-between border-b-amber-50 border-b-2">
-            <div className="font-bold text-2xl">{user?.name}</div>
+            <div className="font-bold text-2xl">{data?.author?.name}</div>
             <p>
               {data?.createdAt
                 ? getTimePassed(new Date(data.createdAt))
@@ -31,7 +31,17 @@ export default function CardDetail() {
             </p>
           </div>
 
-          <div>{data?.author?.name}</div>
+          <div>{data?.title}</div>
+          {/* 삭제 수정 */}
+          <div className=" absolute right-0  top-8 ml-auto  mt-1  flex gap-3 w-fit pt-2 rounded-2xl z-10">
+            <button>
+              <img src="/delete.svg" alt="삭제" className="w-4 h-4" />
+            </button>
+            <button>
+              <img src="/pencil.svg" alt="수정" className="w-4 h-4" />
+            </button>
+          </div>
+
           <div className=" flex items-center justify-center">
             <div className="drop-shadow-[0_10px_15px_rgba(0,0,0,0.8)] bg-gray-600 my-6 p-7 relative">
               <img

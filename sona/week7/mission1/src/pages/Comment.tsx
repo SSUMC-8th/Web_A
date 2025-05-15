@@ -72,24 +72,26 @@ export default function Comment() {
       </div>
       {/* 입력창 */}
       <div className="flex items-center gap-2 mb-4">
-        <InputField
-          type="text"
-          placeholder="댓글을 입력하세요"
-          className="mb-0"
-          errorMsg={errors.content?.message}
-          register={{
-            ...register("content", {
-              required: "댓글은 필수입력입니다",
-              minLength: {
-                value: 2,
-                message: "댓글은 최소 2글자 이상이어야 합니다.",
-              },
-            }),
-          }}
-        />
+        <div className="relative w-full">
+          <InputField
+            type="text"
+            placeholder="댓글을 입력하세요"
+            className="mb-0"
+            errorMsg={errors.content?.message}
+            register={{
+              ...register("content", {
+                required: "댓글은 필수입력입니다",
+                minLength: {
+                  value: 2,
+                  message: "댓글은 최소 2글자 이상이어야 합니다.",
+                },
+              }),
+            }}
+          />
+        </div>
         <button
           className="bg-gray-400 rounded-xl px-3 shrink-0 py-2"
-          onClick={handleSubmit(addComment.mutate)}
+          onClick={handleSubmit((formData) => addComment.mutate(formData))}
         >
           작성
         </button>

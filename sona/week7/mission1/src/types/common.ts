@@ -41,3 +41,10 @@ export type CommentPatchDto = {
   commentId: number;
   content: string;
 };
+
+//userEditDto
+export type UserPatchDto = {
+  name: string;
+  bio?: string;
+  avatar?: string;
+};

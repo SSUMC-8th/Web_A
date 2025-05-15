@@ -80,18 +80,20 @@ export default function CommentItem({ comment }: CommentProps) {
               onSubmit={handleSubmit(onEditSubmit)}
               className="flex gap-2 mt-1"
             >
-              <InputField
-                placeholder="댓글을 수정하세요"
-                className="mb-0 "
-                errorMsg={errors.content?.message}
-                register={register("content", {
-                  required: "댓글은 필수입력입니다",
-                  minLength: {
-                    value: 2,
-                    message: "최소 2자 이상 입력해주세요",
-                  },
-                })}
-              />
+              <div className="relative w-full">
+                <InputField
+                  placeholder="댓글을 수정하세요"
+                  className="mb-0 "
+                  errorMsg={errors.content?.message}
+                  register={register("content", {
+                    required: "댓글은 필수입력입니다",
+                    minLength: {
+                      value: 2,
+                      message: "최소 2자 이상 입력해주세요",
+                    },
+                  })}
+                />
+              </div>
               <button
                 type="submit"
                 className="text-sm bg-blue-500 px-2 py-1 rounded shrink-0"
