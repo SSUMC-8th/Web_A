@@ -19,10 +19,22 @@ export default function CardDetail() {
 
   const deletePost = useMutation({
     mutationFn: (lpId) => {
-      return axiosInstance.delete(`v1/lps/${lpId}`);
+      return axiosInstance.delete(`/v1/lps/${lpId}`);
     },
     onSuccess: () => {
       alert("게시글이 삭제되었습니다");
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  const likeOn = useMutation({
+    mutationFn: (lpId) => {
+      return axiosInstance.post(`/v1/lps/${lpId}/likes`);
+    },
+    onSuccess: () => {
+      alert("좋아요가 추가되었습니다");
     },
     onError: (err) => {
       console.log(err);
@@ -85,7 +97,14 @@ export default function CardDetail() {
           </ul>
         </section>
         <div className="flex justify-center gap-3 items-center">
-          <img className="size-7" src="/detailHart.svg" alt="" />
+          {/* 좋아요 */}
+          <img
+            className="size-7"
+            src="/detailHart.svg"
+            alt=""
+            onClick={() => likeOn.mutate(lpId)}
+          />
+
           <p className="text-xl ">{data?.likes?.length}</p>
         </div>
         <Comment />
