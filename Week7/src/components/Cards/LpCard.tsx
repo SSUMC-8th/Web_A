@@ -21,7 +21,7 @@ const LpCard = ({ id, thumbnail, title, updatedAt, likes }: LpCardProps) => {
       return;
     }
 
-    navigate(RoutePaths.DETAIL.replace(":id", String(id)));
+    navigate(RoutePaths.DETAIL.replace(":lpId", String(id)));
   };
 
   return (

@@ -1,6 +1,8 @@
-import { useRef, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { useRef, useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import RoutePaths from "../../router/routePaths";
+import { deleteUser } from "../../api/Delete/user";
+import ConfirmModal from "../Modal/ConfirmModal";
 
 type SidebarProps = {
   isOpen: boolean;
@@ -9,6 +11,8 @@ type SidebarProps = {
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   // 바깥 클릭 시 닫힘 처리
   useEffect(() => {
@@ -33,8 +37,24 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
     };
   }, [isOpen, onClose]);
 
+  const handleDeleteUser = async () => {
+    try {
+      await deleteUser();
+      alert("탈퇴가 완료되었습니다.");
+      navigate(RoutePaths.MAIN);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <>
+      <ConfirmModal
+        isOpen={showModal}
+        onConfirm={handleDeleteUser}
+        onCancel={() => setShowModal(false)}
+        message="정말 탈퇴하시겠습니까?"
+      />
       {/* ✅ 오버레이 - 작은 화면일 때만 */}
       <div
         onClick={onClose}
@@ -62,7 +82,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             <NavLink to={RoutePaths.MYPAGE}>👤 마이페이지</NavLink>
           </div>
           <div className="pt-4 border-t border-gray-800">
-            <button className="text-sm text-gray-400 w-full text-center">
+            <button
+              onClick={() => setShowModal(true)}
+              className="text-sm text-gray-400 w-full text-center"
+            >
               탈퇴하기
             </button>
           </div>

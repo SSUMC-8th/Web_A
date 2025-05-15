@@ -28,7 +28,7 @@ const Navbar = ({ onSidebarToggle }: NavbarProps) => {
           to={RoutePaths.MAIN}
           className="text-cyan-600 font-bold text-xl"
         >
-          {`${data?.data.name}의 LP판`}
+          {`${data?.data.name ?? "누군가"}의 LP판`}
         </NavLink>
       </div>
       <div className="flex gap-3 items-center">

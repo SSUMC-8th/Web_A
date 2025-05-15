@@ -1,22 +1,60 @@
-// src/components/Comment/Comments.tsx
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { commentDetailDto } from "../../types/lp";
 import { PAGINATION_ORDER } from "../../enums/pagination";
 import CommentItem from "./CommentItem";
+import { usePatchComment } from "../../hook/mutations/usePatchComment";
+import { useDeleteComment } from "../../hook/mutations/useDeleteComment";
+import { useGetMyInfo } from "../../hook/queries/User/useGetMyInfo";
+import { useAuth } from "../../context/TokenContext/useAuth";
 
 export interface CommentsProps {
-  comments: commentDetailDto[]; // 댓글 전체 배열
-  order: PAGINATION_ORDER; // 현재 정렬 순서
-  setOrder: (o: PAGINATION_ORDER) => void; // 정렬 순서 변경 콜백
-  onPost: (text: string) => void; // 댓글 등록 콜백
+  comments: commentDetailDto[];
+  order: PAGINATION_ORDER;
+  setOrder: (o: PAGINATION_ORDER) => void;
+  onPost: (text: string) => void;
 }
 
 const Comments = ({ comments, order, setOrder, onPost }: CommentsProps) => {
-  const [input, setInput] = useState("");
+  const { accessToken } = useAuth();
+  const { lpId } = useParams<{ lpId: string }>();
+  const { data } = useGetMyInfo(accessToken);
+  const patchComment = usePatchComment();
+  const deleteComment = useDeleteComment();
 
+  const [input, setInput] = useState("");
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editText, setEditText] = useState("");
+
+  const startEdit = (comment: commentDetailDto) => {
+    setEditingId(comment.id);
+    setEditText(comment.content);
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditText("");
+  };
+
+  const submitEdit = () => {
+    if (!lpId || editingId === null) return;
+    patchComment.mutate({
+      lpId: Number(lpId),
+      commentId: editingId,
+      content: editText,
+    });
+    cancelEdit();
+  };
+
+  const handleDelete = (commentId: number) => {
+    if (!lpId) return;
+    deleteComment.mutate({ lpId: Number(lpId), commentId });
+  };
+
+  if (!data) return null;
   return (
     <section className="mt-12 space-y-6">
-      {/* 1. 제목 + 정렬 버튼 */}
+      {/* 제목 + 정렬 버튼 */}
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-semibold text-white">댓글</h2>
         <div className="flex space-x-2">
@@ -43,7 +81,7 @@ const Comments = ({ comments, order, setOrder, onPost }: CommentsProps) => {
         </div>
       </div>
 
-      {/* 2. 입력창 + 전송 */}
+      {/* 입력창 + 전송 */}
       <div className="flex items-center space-x-2">
         <input
           type="text"
@@ -55,7 +93,7 @@ const Comments = ({ comments, order, setOrder, onPost }: CommentsProps) => {
         <button
           onClick={() => {
             const text = input.trim();
-            if (text) {
+            if (text && lpId) {
               onPost(text);
               setInput("");
             }
@@ -66,10 +104,21 @@ const Comments = ({ comments, order, setOrder, onPost }: CommentsProps) => {
         </button>
       </div>
 
-      {/* 3. 댓글 리스트 */}
+      {/* 댓글 리스트 */}
       <ul className="space-y-0">
         {comments.map((c) => (
-          <CommentItem key={c.id} comment={c} />
+          <CommentItem
+            key={c.id}
+            comment={c}
+            myInfo={data}
+            isEditing={editingId === c.id}
+            editText={editText}
+            onEditClick={startEdit}
+            onDeleteClick={handleDelete}
+            onEditChange={setEditText}
+            onEditCancel={cancelEdit}
+            onEditSubmit={submitEdit}
+          />
         ))}
       </ul>
     </section>
