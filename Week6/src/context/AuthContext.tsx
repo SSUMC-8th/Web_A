@@ -9,6 +9,7 @@ import { RequestSigninDto, ResponseMyInfoDto } from '../types/auth';
 import { postLogout, postSignin, getMyInfo } from '../apis/auth';
 import { tokenStorage } from '../utils/tokenStorage';
 import ROUTES from '../constants/routes';
+import { useMutation } from '@tanstack/react-query';
 
 interface AuthContextType {
     accessToken: string | null;
@@ -44,29 +45,82 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         }
     };
 
-    const login = async (signinData: RequestSigninDto) => {
-        try {
-            const { data } = await postSignin(signinData);
+    // const login = async (signinData: RequestSigninDto) => {
+    //     try {
+    //         const { data } = await postSignin(signinData);
 
-            if (data) {
-                const newAccessToken = data.accessToken;
-                const newRefreshToken = data.refreshToken;
+    //         if (data) {
+    //             const newAccessToken = data.accessToken;
+    //             const newRefreshToken = data.refreshToken;
 
-                tokenStorage.setAccessToken(newAccessToken);
-                tokenStorage.setRefreshToken(newRefreshToken);
+    //             tokenStorage.setAccessToken(newAccessToken);
+    //             tokenStorage.setRefreshToken(newRefreshToken);
 
-                setAccessToken(newAccessToken);
-                setRefreshToken(newRefreshToken);
+    //             setAccessToken(newAccessToken);
+    //             setRefreshToken(newRefreshToken);
 
-                await loginWithToken();
+    //             await loginWithToken();
 
-                alert('로그인성공');
-                window.location.replace(ROUTES.HOME);
-            }
-        } catch (error) {
+    //             alert('로그인성공');
+    //             window.location.replace(ROUTES.HOME);
+    //         }
+    //     } catch (error) {
+    //         alert('로그인 실패');
+    //         console.error(error);
+    //     }
+    // };
+
+    // const login = () => {
+    //     return useMutation({
+    //         mutationFn: postSignin,
+    //         onSuccess: (data) => {
+    //             const newAccessToken = data.data.accessToken;
+    //             const newRefreshToken = data.data.refreshToken;
+
+    //             tokenStorage.setAccessToken(newAccessToken);
+    //             tokenStorage.setRefreshToken(newRefreshToken);
+
+    //             setAccessToken(newAccessToken);
+    //             setRefreshToken(newRefreshToken);
+
+    //             loginWithToken();
+
+    //             alert('로그인성공');
+    //             window.location.replace(ROUTES.HOME);
+    //         },
+    //         onError: (e) => {
+    //             alert('로그인실패');
+    //             console.error(e);
+    //         },
+    //     });
+    // };
+
+    const { mutateAsync: useLogin } = useMutation({
+        mutationFn: postSignin,
+        onSuccess: (data) => {
+            const newAccessToken = data.data.accessToken;
+            const newRefreshToken = data.data.refreshToken;
+
+            tokenStorage.setAccessToken(newAccessToken);
+            tokenStorage.setRefreshToken(newRefreshToken);
+
+            setAccessToken(newAccessToken);
+            setRefreshToken(newRefreshToken);
+
+            loginWithToken();
+
+            alert('로그인 성공');
+            window.location.replace(ROUTES.HOME);
+        },
+        onError: (e) => {
             alert('로그인 실패');
-            console.error(error);
-        }
+            console.error(e);
+        },
+    });
+
+    // Promise<void> 타입을 만족시키기 위해 명시적으로 래핑x`
+    const login = async (signinData: RequestSigninDto): Promise<void> => {
+        await useLogin(signinData);
     };
 
     const logout = async () => {
