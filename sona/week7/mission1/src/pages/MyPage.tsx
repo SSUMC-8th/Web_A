@@ -70,7 +70,7 @@ const MyPage = () => {
                 <div className="">
                   <div className="relative">
                     <InputField
-                      className="mt-3"
+                      className="mt-[2px]"
                       errorMsg={errors.name?.message}
                       placeholder="이름을 입력해주세요"
                       register={register("name", {
@@ -111,7 +111,7 @@ const MyPage = () => {
             )}
           </div>
           <button
-            className="mb-auto pt-5 shrink-0"
+            className="mb-auto pt-[10px] shrink-0"
             type="button"
             onClick={() => setIsEdit((pre) => !pre)}
           >
