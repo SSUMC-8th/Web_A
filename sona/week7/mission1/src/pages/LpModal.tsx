@@ -99,6 +99,7 @@ export default function LpModal({
       alert(isEdit ? "수정 완료" : "추가 완료");
       onSubmitSuccess?.();
       onClose();
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.lpDetail, lpId] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.lps] });
     },
     onError: (err) => console.error(err),
