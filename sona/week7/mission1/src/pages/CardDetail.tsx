@@ -32,11 +32,10 @@ export default function CardDetail() {
       console.log(err);
     },
   });
+  const hasLike = data?.likes?.some((item) => item.userId === user?.id);
 
   const likeToggleBtn = useMutation({
     mutationFn: (lpId) => {
-      const hasLike = data?.likes?.some((item) => item.userId === user?.id);
-
       if (hasLike) {
         return axiosInstance.delete(`/v1/lps/${lpId}/likes`);
       } else {
@@ -114,7 +113,7 @@ export default function CardDetail() {
           {/* 좋아요 */}
           <img
             className="size-7"
-            src="/detailHart.svg"
+            src={hasLike ? "/detailHart.svg" : "/emptyHart.svg"}
             alt=""
             onClick={() => likeToggleBtn.mutate(lpId)}
           />
