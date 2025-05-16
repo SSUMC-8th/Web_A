@@ -5,6 +5,7 @@ import axiosInstance from "../apis/axios";
 import { QUERY_KEY } from "../constants/key";
 import LpModal from "./LpModal";
 import { Tag } from "../types/lp";
+import useGetLpDetail from "../hooks/useGetLpDetail";
 
 export default function LpDetailEdit() {
   const { id } = useParams();
@@ -12,12 +13,7 @@ export default function LpDetailEdit() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(true);
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: [QUERY_KEY.lpDetail, lpId],
-    queryFn: () => axiosInstance.get(`/v1/lps/${lpId}`),
-    select: (res) => res.data.data,
-    enabled: !!lpId,
-  });
+  const { data, isLoading, isError } = useGetLpDetail(lpId);
 
   if (isLoading) return <p className="text-center mt-10">로딩 중...</p>;
   if (isError || !data)
