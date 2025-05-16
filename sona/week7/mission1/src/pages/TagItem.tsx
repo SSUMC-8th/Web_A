@@ -8,7 +8,9 @@ export function TagItem({
   return (
     <div className="flex mb-5 bg-gray-700 w-fit p-2 rounded-xl border-0 border-white gap-4">
       <div className=""> {tag}</div>
-      <button onClick={onRemove}>x</button>
+      <button onClick={onRemove} type="button">
+        x
+      </button>
     </div>
   );
 }
