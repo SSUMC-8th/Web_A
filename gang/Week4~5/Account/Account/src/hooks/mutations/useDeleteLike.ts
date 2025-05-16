@@ -58,7 +58,7 @@ function useDeleteLike() {
         context?.previousLpPost?.data.id,
       );
     },
-//onSettled는 요청이 끝난 후후 성공/실패 상관없이 실행
+//onSettled는 요청이 끝난 후 성공/실패 상관없이 실행
     onSettled:async(variables)=>{
       await queryClient.invalidateQueries({
         queryKey:[QueryKeys.lps,variables],

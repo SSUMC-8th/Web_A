@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
-import ArrangeButton from "../components/LpBoard/ArrangeButton";
 import { OrderEnum } from "../types/common";
 import useGetMyInfo from "../hooks/query/useGetMyInfo";
 import InfoBoard from "../components/MyPage/InfoBoard";
 import { Check, Settings } from "lucide-react";
 import usePatchUsers from "../hooks/mutations/usePatchUsers";
+import { useGetMyLpList } from "../hooks/query/useGetMyLpList";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Lp } from "../types/lptype";
+import LpBoard from "../components/LpBoard/LpBoard";
+import ArrangeButton from "../components/ArrangeButton";
 
 const MyPage = () => {
+  const location = useLocation();
   const [order, setOrder] = useState<OrderEnum>(OrderEnum.ASC);
   const { data } = useGetMyInfo();
+  const navigate = useNavigate();
+  const { data: lps } = useGetMyLpList({ limit: 20, search: "", order });
+
   const me = data?.data;
   const defaultProfileImage =
     "https://cdn-icons-png.flaticon.com/512/847/847969.png";
@@ -18,30 +26,33 @@ const MyPage = () => {
   const [email, setEmail] = useState<string>("");
 
   useEffect(() => {
-  if (me) {
-    setName(me.name);
-    setBio(me.bio ?? "");
-    setEmail(me.email ?? "");
-  }
-}, [me]);
+    if (me) {
+      setName(me.name);
+      setBio(me.bio ?? "");
+      setEmail(me.email ?? "");
+    }
+  }, [me]);
   const { mutate } = usePatchUsers();
   const handlePatch = () => {
-    if (me?.name.trim()) {
-      try {
-        mutate({
-          name,
-          bio,
-          email,
-        });
-        setIsEditing(false);
-      } catch (error) {
-        console.error("프로필 수정 실패", error);
-      }
+    if (!name.trim()) {
+      alert("이름을 입력해주세요.");
+      return;
+    }
+    try {
+      mutate({
+        name,
+        bio,
+        email,
+      });
+      setIsEditing(false);
+    } catch (error) {
+      console.error("프로필 수정 실패", error);
     }
   };
+
   return (
     <div className="flex items-center justify-center h-full bg-black">
-      <div className="bg-gray-800 h-full w-full shadow-md rounded-xl p-8  ">
+      <div className="bg-black h-full w-full shadow-md rounded-xl p-8  ">
         <h2 className="text-2xl font-bold mb-6 text-center text-white">
           My Page
         </h2>
@@ -67,12 +78,14 @@ const MyPage = () => {
               />{" "}
               {isEditing ? (
                 <button
-                disabled={!me?.name.trim()} // 이름이 없으면 비활성화
+                  type="button"
+                  disabled={!name.trim()}
                   onClick={handlePatch}
-                  className={`rounded-2xl ${
-                    me?.name.trim() ? "bg-green-500" : "bg-black"
-                  } text-white`}>
-                <Check/>
+                  className={`flex items-center justify-center w-10 h-10 rounded-full
+                  ${name.trim() ? "bg-green-500" : "bg-gray-500"}  
+                  text-white`}
+                >
+                  <Check className="w-5 h-5" />
                 </button>
               ) : (
                 <Settings
@@ -84,6 +97,20 @@ const MyPage = () => {
           </div>
           <div className="w-full flex justify-end px-4 py-2">
             <ArrangeButton order={order} setOrder={setOrder} />
+          </div>
+          <div className="grid sm:grid-cols-3 md:grid-cols-5 items-center justify-center px-2 gap-2">
+            {lps?.data.data.map((lp: Lp) => (
+              <div key={lp.id} className="relative">
+                <LpBoard
+                  lp={lp}
+                  onClick={() =>
+                    navigate(`/lps/${lp.id}`, {
+                      state: { backgroundLocation: location },
+                    })
+                  }
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>

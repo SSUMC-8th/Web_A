@@ -1,6 +1,6 @@
 import { CursorBasedResponse } from "./common";
 
-export type LpCommentResponse=CursorBasedResponse<CommentDetail>
+export type ResponseLpCommentDto=CursorBasedResponse<CommentDetail>
 
 export type CommentDetail = {
   id: number;
@@ -26,3 +26,13 @@ export type RequestCommentDto ={
   content : string
 }
 
+export interface useCommentProps{
+    commentId:number,
+    lpId:number,
+}
+
+export type RequestPatchCommentDto={
+  content:string,
+  commentId: number,
+  lpId:number
+}

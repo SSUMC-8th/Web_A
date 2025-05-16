@@ -1,4 +1,3 @@
-import ArrangeButton from "../LpBoard/ArrangeButton";
 import { OrderEnum } from "../../types/common";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
@@ -9,6 +8,7 @@ import LpCommentSkeleton from "./LpCommentSkeleton";
 import LpCommentInput from "./LpCommentInput";
 import { LpId } from "../../types/lptype";
 import useGetMyInfo from "../../hooks/query/useGetMyInfo";
+import ArrangeButton from "../ArrangeButton";
 
 interface LpCommentListProps {
   lpId: LpId;

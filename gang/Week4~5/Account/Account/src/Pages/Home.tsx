@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import LpBoardSkeleton from "../components/LpBoard/LpBoardSkeleton";
 import { OrderEnum } from "../types/common";
-import ArrangeButton from "../components/LpBoard/ArrangeButton";
+import ArrangeButton from "../components/ArrangeButton";
 
 function Home() {
   const location = useLocation();

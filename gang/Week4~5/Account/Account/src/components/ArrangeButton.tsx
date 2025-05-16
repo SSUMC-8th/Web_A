@@ -1,4 +1,4 @@
-import { OrderEnum } from "../../types/common";
+import { OrderEnum } from "../types/common";
 
 interface ArrangeButtonProps {
   order: OrderEnum;
@@ -19,7 +19,7 @@ const ArrangeButton = ({order, setOrder}: ArrangeButtonProps) => {
             : "bg-white text-black"
         }`}
       >
-        오래된순
+        최신순
       </button>
       <button
         type="button"
@@ -32,7 +32,7 @@ const ArrangeButton = ({order, setOrder}: ArrangeButtonProps) => {
             : "bg-white text-black"
         }`}
       >
-        최신순
+        오래된순
       </button>
     </div>
   );

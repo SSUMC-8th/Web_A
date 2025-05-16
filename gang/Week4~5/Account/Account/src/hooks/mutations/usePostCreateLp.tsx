@@ -9,7 +9,7 @@ function usePostCreateLp() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: [QueryKeys.newLps, data.data.id],
-        exact: true,
+        exact: false
       });
     },
   });

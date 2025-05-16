@@ -1,21 +1,21 @@
-import { postLogin, postLogout } from "../apis/auth";
+import {  postLogout } from "../apis/auth";
 import { getMyInfo } from "../apis/user";
 import { LOCAL_STORAGE_KEY } from "../constants/key";
 import useLocalStorage from "../hooks/useLocalStorage";
-import { RequestLoginDto, UserInfo } from "../types/auth";
+import {  UserInfo } from "../types/auth";
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 
 interface AuthContextType {
   accessToken: string | null;
   refreshToken: string | null;
   isLoggedIn: boolean;
-  login: (loginData: RequestLoginDto) => Promise<void>;
   logout: () => Promise<void>;
   username: string | null;
   setUsername: (username: string | null) => void;
   userInfo: UserInfo | null;
   setUserInfo: (userInfo: UserInfo | null) => void;
   getmyinfo: () => void;
+  setAuthInfo: (data: { accessToken: string; refreshToken: string; username: string }) => void;
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -25,10 +25,10 @@ export const AuthContext = createContext<AuthContextType>({
   username: null,
   userInfo: null,
   setUsername: () => {},
-  login: async () => {},
   logout: async () => {},
   setUserInfo: () => {},
   getmyinfo: async () => {},
+  setAuthInfo: () =>{},
 });
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
@@ -65,48 +65,38 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     getUsernameFromStorage()
   );
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-  const login = async (loginData: RequestLoginDto) => {
-    try {
-      const { data } = await postLogin(loginData);
+   const setAuthInfo = (data: { accessToken: string; refreshToken: string; username: string }) => {
+    setAccessToken(data.accessToken);
+    setRefreshToken(data.refreshToken);
+    setUsername(data.username);
 
-      if (data) {
-        const newAccessToken = data.accessToken;
-        const newRefreshToken = data.refreshToken;
-        const newUsername = data.name;
-        setAccessToken(newAccessToken);
-        setRefreshToken(newRefreshToken);
-        setUsername(newUsername);
+    setAccessTokenInStorage(data.accessToken);
+    setRefreshTokenInStorage(data.refreshToken);
+    setUsernameInStorage(data.username);
 
-        setUsernameInStorage(newUsername);
-        setAccessTokenInStorage(newAccessToken);
-        setRefreshTokenInStorage(newRefreshToken);
-        setIsLoggedIn(true);
-
-        alert("로그인 성공");
-      }
-    } catch (error) {
-      console.error("로그인 실패", error);
-    }
+    setIsLoggedIn(true);
   };
+
 
   const logout = async () => {
-    try {
-      await postLogout();
-      removeAccessTokenFromStorage();
-      removeRefreshTokenFromStorage();
-      removeUsernameFromStorage();
+  try {
+    await postLogout();
 
-      setAccessToken(null);
-      setRefreshToken(null);
-      setUsername(null);
-      setIsLoggedIn(false);
+    removeAccessTokenFromStorage();
+    removeRefreshTokenFromStorage();
+    removeUsernameFromStorage();
 
-      alert("로그아웃 성공");
-      window.location.href = "/login";
-    } catch (error) {
-      console.error("로그아웃 실패", error);
-    }
-  };
+    setAccessToken(null);
+    setRefreshToken(null);
+    setUsername(null);
+    setIsLoggedIn(false);
+
+    console.log("로그아웃 성공");
+  } catch (error) {
+    console.error("로그아웃 실패", error);
+  }
+};
+
 
   const getmyinfo = async () => {
     try {
@@ -123,7 +113,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         accessToken,
         refreshToken,
         username,
-        login,
+        setAuthInfo,
         logout,
         isLoggedIn,
         userInfo,

@@ -13,13 +13,15 @@ interface usePostCreateCommentProps{
 function usePostCreateComment() {
   return useMutation({
     mutationFn: ({ lpId, body }: usePostCreateCommentProps) => postCreateComment(lpId, body),
-    onSuccess: (data) => {
+    onSuccess: (variables) => {
       queryClient.invalidateQueries({
-        queryKey: [QueryKeys.lpComment, data.id]
+        queryKey: [QueryKeys.lpComment, variables.lpId],
+      });
+      queryClient.refetchQueries({
+        queryKey: [QueryKeys.lpComment, variables.lpId],
       });
     },
   });
 }
-
 
 export default usePostCreateComment;

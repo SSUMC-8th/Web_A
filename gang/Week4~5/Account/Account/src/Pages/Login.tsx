@@ -4,10 +4,13 @@ import { UserLoginInfo, validateLogin } from "../utils/validate";
 import GoogleButton from "../components/Login/GoogleButton";
 import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
+import usePostLogin from "../hooks/mutations/usePostLogin";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login, accessToken } = useAuth();
+  const {setAuthInfo} = useAuth();
+  const {mutate} = usePostLogin();
+  const { accessToken } = useAuth();
   const { values, errors, touched, getInputProps } = useForm<UserLoginInfo>({
     initialValue: {
       email: "",
@@ -22,15 +25,20 @@ const Login = () => {
     }
   },[navigate, accessToken]);
 
-  const handleSubmit = async () => {
-    console.log(values);
-    try {
-      await login(values);
-      navigate("/mypage");
-    } catch (error) {
-      alert(error);
-    }
-  };
+const handleSubmit = () => {
+  mutate(values, {
+    onSuccess: (data) => {
+      const { accessToken, refreshToken, name } = data.data;
+      setAuthInfo({ accessToken, refreshToken, username: name });
+      alert("로그인 성공");
+    },
+    onError: (error) => {
+      console.error("로그인 실패", error);
+      alert("로그인 실패했습니다.");
+    },
+  });
+};
+
 
   const isDisabled: boolean =
     Object.values(errors || {}).some((error) => error.length > 0) ||
