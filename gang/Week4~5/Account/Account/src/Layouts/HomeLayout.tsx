@@ -1,12 +1,10 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import Sidebar from "../components/SideBar";
 import { useEffect, useState } from "react";
-import LpDetail from "../components/LpDetail/LpDetail";
+import LpAddButton from "../components/NewLp/LpAddButton";
 
 function HomeLayout() {
-  const location = useLocation();
-  const state = location.state as { backgroundLocation?: Location };
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
   useEffect(() => {
@@ -23,7 +21,7 @@ function HomeLayout() {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []); // 창 사이즈 줄면 사이드 바 사라짐짐
+  }, []); // 창 사이즈 줄면 사이드 바 사라짐
   return (
     <div className="h-dvh flex flex-col ">
       <header>
@@ -48,9 +46,8 @@ function HomeLayout() {
           } bg-black flex-1 overflow-y-auto`}
         >
           <Outlet />
-          {state?.backgroundLocation && <LpDetail />}
-          {/* LpDetail을 컴포넌트처럼 사용 */}
         </main>
+          <LpAddButton />
       </div>
       <footer className="bg-black text-white"></footer>
     </div>

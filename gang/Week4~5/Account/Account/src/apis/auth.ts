@@ -2,7 +2,6 @@ import {
   RequestLoginDto,
   RequestRegisterDto,
   ResponseLoginDto,
-  ResponseMyInfoDto,
   ResponseRegisterDto,
   RequestRefreshDTO,
   ResponseRefreshDTO,
@@ -29,10 +28,6 @@ export const postLogout = async (): Promise<ResponseLogoutDto> => {
   return data;
 };
 
-export const getMyInfo = async (): Promise<ResponseMyInfoDto> => {
-  const { data } = await axiosInstance.get("/v1/users/me");
-  return data;
-};
 
 export const postRefresh = async (
   body: RequestRefreshDTO

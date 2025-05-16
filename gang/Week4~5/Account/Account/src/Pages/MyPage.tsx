@@ -1,39 +1,118 @@
 import { useEffect, useState } from "react";
-import { getMyInfo } from "../apis/auth";
-import { ResponseMyInfoDto } from "../types/auth";
+import { OrderEnum } from "../types/common";
+import useGetMyInfo from "../hooks/query/useGetMyInfo";
+import InfoBoard from "../components/MyPage/InfoBoard";
+import { Check, Settings } from "lucide-react";
+import usePatchUsers from "../hooks/mutations/usePatchUsers";
+import { useGetMyLpList } from "../hooks/query/useGetMyLpList";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Lp } from "../types/lptype";
+import LpBoard from "../components/LpBoard/LpBoard";
+import ArrangeButton from "../components/ArrangeButton";
 
 const MyPage = () => {
-  const [userInfo, setUserInfo] = useState<ResponseMyInfoDto>();
+  const location = useLocation();
+  const [order, setOrder] = useState<OrderEnum>(OrderEnum.ASC);
+  const { data } = useGetMyInfo();
+  const navigate = useNavigate();
+  const { data: lps } = useGetMyLpList({ limit: 20, search: "", order });
+
+  const me = data?.data;
+  const defaultProfileImage =
+    "https://cdn-icons-png.flaticon.com/512/847/847969.png";
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [name, setName] = useState<string>("");
+  const [bio, setBio] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
 
   useEffect(() => {
-    const getData = async () => {
-      const response = await getMyInfo();
-      setUserInfo(response);
-      console.log(response);
-    };
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) getData();
-  }, []);
+    if (me) {
+      setName(me.name);
+      setBio(me.bio ?? "");
+      setEmail(me.email ?? "");
+    }
+  }, [me]);
+  const { mutate } = usePatchUsers();
+  const handlePatch = () => {
+    if (!name.trim()) {
+      alert("이름을 입력해주세요.");
+      return;
+    }
+    try {
+      mutate({
+        name,
+        bio,
+        email,
+      });
+      setIsEditing(false);
+    } catch (error) {
+      console.error("프로필 수정 실패", error);
+    }
+  };
+
   return (
-    <div className="flex items-center justify-center h-screen bg-black">
-      <div className="bg-black shadow-md rounded-xl p-8 w-full max-w-md">
+    <div className="flex items-center justify-center h-full bg-black">
+      <div className="bg-black h-full w-full shadow-md rounded-xl p-8  ">
         <h2 className="text-2xl font-bold mb-6 text-center text-white">
           My Page
         </h2>
-        {userInfo ? (
-          <div className="space-y-4 text-white">
+
+        <div className="flex flex-col">
+          <div className="space-y-4 text-white flex flex-row justify-center items-center gap-2">
             <div>
-              <p className="text-sm">이름</p>
-              <p className="text-lg font-medium">{userInfo.data.name}</p>
+              <img
+                src={me?.avatar || defaultProfileImage}
+                alt="프로필 사진"
+                className="w-32 h-32 rounded-full object-cover "
+              />
             </div>
-            <div>
-              <p className="text-sm">이메일</p>
-              <p className="text-lg font-medium">{userInfo.data.email}</p>
+            <div className="flex flex-row gap-2 text-white ">
+              <InfoBoard
+                isEditing={isEditing}
+                name={name}
+                bio={bio}
+                email={email}
+                setName={setName}
+                setBio={setBio}
+                setEmail={setEmail}
+              />{" "}
+              {isEditing ? (
+                <button
+                  type="button"
+                  disabled={!name.trim()}
+                  onClick={handlePatch}
+                  className={`flex items-center justify-center w-10 h-10 rounded-full
+                  ${name.trim() ? "bg-green-500" : "bg-gray-500"}  
+                  text-white`}
+                >
+                  <Check className="w-5 h-5" />
+                </button>
+              ) : (
+                <Settings
+                  onClick={() => setIsEditing(true)}
+                  className=" rounded-full bg-transparent text-white"
+                />
+              )}
             </div>
           </div>
-        ) : (
-          <p className="text-center text-gray-500">로딩 중...</p>
-        )}
+          <div className="w-full flex justify-end px-4 py-2">
+            <ArrangeButton order={order} setOrder={setOrder} />
+          </div>
+          <div className="grid sm:grid-cols-3 md:grid-cols-5 items-center justify-center px-2 gap-2">
+            {lps?.data.data.map((lp: Lp) => (
+              <div key={lp.id} className="relative">
+                <LpBoard
+                  lp={lp}
+                  onClick={() =>
+                    navigate(`/lps/${lp.id}`, {
+                      state: { backgroundLocation: location },
+                    })
+                  }
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

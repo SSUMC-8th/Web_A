@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import DeleteAccountModal from "./DeleteAccountModal";
 
 interface ISideBar {
   isOpen: boolean;
   onClose: () => void;
 }
 export default function Sidebar({ isOpen, onClose }: ISideBar) {
+  const [isDeleteModalOPen, setIsDeleteModalOpen] = useState<boolean>(false);
   return (
     <div
       className={`
@@ -26,8 +29,16 @@ export default function Sidebar({ isOpen, onClose }: ISideBar) {
 
       {/* 하단 버튼 */}
       <div className="pt-4 border-t border-gray-600">
-        <button className="text-white">탈퇴하기</button>
+        <button
+          className="text-white"
+          onClick={() => setIsDeleteModalOpen(true)}
+        >
+          탈퇴하기
+        </button>
       </div>
+      {isDeleteModalOPen && (
+        <DeleteAccountModal onClose={() => setIsDeleteModalOpen(false)} />
+      )}
     </div>
   );
 }

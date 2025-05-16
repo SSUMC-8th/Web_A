@@ -3,38 +3,52 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { postRegister } from "../apis/auth";
 import { useNavigate } from "react-router-dom";
-import schema from "../schema/schema";
-import RegiBlank from "../components/RegiBlank";
+import RegiBlank from "../components/Registration/RegistrationInput"
 import { useState } from "react";
+import ProfileImage from "../components/Registration/ProfileImage";
+import { useImageUploader } from "../hooks/useImageUploader";
+import { RegistrationSchema } from "../schema/schema";
 
-export type FormFields = z.infer<typeof schema>;
+
+
+
+export type registrationFormFields = z.infer<typeof RegistrationSchema>;
 const Registration = () => {
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
   const handleNext = () => {
     setStep((prev) => prev + 1);
   };
+  
+//프로필 사진
+const defaultImage = "https://cdn-icons-png.flaticon.com/512/847/847969.png";
 
-  const {
-    register,
-    watch,
-    handleSubmit,
+const {
+  register,
+  watch,
+  handleSubmit,
+  setValue,
     formState: { errors, isSubmitting },
-  } = useForm<FormFields>({
+  } = useForm<registrationFormFields>({
     defaultValues: {
       name: "",
       email: "",
       password: "",
       passwordCheck: "",
+      avatar: defaultImage
     },
-    resolver: zodResolver(schema),
+    resolver: zodResolver(RegistrationSchema),
     mode: "onBlur",
   });
-  
+
+const { handleImageChange } = useImageUploader(defaultImage, setValue, "avatar");
+
+
   const emailValue = watch("email");
   const passwordValue = watch("password");
   const passwordCheckValue = watch("passwordCheck");
   const nameValue = watch("name"); // 이메일 실시간
+  const avatarValue = watch("avatar");
 
   const isStepValid = () => {
     if (step === 0) return emailValue && !errors.email;
@@ -44,8 +58,9 @@ const Registration = () => {
     return false;
   };
 
-  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+  const onSubmit: SubmitHandler<registrationFormFields> = async (data) => {
     const { passwordCheck, ...rest } = data;
+    console.log("rest", rest);
     const response = await postRegister(rest);
     console.log(response);
     navigate("/login");
@@ -62,11 +77,6 @@ const Registration = () => {
             {"<"}
           </button>
           <h1 className="text-white  text-center ">회원가입</h1>
-        </div>
-        <div className="flex items-center w-full ">
-          <div className="flex-grow border-t border-white"></div>
-          <span className="mx-4 px-3 text-white">OR</span>
-          <div className="flex-grow border-t border-white"></div>
         </div>
         <div className="text-white text-sm"></div>
         {step == 0 && (
@@ -97,7 +107,11 @@ const Registration = () => {
           </div>
         )}
         {step >= 2 && (
-          <div>
+          <div className="flex flex-col items-center justify-center gap-2">
+            <ProfileImage
+              previewUrl={avatarValue}
+              onImage={handleImageChange}
+            />
             <RegiBlank
               register={register}
               errors={errors}
