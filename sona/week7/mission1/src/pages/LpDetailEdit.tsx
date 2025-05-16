@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import axiosInstance from "../apis/axios";
-import { QUERY_KEY } from "../constants/key";
+
 import LpModal from "./LpModal";
 import { Tag } from "../types/lp";
 import useGetLpDetail from "../hooks/useGetLpDetail";
@@ -30,9 +28,9 @@ export default function LpDetailEdit() {
             thumbnail: data.thumbnail,
             tags: data.tags.map((t: Tag) => t.name), // tags가 [{ id, name }] 형태라면
           }}
-          onClose={() => navigate(-1)}
+          onClose={() => setIsModalOpen(false)}
           onSubmitSuccess={() => {
-            navigate(`/lps/${lpId}`);
+            navigate(-1);
           }}
         />
       )}
