@@ -4,7 +4,6 @@ import { loginSchema, LoginFields } from '../../schemas/login.schema';
 import { useAuth } from '../../context/AuthContext';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ROUTES from '../../constants/routes';
 import { API_AUTH } from '../../constants/api';
 
 function LoginPage() {
@@ -28,8 +27,6 @@ function LoginPage() {
 
     const onSubmit = async (data: LoginFields) => {
         await login(data);
-        alert('로그인성공');
-        navigate(ROUTES.HOME);
     };
 
     const navigateToGoogleLogin = () => {

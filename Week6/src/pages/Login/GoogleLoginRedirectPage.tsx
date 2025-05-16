@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { LOCAL_STORAGE_KEY } from '../../constants/key';
-import { localStorageUtil } from '../../utils/localStorageUtil';
 import ROUTES from '../../constants/routes';
+import { tokenStorage } from '../../utils/tokenStorage';
 
 const GoogleLoginRedirectPage = () => {
     useEffect(() => {
@@ -11,14 +11,8 @@ const GoogleLoginRedirectPage = () => {
         const refreshToken = urlParams.get(LOCAL_STORAGE_KEY.refreshToken);
 
         if (accessToken && refreshToken) {
-            localStorageUtil.setItem(
-                LOCAL_STORAGE_KEY.accessToken,
-                accessToken,
-            );
-            localStorageUtil.setItem(
-                LOCAL_STORAGE_KEY.refreshToken,
-                refreshToken,
-            );
+            tokenStorage.setAccessToken(accessToken);
+            tokenStorage.setRefreshToken(refreshToken);
             window.location.href = ROUTES.HOME;
         }
     }, []);

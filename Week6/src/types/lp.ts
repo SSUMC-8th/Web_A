@@ -1,3 +1,5 @@
+import { CommonResponse } from './common';
+
 export type Tag = { id: number; name: string };
 export type Like = { id: number; userId: number; lpId: number };
 export type Author = {
@@ -45,6 +47,8 @@ export type ResponseLpDetailDto = {
     data: LpDetailItem;
 };
 
+export type ResponsePatchLpDto = CommonResponse<LpItem>;
+
 export type CommentAuthor = Author;
 export type CommentItem = {
     id: number;
@@ -67,4 +71,50 @@ export type ResponseCommentDto = {
     statusCode: number;
     message: string;
     data: CommentDataDto;
+};
+
+export type ResponsePostCommentDto = {
+    status: boolean;
+    message: string;
+    statusCode: number;
+    data: {
+        id: number;
+        content: string;
+        lpId: number;
+        authorId: number;
+        createdAt: string;
+        updatedAt: string;
+    };
+};
+
+export type ResponsePatchCommentDto = CommonResponse<{ message: string }>;
+
+export type CreateLpDto = {
+    title: string;
+    content: string;
+    thumbnail?: string;
+    tags: string[];
+    published?: boolean;
+};
+
+export type patchLpDto = CreateLpDto & {
+    lpId: number;
+};
+
+export type CreatedLpItem = {
+    id: number;
+    title: string;
+    content: string;
+    thumbnail: string;
+    published: boolean;
+    authorId: number;
+    createdAt: string;
+    updatedAt: string;
+};
+
+export type ResponseCreateLpDto = {
+    status: boolean;
+    message: string;
+    statusCode: number;
+    data: CreatedLpItem;
 };

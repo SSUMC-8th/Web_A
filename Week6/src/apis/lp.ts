@@ -1,9 +1,13 @@
-import { API_COMMENTS, API_LPS } from '../constants/api';
+import { API_COMMENTS, API_LIKES, API_LPS } from '../constants/api';
 import { SortOrder } from '../constants/sort';
 import {
     ResponseLpDto,
     ResponseLpDetailDto,
     ResponseCommentDto,
+    CreateLpDto,
+    ResponsePostCommentDto,
+    ResponsePatchCommentDto,
+    patchLpDto,
 } from '../types/lp';
 import { privateAxios, publicAxios } from './axiosInstance';
 
@@ -25,6 +29,7 @@ export const getLpInfo = async ({
             order,
         },
     });
+    console.log(data);
     return data;
 };
 
@@ -36,7 +41,7 @@ export const getLpDetail = async (
 };
 
 interface GetCommentsParms extends GetLpInfoParams {
-    lpId: number | string;
+    lpId: number;
 }
 
 export const getComments = async ({
@@ -49,5 +54,101 @@ export const getComments = async ({
         API_COMMENTS.LIST(lpId),
         { params: { cursor, limit, order } },
     );
+    return data;
+};
+
+export const postComment = async ({
+    lpId,
+    content,
+}: {
+    lpId: number;
+    content: string;
+}) => {
+    const { data } = await privateAxios.post<ResponsePostCommentDto>(
+        API_COMMENTS.CREATE(lpId),
+        { content },
+    );
+    return data;
+};
+
+export const patchComment = async ({
+    lpId,
+    commentId,
+    content,
+}: {
+    lpId: number;
+    commentId: number;
+    content: string;
+}) => {
+    const { data } = await privateAxios.patch<ResponsePostCommentDto>(
+        API_COMMENTS.UPDATE(lpId, commentId),
+        { content },
+    );
+    return data;
+};
+
+export const deleteComment = async ({
+    lpId,
+    commentId,
+}: {
+    lpId: number;
+    commentId: number;
+}) => {
+    const { data } = await privateAxios.delete<ResponsePatchCommentDto>(
+        API_COMMENTS.DELETE(lpId, commentId),
+    );
+
+    return data;
+};
+
+export const postLp = async ({
+    title,
+    content,
+    thumbnail,
+    tags,
+    published = true,
+}: CreateLpDto) => {
+    const { data } = await privateAxios.post(API_LPS.CREATE, {
+        title,
+        content,
+        thumbnail,
+        tags,
+        published,
+    });
+
+    return data;
+};
+
+export const patchLp = async ({
+    lpId,
+    title,
+    content,
+    thumbnail,
+    tags,
+    published = true,
+}: patchLpDto) => {
+    const { data } = await privateAxios.patch(API_LPS.UPDATE(lpId), {
+        title,
+        content,
+        thumbnail,
+        tags,
+        published,
+    });
+
+    return data;
+};
+
+export const deleteLp = async (lpId: number) => {
+    const { data } = await privateAxios.delete(API_LPS.DELETE(lpId));
+    return data;
+};
+
+export const postLike = async (lpId: number) => {
+    const { data } = await privateAxios.post(API_LIKES.LIKE(lpId));
+    return data;
+};
+
+export const deleteLike = async (lpId: number) => {
+    const { data } = await privateAxios.delete(API_LIKES.UNLIKE(lpId));
     return data;
 };
