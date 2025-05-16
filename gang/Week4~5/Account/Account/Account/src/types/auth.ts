@@ -42,13 +42,6 @@ export type ResponseMyInfoDto = CommonResponse<{
     createdAt: Date,
     updatedAt: Date,
 }>
-export type UserInfo = ResponseMyInfoDto['data'];
-
-export type RequestPatchMyInfoDto={
-    name: string,
-    bio: string,
-    email:string,
-}
 export type ResponseRefreshDTO = CommonResponse<{
     id:number,
     name:string,
@@ -59,22 +52,3 @@ export type ResponseRefreshDTO = CommonResponse<{
 export type RequestRefreshDTO = {
     refresh:string,
 }
-
-export type RequestCreateLpDto = {
-    title: string,
-    content: string, 
-    thumbnail: string,
-    tags: string[],
-    published: boolean,
-}
-
-export type ResponseCreateLpDto = CommonResponse<{
-    id:number,
-    title: string,
-    content: string, 
-    thumbnail: string,
-    published: boolean,
-    authorId:number,
-    createdAt: Date,
-    updatedAt: Date,
-}>

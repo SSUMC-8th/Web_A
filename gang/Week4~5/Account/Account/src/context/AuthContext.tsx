@@ -126,7 +126,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     </AuthContext.Provider>
   );
 };
-
 export const useAuth = () => {
   const context: AuthContextType = useContext(AuthContext);
   if (!context) {

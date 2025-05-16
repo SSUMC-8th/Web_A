@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import useGetLpDetail from "../../hooks/query/useGetLpDetail";
 import LoadingSpinner from "../LoadingSpinner";
 import { useEffect, useState } from "react";
-import { useAuth } from "../../context/AuthContext";
 import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
 import { Pencil, Trash } from "lucide-react";
@@ -15,6 +14,7 @@ import useGetMyInfo from "../../hooks/query/useGetMyInfo";
 import usePatchLp from "../../hooks/mutations/usePatchLp";
 import useDeleteLp from "../../hooks/mutations/useDeleteLp";
 import { Tags } from "../../types/lptype";
+import { useAuth } from "../../context/AuthContext";
 
 const LpDetail = () => {
   const { mutate: patchLp } = usePatchLp();
