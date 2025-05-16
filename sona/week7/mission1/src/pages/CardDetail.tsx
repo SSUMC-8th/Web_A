@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import getTimePassed from "../utils/dateCalculate";
 import Comment from "./Comment";
 
@@ -10,22 +10,23 @@ import { QUERY_KEY } from "../constants/key";
 
 export default function CardDetail() {
   const queryClient = useQueryClient();
-
+  const naviagte = useNavigate();
   const { id } = useParams();
   const lpId = Number(id);
   const { data } = useGetLpDetail(lpId);
-  // console.log(data);
 
   const { user } = useGetProfile();
+  console.log(user);
 
   // console.log(data);
 
   const deletePost = useMutation({
-    mutationFn: (lpId) => {
+    mutationFn: (lpId: number) => {
       return axiosInstance.delete(`/v1/lps/${lpId}`);
     },
     onSuccess: () => {
       alert("게시글이 삭제되었습니다");
+      naviagte(-1);
     },
     onError: (err) => {
       console.log(err);
@@ -46,11 +47,12 @@ export default function CardDetail() {
       console.log(err);
     },
   });
-  console.log(user?.id);
-  console.log(data?.authorId);
+  console.log("userid", user?.id);
+  console.log("글쓴이id", data?.authorId);
   // if (!data || !user) {
   //   return <div>Loading</div>;
   // }
+
   return (
     <>
       <main className="max-w-3xl bg-gray-700 p-7 mx-auto">

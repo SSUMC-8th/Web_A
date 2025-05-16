@@ -8,7 +8,7 @@ interface LpProps {
 
 export default function LpCard({ item }: LpProps) {
   //   console.log(item.thumbnail);
-  //   console.log(item);
+  // console.log(item);
   return (
     <>
       <div className="relative overflow-hidden rounded-2xl shadow-lg cursor-pointer transition-transform duration-300 hover:scale-120">
