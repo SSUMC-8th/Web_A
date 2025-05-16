@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { patchComment } from '../../../apis/lp';
+import { QUERY_KEY } from '../../../constants/key';
 
 export const usePatchComments = () => {
     const queryClient = useQueryClient();
@@ -8,7 +9,7 @@ export const usePatchComments = () => {
         mutationFn: patchComment,
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries({
-                queryKey: ['comments', variables.lpId],
+                queryKey: [QUERY_KEY.comments, variables.lpId],
             });
         },
         onError: (err) => {

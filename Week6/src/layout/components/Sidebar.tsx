@@ -59,7 +59,6 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }: SidebarProps) => {
             </button>
             {isModalOpen && (
                 <Modal
-                    open={isModalOpen}
                     message="정말 탈퇴하시겠습니까?"
                     onConfirm={deleteUser}
                     onCancel={closeModal}

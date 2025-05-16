@@ -1,20 +1,16 @@
-import {
-    createContext,
-    PropsWithChildren,
-    useContext,
-    useEffect,
-    useState,
-} from 'react';
+import { createContext, PropsWithChildren, useContext, useState } from 'react';
 import { RequestSigninDto, ResponseMyInfoDto } from '../types/auth';
-import { postLogout, postSignin, getMyInfo } from '../apis/auth';
+import { postLogout, postSignin } from '../apis/auth';
 import { tokenStorage } from '../utils/tokenStorage';
 import ROUTES from '../constants/routes';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useGetUsers } from './useGetUsers';
+import { QUERY_KEY } from '../constants/key';
 
 interface AuthContextType {
     accessToken: string | null;
     refreshToken: string | null;
-    myInfo: ResponseMyInfoDto | null;
+    myInfo: ResponseMyInfoDto | undefined;
     login: (signinData: RequestSigninDto) => Promise<void>;
     logout: () => Promise<void>;
 }
@@ -22,28 +18,22 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType>({
     accessToken: null,
     refreshToken: null,
-    myInfo: null,
+    myInfo: undefined,
     login: async () => {},
     logout: async () => {},
 });
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
+    const queryClient = useQueryClient();
+
     const [accessToken, setAccessToken] = useState<string | null>(
         tokenStorage.getAccessToken(),
     );
     const [refreshToken, setRefreshToken] = useState<string | null>(
         tokenStorage.getRefreshToken(),
     );
-    const [myInfo, setMyInfo] = useState<ResponseMyInfoDto | null>(null);
 
-    const loginWithToken = async () => {
-        try {
-            const userInfo = await getMyInfo();
-            setMyInfo(userInfo);
-        } catch (error) {
-            console.error('유저 정보 불러오기 실패', error);
-        }
-    };
+    const { data: myInfo } = useGetUsers();
 
     const { mutateAsync: useLogin } = useMutation({
         mutationFn: postSignin,
@@ -57,7 +47,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
             setAccessToken(newAccessToken);
             setRefreshToken(newRefreshToken);
 
-            loginWithToken();
+            queryClient.invalidateQueries({ queryKey: [QUERY_KEY.users] });
 
             alert('로그인 성공');
             window.location.replace(ROUTES.HOME);
@@ -68,7 +58,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         },
     });
 
-    // Promise<void> 타입을 만족시키기 위해 명시적으로 래핑x`
     const login = async (signinData: RequestSigninDto): Promise<void> => {
         await useLogin(signinData);
     };
@@ -80,7 +69,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
             setAccessToken(null);
             setRefreshToken(null);
-            setMyInfo(null);
+
+            queryClient.removeQueries({ queryKey: [QUERY_KEY.users] });
 
             alert('로그아웃되었습니다.');
         },
@@ -93,12 +83,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     const logout = async (): Promise<void> => {
         await useLogout();
     };
-
-    useEffect(() => {
-        if (accessToken) {
-            loginWithToken();
-        }
-    }, [accessToken]);
 
     return (
         <AuthContext.Provider

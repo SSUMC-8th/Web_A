@@ -1,11 +1,10 @@
-// src/pages/Mypage.tsx
 import { ChangeEvent, useEffect, useState } from 'react';
 import LogoutButton from '../../components/LogoutButton/LogoutButton';
 import { IMAGE_PATH } from '../../constants/images';
 import LpCreateModal from './components/LpCreateModal';
 import { postImagePrivate } from '../../apis/image';
 import { usePatchUsers } from './hooks/usePatchUsers';
-import { useGetUsers } from './hooks/useGetUsers';
+import { useGetUsers } from '../../context/useGetUsers';
 
 function Mypage() {
     const { data: myInfo } = useGetUsers();

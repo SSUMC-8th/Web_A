@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postLike, deleteLike } from '../../../apis/lp';
+import { useAuth } from '../../../context/AuthContext';
+import { QUERY_KEY } from '../../../constants/key';
 
 interface LikeParams {
     lpId: number;
@@ -8,45 +10,56 @@ interface LikeParams {
 
 export const useToggleLike = () => {
     const queryClient = useQueryClient();
+    const { myInfo } = useAuth();
+    const myUserId = myInfo?.data.id;
 
     return useMutation({
         mutationFn: ({ lpId, isLiked }: LikeParams) => {
             return isLiked ? deleteLike(lpId) : postLike(lpId);
         },
 
-        // Optimistic update
         onMutate: ({ lpId, isLiked }) => {
-            queryClient.cancelQueries({ queryKey: ['lpDetail', lpId] });
+            queryClient.cancelQueries({ queryKey: [QUERY_KEY.lpDetail, lpId] });
 
-            const previous = queryClient.getQueryData(['lpDetail', lpId]);
+            const previous = queryClient.getQueryData([
+                QUERY_KEY.lpDetail,
+                lpId,
+            ]);
+            if (!previous || !myUserId) return { previous };
 
-            queryClient.setQueryData(['lpDetail', lpId], (old: any) => {
+            queryClient.setQueryData([QUERY_KEY.lpDetail, lpId], (old: any) => {
                 if (!old) return old;
+
+                const updatedLikes = isLiked
+                    ? old.data.likes.filter((u: any) => u.userId !== myUserId)
+                    : [...old.data.likes, { userId: myUserId }];
+
+                //devTool보고 똑같은 Data형식 return해야 함.
                 return {
                     ...old,
-                    isLiked: !isLiked,
-                    likeCount: old.likeCount + (isLiked ? -1 : 1),
+                    data: {
+                        ...old.data,
+                        likes: updatedLikes,
+                    },
                 };
             });
-
-            console.log('옵티미스틱 성공이ㅛㅁ');
 
             return { previous };
         },
 
-        // 실패 시 롤백
-        onError: (_, __, context) => {
+        onError: (_err, _variables, context) => {
             if (context?.previous) {
                 queryClient.setQueryData(
-                    ['lpDetail', context.previous],
+                    [QUERY_KEY.lpDetail, context.previous],
                     context.previous,
                 );
             }
         },
 
-        // 서버와 동기화
         onSettled: (_, __, { lpId }) => {
-            queryClient.invalidateQueries({ queryKey: ['lpDetail', lpId] });
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEY.lpDetail, lpId],
+            });
         },
     });
 };

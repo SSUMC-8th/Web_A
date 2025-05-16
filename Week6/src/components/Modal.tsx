@@ -1,15 +1,9 @@
-// src/components/common/Modal.tsx
 import { PropsWithChildren } from 'react';
 import { createPortal } from 'react-dom';
 
 interface ModalProps extends PropsWithChildren {
-    /** 열림‧닫힘 여부 */
-    open: boolean;
-    /** 본문 메시지 */
     message: string;
-    /** “예” 클릭 시 실행 */
     onConfirm: () => void;
-    /** “아니오” 클릭 시 실행 */
     onCancel: () => void;
     /** 버튼 레이블(기본값: “예”) */
     confirmText?: string;
@@ -18,15 +12,14 @@ interface ModalProps extends PropsWithChildren {
 }
 
 export default function Modal({
-    open,
     message,
     onConfirm,
     onCancel,
     confirmText = '예',
     cancelText = '아니오',
 }: ModalProps) {
-    if (!open) return null;
-
+    // DOM 계층 구조 바깥에 렌더링
+    // createPortal(ReactNode, DOMElement)
     return createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center">
             {/* overlay */}
@@ -51,7 +44,7 @@ export default function Modal({
                     <button
                         type="button"
                         onClick={onCancel}
-                        className="flex-1 py-2 text-white transition bg-pink-500 rounded-md hover:bg-pink-600"
+                        className="flex-1 py-2 text-white transition bg-red-500 rounded-md hover:bg-red-600"
                     >
                         {cancelText}
                     </button>

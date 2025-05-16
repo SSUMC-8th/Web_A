@@ -1,12 +1,12 @@
 import LogoutButton from '../../../../components/LogoutButton/LogoutButton';
-import { useGetUsers } from '../../../../pages/Mypage/hooks/useGetUsers';
+import { useGetUsers } from '../../../../context/useGetUsers';
 
 function UserMenu() {
     const { data: myInfo } = useGetUsers();
 
     return (
         <div>
-            <span className="text-base font-bold text-blue-700">
+            <span className="mr-2 text-base font-bold text-blue-700">
                 {myInfo?.data.name}
             </span>
             <span className="pr-8">님 반갑습니다.</span>

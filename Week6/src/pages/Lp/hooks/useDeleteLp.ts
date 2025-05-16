@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteLp } from '../../../apis/lp';
+import { QUERY_KEY } from '../../../constants/key';
 
 export const useDeleteLp = () => {
     const queryClient = useQueryClient();
@@ -8,7 +9,7 @@ export const useDeleteLp = () => {
         mutationFn: deleteLp,
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries({
-                queryKey: ['lp', variables],
+                queryKey: [QUERY_KEY.lpInfo, variables],
             });
         },
         onError: (err) => {

@@ -13,6 +13,7 @@ import { useDeleteLp } from './hooks/useDeleteLp';
 import { useAuth } from '../../context/AuthContext';
 import ROUTES from '../../constants/routes';
 import { useToggleLike } from './hooks/useToggleLike';
+import { QUERY_KEY } from '../../constants/key';
 
 function Lp() {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ function Lp() {
     const id = Number(lpId);
 
     const { data, isPending, isError } = useQuery({
-        queryKey: ['lpDetail', id],
+        queryKey: [QUERY_KEY.lpDetail, id],
         queryFn: () => getLpDetail(id),
         enabled: Number.isFinite(id),
     });
@@ -91,6 +92,8 @@ function Lp() {
             },
         );
     };
+
+    console.log(lp.likes);
 
     return (
         <main className="flex flex-col items-center gap-8 px-4 pb-12">

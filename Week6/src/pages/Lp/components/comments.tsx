@@ -7,6 +7,7 @@ import ErrorMessage from '../../../components/ErrorMessage';
 import { SortOrder, SortOrderLabel } from '../../../constants/sort';
 import { useCreateComments } from '../hooks/useCreateComments';
 import Comment from './comment';
+import { QUERY_KEY } from '../../../constants/key';
 
 const CommentSkeleton = () => <BulletList />;
 
@@ -22,7 +23,7 @@ function Comments({ lpId }: { lpId: number }) {
         hasNextPage,
         isFetchingNextPage,
     } = useInfiniteQuery<ResponseCommentDto, Error>({
-        queryKey: ['comments', lpId, order],
+        queryKey: [QUERY_KEY.comments, lpId, order],
         queryFn: ({ pageParam = null }) =>
             getComments({
                 lpId,

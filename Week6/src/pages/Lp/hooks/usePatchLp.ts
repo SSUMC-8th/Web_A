@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { patchLp } from '../../../apis/lp';
+import { QUERY_KEY } from '../../../constants/key';
 
 export const usePatchLp = () => {
     const queryClient = useQueryClient();
@@ -8,7 +9,7 @@ export const usePatchLp = () => {
         mutationFn: patchLp,
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries({
-                queryKey: ['lpDetail', variables.lpId],
+                queryKey: [QUERY_KEY.lpDetail, variables.lpId],
             });
         },
         onError: (err) => {
