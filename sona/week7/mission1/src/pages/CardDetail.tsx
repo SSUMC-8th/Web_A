@@ -16,7 +16,7 @@ export default function CardDetail() {
   const { data } = useGetLpDetail(lpId);
 
   const { user } = useGetProfile();
-  console.log(user);
+  // console.log(user);
 
   // console.log(data);
 
@@ -33,12 +33,17 @@ export default function CardDetail() {
     },
   });
 
-  const likeOn = useMutation({
+  const likeToggleBtn = useMutation({
     mutationFn: (lpId) => {
-      return axiosInstance.post(`/v1/lps/${lpId}/likes`);
+      const hasLike = data?.likes?.some((item) => item.userId === user?.id);
+
+      if (hasLike) {
+        return axiosInstance.delete(`/v1/lps/${lpId}/likes`);
+      } else {
+        return axiosInstance.post(`/v1/lps/${lpId}/likes`);
+      }
     },
     onSuccess: () => {
-      // alert("좋아요가 추가되었습니다");
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY.lpDetail, lpId],
       });
@@ -47,11 +52,8 @@ export default function CardDetail() {
       console.log(err);
     },
   });
-  console.log("userid", user?.id);
-  console.log("글쓴이id", data?.authorId);
-  // if (!data || !user) {
-  //   return <div>Loading</div>;
-  // }
+  // console.log("userid", user?.id);
+  // console.log("글쓴이id", data?.authorId);
 
   return (
     <>
@@ -114,7 +116,7 @@ export default function CardDetail() {
             className="size-7"
             src="/detailHart.svg"
             alt=""
-            onClick={() => likeOn.mutate(lpId)}
+            onClick={() => likeToggleBtn.mutate(lpId)}
           />
 
           <p className="text-xl ">{data?.likes?.length}</p>
