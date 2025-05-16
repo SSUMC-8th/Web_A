@@ -55,7 +55,7 @@ export default function Home() {
       >
         <img
           src="/whitePlus.svg"
-          alt="더하기"
+          alt="등록"
           className="size-13 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
         />
       </div>
@@ -63,9 +63,9 @@ export default function Home() {
       {/* 등록 모달 */}
       {isModalOpen && (
         <LpModal
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => setIsModalOpen(false)} //모달 직접 닫기
           onSubmitSuccess={() => {
-            setIsModalOpen(false);
+            setIsModalOpen(false); //성공후 모달 닫음
           }}
         />
       )}

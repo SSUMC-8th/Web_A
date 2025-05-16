@@ -33,7 +33,7 @@ export default function LpModal({
   lpId,
   initialData,
 }: LpModalProps) {
-  const isEdit = !!lpId;
+  const isEdit = !!lpId; //수정 mode
   const [tagInputValue, setTagInputValue] = useState("");
   const [tags, setTags] = useState<string[]>(initialData?.tags ?? []);
   const [preview, setPreview] = useState<string | null>(
@@ -43,6 +43,7 @@ export default function LpModal({
 
   const AddTag = () => {
     const tagNode = tagInputValue.trim();
+
     if (tagNode && !tags.includes(tagNode)) {
       setTags([...tags, tagNode]);
     }
@@ -63,7 +64,7 @@ export default function LpModal({
   });
 
   const mutationFn = async () => {
-    const formValues = getValues();
+    const formValues = getValues(); //formData
     const postBody: LpBodyPost = {
       title: formValues.lpName,
       content: formValues.lpContent,
@@ -91,6 +92,7 @@ export default function LpModal({
       : axiosInstance.post(`/v1/lps`, postBody);
   };
 
+  //Lp
   const addOrUpdateLp = useMutation({
     mutationFn,
     onSuccess: () => {
@@ -105,8 +107,8 @@ export default function LpModal({
   const imageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setPreview(URL.createObjectURL(file));
-      fileInput.current = file;
+      setPreview(URL.createObjectURL(file)); //미리보기
+      fileInput.current = file; //업로드파일 저장
     }
   };
 
@@ -135,7 +137,7 @@ export default function LpModal({
                 accept="image/*"
                 id="image-upload"
                 {...register("file")}
-                onChange={imageChange}
+                onChange={imageChange} //이미지 바뀌면 미리보기
                 className="hidden"
               />
               <img

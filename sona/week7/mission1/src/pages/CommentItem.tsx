@@ -29,7 +29,9 @@ export default function CommentItem({ comment }: CommentProps) {
       return axiosInstance.delete(`/v1/lps/${lpId}/comments/${commentId}`);
     },
     onSuccess: () => {
-      alert("댓글이 삭제되었습니다");
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.comment],
+      });
     },
     onError: (err) => {
       console.log(err);
@@ -44,7 +46,8 @@ export default function CommentItem({ comment }: CommentProps) {
       });
     },
     onSuccess: () => {
-      alert("댓글이 수정되었습니다");
+      setEdit(false);
+      reset();
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY.comment],
       });
@@ -60,6 +63,7 @@ export default function CommentItem({ comment }: CommentProps) {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<CommentForm>();
 
   const onEditSubmit = (data: { content: string }) => {
@@ -114,7 +118,10 @@ export default function CommentItem({ comment }: CommentProps) {
               </button>
               <button
                 type="button"
-                onClick={() => setEdit(false)}
+                onClick={() => {
+                  setEdit(false);
+                  reset();
+                }}
                 className="text-sm bg-gray-500 px-2 py-1 rounded shrink-0"
               >
                 취소

@@ -45,7 +45,6 @@ export default function Comment() {
     mutationFn: (comment) =>
       axiosInstance.post(`/v1/lps/${lpId}/comments`, comment),
     onSuccess: () => {
-      alert("댓글작성 성공");
       reset();
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY.comment],
