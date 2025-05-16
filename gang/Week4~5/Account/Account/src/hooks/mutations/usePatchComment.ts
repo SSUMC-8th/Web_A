@@ -7,9 +7,9 @@ import { RequestPatchCommentDto, ResponseLpCommentDto } from "../../types/commen
 function usePatchComment() {
   return useMutation({
     mutationFn: (data: RequestPatchCommentDto): Promise<ResponseLpCommentDto> => patchLpComment(data),
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QueryKeys.lpComment, data.data.data.id],
+        queryKey: [QueryKeys.lpComment],
       });
     },
   });

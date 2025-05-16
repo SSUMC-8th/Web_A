@@ -63,7 +63,7 @@ const LpCommentList = ({ lpId }: LpCommentListProps) => {
         {comments?.pages
           ?.map((page) => page.data.data)
           ?.flat()
-          ?.map((comment: CommentDetail) => (
+        ?.map((comment: CommentDetail) => (
             <div key={comment.id} className="relative mb-4">
               <LpComment comment={comment} userId = {Number(me?.data.id)} />
             </div>

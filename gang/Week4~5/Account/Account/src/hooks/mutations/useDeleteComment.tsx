@@ -8,9 +8,9 @@ function useDeleteComment() {
   return useMutation({
     mutationFn: ({ commentId, lpId }: useCommentProps): Promise<ResponseLpCommentDto> =>
       deleteLpComment({ commentId, lpId }),
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QueryKeys.lpComment, data.data.data.id],
+        queryKey: [QueryKeys.lpComment],
       });
     },
   });

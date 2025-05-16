@@ -20,15 +20,6 @@ const LpDetail = () => {
   const { mutate: patchLp } = usePatchLp();
   const { mutate: deleteLp } = useDeleteLp();
 
-  // 삭제 핸들러
-  const handleDeleteLp = () => {
-    deleteLp(parsedLpId, {
-      onSuccess: () => {
-        navigate("/");
-      },
-    });
-  };
-
   //파라미터에서 lpId를 가져옴
   const { lpId } = useParams<{ lpId: string }>();
   const parsedLpId = Number(lpId);
@@ -99,6 +90,15 @@ const LpDetail = () => {
     },
   });
 };
+
+  // 삭제 핸들러
+  const handleDeleteLp = () => {
+    deleteLp(parsedLpId, {
+      onSuccess: () => {
+        navigate("/mypage");
+      },
+    });
+  };
   if (isLoading || !lp) {
     return <LoadingSpinner />;
   }
