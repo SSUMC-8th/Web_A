@@ -1,19 +1,20 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteUser } from '../../apis/users';
-import { QUERY_KEY } from '../../constants/key';
+
+import { deleteUser } from '#/apis/users';
+import { QUERY_KEY } from '#/constants/key';
 
 export const useDeleteUser = () => {
-    const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-    return useMutation({
-        mutationFn: deleteUser,
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: [QUERY_KEY.users],
-            });
-        },
-        onError: (err) => {
-            console.error('댓글 생성 실패', err);
-        },
-    });
+  return useMutation({
+    mutationFn: deleteUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.users],
+      });
+    },
+    onError: (err) => {
+      console.error('댓글 생성 실패', err);
+    },
+  });
 };

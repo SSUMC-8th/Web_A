@@ -14,7 +14,7 @@ import { privateAxios, publicAxios } from './axiosInstance';
 interface GetLpInfoParams {
   cursor?: number | null;
   limit?: number;
-  search?: string;
+  search?: string | undefined | null;
   order?: SortOrder.LATEST | SortOrder.OLDEST;
 }
 

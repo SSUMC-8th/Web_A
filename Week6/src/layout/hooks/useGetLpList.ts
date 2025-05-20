@@ -5,11 +5,13 @@ import { SortOrder } from '#/constants/sort';
 import { ResponseLpDto } from '#/types/lp';
 
 interface useGetLpListProps {
-  search?: string;
+  search?: string | null;
   order?: SortOrder;
+  //검색 시 전체데이터 받아오는 버그 방지
+  enabled?: boolean;
 }
 
-function useGetLpList({ search, order }: useGetLpListProps) {
+function useGetLpList({ search, order, enabled }: useGetLpListProps) {
   const data = useInfiniteQuery<ResponseLpDto, Error>({
     queryKey: ['lpInfo', search, order],
     queryFn: ({ pageParam = null }) =>
@@ -22,6 +24,7 @@ function useGetLpList({ search, order }: useGetLpListProps) {
     initialPageParam: null,
     getNextPageParam: (lastPage) =>
       lastPage.data.hasNext ? lastPage.data.nextCursor : undefined,
+    enabled,
   });
 
   return data;

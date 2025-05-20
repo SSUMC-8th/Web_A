@@ -15,12 +15,15 @@ import Lp from '#/pages/Lp/Lp';
 import Mypage from '#/pages/Mypage/Mypage';
 import SignupPage from '#/pages/SignUp/SignupPage';
 
+import SearchPage from './pages/SearchPage';
+
 const publicRoutes: RouteObject[] = [
   {
     path: ROUTES.HOME,
     element: <Layout />,
     children: [
       { path: ROUTES.HOME, element: <HomePage /> },
+      { path: ROUTES.SEARCH, element: <SearchPage /> },
       { path: ROUTES.LOGIN, element: <LoginPage /> },
       { path: ROUTES.SIGNUP, element: <SignupPage /> },
       {

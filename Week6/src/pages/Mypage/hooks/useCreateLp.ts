@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { postImagePrivate } from '../../../apis/image';
-import { postLp } from '../../../apis/lp';
-import { UploadImageDto } from '../../../types/image';
-import { CreateLpDto } from '../../../types/lp';
+import { postImagePrivate } from '#/apis/image';
+import { postLp } from '#/apis/lp';
+import { UploadImageDto } from '#/types/image';
+import { CreateLpDto } from '#/types/lp';
 
 export const useCreateLp = () => {
   const queryClient = useQueryClient();

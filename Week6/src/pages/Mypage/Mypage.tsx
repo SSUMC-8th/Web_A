@@ -1,9 +1,10 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
-import { postImagePrivate } from '../../apis/image';
-import LogoutButton from '../../components/LogoutButton/LogoutButton';
-import { IMAGE_PATH } from '../../constants/images';
-import { useGetUsers } from '../../context/useGetUsers';
+import { postImagePrivate } from '#/apis/image';
+import LogoutButton from '#/components/LogoutButton/LogoutButton';
+import { IMAGE_PATH } from '#/constants/images';
+import { useGetUsers } from '#/context/useGetUsers';
+
 import LpCreateModal from './components/LpCreateModal';
 import { usePatchUsers } from './hooks/usePatchUsers';
 

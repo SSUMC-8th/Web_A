@@ -1,4 +1,5 @@
-import { useAuth } from '../../../context/AuthContext';
+import { useAuth } from '#/context/AuthContext';
+
 import AuthLinks from './ui/AuthLinks';
 import NavLogo from './ui/NavLogo';
 import SearchBar from './ui/SearchBar';
