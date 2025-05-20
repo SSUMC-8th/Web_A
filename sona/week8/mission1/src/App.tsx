@@ -3,7 +3,7 @@ import "./App.css";
 import router from "./routes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "./context/AuthContext";
-// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export const client = new QueryClient();
 
@@ -18,7 +18,7 @@ function App() {
           />
         </div>
       </AuthProvider>
-      {/* {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />} */}
+      {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
   );
 }

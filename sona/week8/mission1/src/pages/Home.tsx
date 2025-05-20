@@ -8,16 +8,20 @@ import useGetInfiniteLpList from "../hooks/usegetInfiniteLpList";
 import { useInView } from "react-intersection-observer";
 import LpCard from "./LpCard";
 import { PAGENATION_ORDER } from "../enums/common";
+import useDebounce from "../hooks/useDebounce";
+import { SEATCH_DEBOUNCE_DELAY } from "../constants/delay";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState<PAGENATION_ORDER>(
     PAGENATION_ORDER.desc
   );
+  const [search, setSearch] = useState<string>("");
+  const deboundced = useDebounce(search, SEATCH_DEBOUNCE_DELAY);
 
   const { data, isFetching, hasNextPage, fetchNextPage } = useGetInfiniteLpList(
     5,
-    "",
+    deboundced,
     sortOrder
   );
 
@@ -36,7 +40,13 @@ export default function Home() {
     <>
       <div className="flex flex-col min-h-screen w-full">
         <SortComponent sortOrder={sortOrder} setSortOrder={setSortOrder} />
-
+        <input
+          type="text"
+          placeholder="입력하세요"
+          className=" border-white border-1 max-w-xs p-3"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
         <div className="px-15 py-5 min-h-[400px] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
           {allLps.map((item) => (
             <LpCard key={item.id} item={item} />

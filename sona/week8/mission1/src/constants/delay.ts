@@ -1,0 +1,1 @@
+export const SEATCH_DEBOUNCE_DELAY = 500;
