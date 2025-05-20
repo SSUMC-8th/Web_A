@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import CardDetail from "./pages/CardDetail";
 import Comment from "./pages/Comment";
 import LpDetailEdit from "./pages/LpDetailEdit";
+import ThrottlePage from "./pages/ThrottlePage";
 //로그인 필요없는 페이지
 const publicRoutes: RouteObject[] = [
   {
@@ -28,6 +29,10 @@ const publicRoutes: RouteObject[] = [
       {
         path: "signup",
         element: <SignUp />,
+      },
+      {
+        path: "throttle",
+        element: <ThrottlePage />,
       },
 
       { path: "v1/auth/google/callback", element: <GoogleLoginRedirectPage /> },
