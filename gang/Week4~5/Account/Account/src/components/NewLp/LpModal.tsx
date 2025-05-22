@@ -1,7 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useImageUploader } from "../../hooks/useImageUploader";
 import defaultLpImage from "../../assets/defaultLp.png";
-import LpImage from "./LpImage";
 import { LpSchema } from "../../schema/schema";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import LpInput from "./LpInput";
 import LpTagInput from "./LpTagInput";
 import usePostCreateLp from "../../hooks/mutations/usePostCreateLp";
+import LpThumbnail from "../ImageUploader";
 
 export type lpFormFields = z.infer<typeof LpSchema>;
 const LpModal = () => {
@@ -26,11 +26,8 @@ const LpModal = () => {
     mode: "onBlur",
   });
 
-  const { handleImageChange } = useImageUploader(
-    defaultLpImage,
-    setValue,
-    "thumbnail"
-  );
+ const handleImageChange = useImageUploader(defaultLpImage, setValue, "thumbnail");
+
   const thumbnailValue = watch("thumbnail");
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -61,10 +58,9 @@ const LpModal = () => {
             x
           </button>
         </div>
-        <div className="w-40 h-40 rounded-full overflow-hidden m-4">
-          <LpImage previewUrl={thumbnailValue} onImage={handleImageChange} />
+        <div>
+          <LpThumbnail previewUrl={thumbnailValue} defaultImage={thumbnailValue} onImage={handleImageChange} altText="Lp 이미지" id="lp-image"  />
         </div>
-
         <div className="p-6 w-full shadow-lg text-center  ">
           <LpInput register={register} field="title" placeholder="Lp Title" />
           <LpInput

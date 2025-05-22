@@ -15,36 +15,53 @@ import usePatchLp from "../../hooks/mutations/usePatchLp";
 import useDeleteLp from "../../hooks/mutations/useDeleteLp";
 import { Tags } from "../../types/lptype";
 import { useAuth } from "../../context/AuthContext";
+import { useImageUploader } from "../../hooks/useImageUploader";
+import { DEFAULT_PROFILE_IMAGE } from "../../constants/key";
+import ImageUploader from "../ImageUploader";
 
 const LpDetail = () => {
+  const navigate = useNavigate();
+  const [showComments, setShowComments] = useState(false);
   const { mutate: patchLp } = usePatchLp();
   const { mutate: deleteLp } = useDeleteLp();
+  const { username } = useAuth();
 
   //파라미터에서 lpId를 가져옴
   const { lpId } = useParams<{ lpId: string }>();
   const parsedLpId = Number(lpId);
-  const navigate = useNavigate();
-  const { username } = useAuth();
-  const [showComments, setShowComments] = useState(false);
 
+  //상대 시간 계산 함수
   function getRelativeTime(date: Date) {
     return formatDistanceToNow(new Date(date), { addSuffix: true, locale: ko });
-  } //상대 시간 계산 함수
+  }
+  //잘못된 ID면 이전 페이지
   useEffect(() => {
     if (!lpId || isNaN(parsedLpId)) {
       navigate(-1);
     }
   }, [lpId, parsedLpId, navigate]);
 
+  //lp와 user 정보 
   const { data: lp, isLoading, error } = useGetLpDetail(parsedLpId);
   const { data: me } = useGetMyInfo();
-
+  const stringId = String(lp?.data.id);
+  //lp 정보 수정
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [thumbnail, setThumbnail] = useState("");
   const [tags, setTags] = useState<Tags[]>([]);
   const [published, setPublished] = useState<boolean>(false);
+
+  //lp 썸네일 수정
+const handleImageChange = useImageUploader(
+  lp?.data.thumbnail ?? DEFAULT_PROFILE_IMAGE,
+   (field, value) => {
+    if (field === "thumbnail") setThumbnail(value);
+  },"thumbnail"
+);
+
+  
 
   useEffect(() => {
     if (lp?.data) {
@@ -57,7 +74,6 @@ const LpDetail = () => {
   }, [lp]);
 
   //lp좋아요 버튼
-
   const { mutate: likeMutate } = usePostLike();
   const { mutate: dislikeMutate } = useDeleteLike();
   const handleLikeLp = () => {
@@ -72,24 +88,28 @@ const LpDetail = () => {
       navigate(-1); // 배경 클릭 시 닫기
     }
   };
+
   // 수정 완료 핸들러
   const handleUpdateLp = () => {
-  patchLp({
-    lpId: parsedLpId,
-    body: {
-      title: title,
-      content: content,
-      thumbnail: thumbnail,
-      tags: tags.map((tag) => tag.name), 
-      published,
-    },
-  }, {
-    onSuccess: () => {
-      setIsEditing(false);
-      alert("수정 완료되었습니다!");
-    },
-  });
-};
+    patchLp(
+      {
+        lpId: parsedLpId,
+        body: {
+          title: title,
+          content: content,
+          thumbnail: thumbnail,
+          tags: tags.map((tag) => tag.name),
+          published,
+        },
+      },
+      {
+        onSuccess: () => {
+          setIsEditing(false);
+          alert("수정 완료되었습니다!");
+        },
+      }
+    );
+  };
 
   // 삭제 핸들러
   const handleDeleteLp = () => {
@@ -131,7 +151,7 @@ const LpDetail = () => {
             )}
 
             <div className="flex flex-row gap-2 ml-2">
-              {isEditing ? (
+              {(me?.data.id===lp.data.authorId)&&isEditing ? (
                 <button
                   onClick={handleUpdateLp}
                   className="bg-green-500 text-white px-3 py-1 rounded"
@@ -152,18 +172,14 @@ const LpDetail = () => {
           </div>
 
           {/* 썸네일 */}
-          {isEditing ? (
-            <input
-              value={thumbnail}
-              onChange={(e) => setThumbnail(e.target.value)}
-              className="text-black p-2 rounded w-full"
-            />
+          {(me?.data.id===lp.data.authorId)&&isEditing ? (
+            <ImageUploader previewUrl={"thumbnail"} onImage={handleImageChange} defaultImage={lp.data.thumbnail} altText={lp.data.title} id={stringId}/>
           ) : (
             <RotatingThumbnail imageUrl={lp.data.thumbnail} />
           )}
 
           {/* 내용 */}
-          {isEditing ? (
+          {(me?.data.id===lp.data.authorId)&&isEditing ? (
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}

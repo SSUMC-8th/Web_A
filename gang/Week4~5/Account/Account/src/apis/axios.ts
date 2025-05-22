@@ -78,7 +78,7 @@ axiosInstance.interceptors.response.use(
           //새 accessToken을 반환하여 다른 요청들이 이것을 사용할 수 있게 함.
           return data.data.accessToken;
         })()
-          .catch((error) => {
+          .catch(() => {
             const {removeItem:removeAccessToken}= useLocalStorage(LOCAL_STORAGE_KEY.accessToken);
             const {removeItem:removeRefreshToken}= useLocalStorage(LOCAL_STORAGE_KEY.refreshToken);
             removeAccessToken();
@@ -96,7 +96,7 @@ axiosInstance.interceptors.response.use(
         return axiosInstance.request(originalRequest);
       });
     }
-    //401 에러가 아닌 경우 그대로 오류 반환환
+    //401 에러가 아닌 경우 그대로 오류 반환
     return Promise.reject(error);
   }
 );

@@ -3,11 +3,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { postRegister } from "../apis/auth";
 import { useNavigate } from "react-router-dom";
-import RegiBlank from "../components/Registration/RegistrationInput"
+import RegistrationInput from "../components/Registration/RegistrationInput"
 import { useState } from "react";
 import ProfileImage from "../components/Registration/ProfileImage";
 import { useImageUploader } from "../hooks/useImageUploader";
 import { RegistrationSchema } from "../schema/schema";
+import { DEFAULT_PROFILE_IMAGE } from "../constants/key";
 
 
 
@@ -41,7 +42,7 @@ const {
     mode: "onBlur",
   });
 
-const { handleImageChange } = useImageUploader(defaultImage, setValue, "avatar");
+const handleImageChange = useImageUploader(defaultImage, setValue, "avatar");
 
 
   const emailValue = watch("email");
@@ -80,7 +81,7 @@ const { handleImageChange } = useImageUploader(defaultImage, setValue, "avatar")
         </div>
         <div className="text-white text-sm"></div>
         {step == 0 && (
-          <RegiBlank
+          <RegistrationInput
             register={register}
             errors={errors}
             blankName="email"
@@ -92,13 +93,13 @@ const { handleImageChange } = useImageUploader(defaultImage, setValue, "avatar")
             <div className="`w-2xs p-3 mb-2 border rounded-lg bg-gray-500 text-black">
               {emailValue}
             </div>
-            <RegiBlank
+            <RegistrationInput
               register={register}
               errors={errors}
               blankName="password"
               blankPlaceholder="비밀번호"
             />
-            <RegiBlank
+            <RegistrationInput
               register={register}
               errors={errors}
               blankName="passwordCheck"
@@ -111,8 +112,11 @@ const { handleImageChange } = useImageUploader(defaultImage, setValue, "avatar")
             <ProfileImage
               previewUrl={avatarValue}
               onImage={handleImageChange}
+              defaultImage={DEFAULT_PROFILE_IMAGE}
+              altText="프로필 이미지"
+              id="profile-image"
             />
-            <RegiBlank
+            <RegistrationInput
               register={register}
               errors={errors}
               blankName="name"
