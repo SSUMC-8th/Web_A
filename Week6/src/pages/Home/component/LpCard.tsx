@@ -2,8 +2,9 @@ import { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
+import { IMAGE_PATH } from '#/constants/images';
 import ROUTES from '#/constants/routes';
-import { LpItem } from '#/types/lp';
+import { LpItem } from '#/types/lps';
 
 import LpCardCover from './LpCardCover';
 import LpCardSkeleton from './LpCardSkeleton';
@@ -24,7 +25,7 @@ function LpCard({ lp }: LPCardProps) {
       {!loaded && <LpCardSkeleton />}
 
       <img
-        src={lp.thumbnail}
+        src={lp.thumbnail ?? IMAGE_PATH.LP}
         alt={lp.title}
         loading="lazy"
         onLoad={() => setLoaded(true)}

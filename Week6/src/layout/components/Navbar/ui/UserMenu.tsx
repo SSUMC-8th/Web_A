@@ -1,5 +1,5 @@
 import LogoutButton from '#/components/LogoutButton/LogoutButton';
-import { useGetUsers } from '#/context/useGetUsers';
+import { useGetUsers } from '#/features/users/hooks/useGetUsers';
 
 function UserMenu() {
   const { data: myInfo } = useGetUsers();

@@ -1,16 +1,16 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { deleteUser } from '#/apis/users';
+import { postComment } from '#/apis/comments';
 import { QUERY_KEY } from '#/constants/key';
 
-export const useDeleteUser = () => {
+export const useCreateComments = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: deleteUser,
-    onSuccess: () => {
+    mutationFn: postComment,
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY.users],
+        queryKey: [QUERY_KEY.comments, variables.lpId],
       });
     },
     onError: (err) => {

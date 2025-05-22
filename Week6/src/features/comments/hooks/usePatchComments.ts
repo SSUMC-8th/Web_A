@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { patchComment } from '#/apis/lp';
+import { patchComment } from '#/apis/comments';
 import { QUERY_KEY } from '#/constants/key';
 
 export const usePatchComments = () => {

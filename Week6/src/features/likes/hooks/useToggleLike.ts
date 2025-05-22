@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { deleteLike, postLike } from '#/apis/lp';
+import { deleteLike, postLike } from '#/apis/likes';
 import { QUERY_KEY } from '#/constants/key';
-import { useAuth } from '#/context/AuthContext';
+import { useGetUsers } from '#/features/users/hooks/useGetUsers';
 
 interface LikeParams {
   lpId: number;
@@ -11,7 +11,7 @@ interface LikeParams {
 
 export const useToggleLike = () => {
   const queryClient = useQueryClient();
-  const { myInfo } = useAuth();
+  const { data: myInfo } = useGetUsers();
   const myUserId = myInfo?.data.id;
 
   return useMutation({

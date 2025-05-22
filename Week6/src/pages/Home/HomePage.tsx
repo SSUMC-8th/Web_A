@@ -4,14 +4,13 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import ErrorMessage from '#/components/ErrorMessage';
 import { SortOrder, SortOrderLabel } from '#/constants/sort';
-import useGetLpList from '#/layout/hooks/useGetLpList';
-import { LpItem } from '#/types/lp';
+import useGetLpList from '#/features/lps/hooks/useGetLpList';
+import { LpItem } from '#/types/lps';
 
 import LpCard from './component/LpCard';
 
 function HomePage() {
   const [order, setOrder] = useState<SortOrder>(SortOrder.LATEST);
-  //queryClient는 컴포넌트마다 구현해야 하나?
   const queryClient = useQueryClient();
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 

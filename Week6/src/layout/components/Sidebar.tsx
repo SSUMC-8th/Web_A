@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Modal from '#/components/Modal';
 import ROUTES from '#/constants/routes';
 
-import { useDeleteUser } from '../hooks/useDeleteUser';
+import { useDeleteUser } from '../../features/users/hooks/useDeleteUser';
 
 interface SidebarProps {
   isSidebarOpen: boolean;

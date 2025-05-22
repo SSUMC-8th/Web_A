@@ -1,20 +1,20 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { postComment } from '#/apis/lp';
+import { patchLpDetail } from '#/apis/lps';
 import { QUERY_KEY } from '#/constants/key';
 
-export const useCreateComments = () => {
+export const usePatchLp = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: postComment,
+    mutationFn: patchLpDetail,
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY.comments, variables.lpId],
+        queryKey: [QUERY_KEY.lpDetail, variables.lpId],
       });
     },
     onError: (err) => {
-      console.error('댓글 생성 실패', err);
+      console.error('lp 수정 실패', err);
     },
   });
 };

@@ -6,12 +6,14 @@ import { useNavigate } from 'react-router-dom';
 
 import { API_AUTH } from '#/constants/api';
 import { useAuth } from '#/context/AuthContext';
+import useLogin from '#/features/auth/hooks/useLogin';
 import { LoginFields, loginSchema } from '#/schemas/login.schema';
 
 function LoginPage() {
-  const { login, accessToken } = useAuth();
+  const { accessToken, setAccessToken, setRefreshToken } = useAuth();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
+  const { mutate } = useLogin({ setAccessToken, setRefreshToken });
 
   const {
     register,
@@ -27,8 +29,8 @@ function LoginPage() {
     }
   }, [accessToken, navigate]);
 
-  const onSubmit = async (data: LoginFields) => {
-    await login(data);
+  const onSubmit = (data: LoginFields) => {
+    mutate(data);
   };
 
   const navigateToGoogleLogin = () => {

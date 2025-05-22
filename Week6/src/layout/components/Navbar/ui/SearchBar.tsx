@@ -4,9 +4,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { IMAGE_PATH } from '#/constants/images';
 import ROUTES from '#/constants/routes';
-import useDebounce from '#/layout/hooks/useDebounce';
-import useGetLpList from '#/layout/hooks/useGetLpList';
-import { LpItem } from '#/types/lp';
+import useGetLpList from '#/features/lps/hooks/useGetLpList';
+import useDebounce from '#/hooks/useDebounce';
+import { LpItem } from '#/types/lps';
 
 function SearchBar() {
   const [isOpenSearchBar, setIsOpenSearchBar] = useState(false);

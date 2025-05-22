@@ -5,21 +5,22 @@ import { HiHeart, HiOutlineHeart } from 'react-icons/hi2';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { postImagePrivate } from '#/apis/image';
-import { getLpDetail } from '#/apis/lp';
+import { getLpDetail } from '#/apis/lps';
 import ErrorMessage from '#/components/ErrorMessage';
 import LoadingSpinner from '#/components/LoadingSpinner';
 import { QUERY_KEY } from '#/constants/key';
 import ROUTES from '#/constants/routes';
-import { useAuth } from '#/context/AuthContext';
+import { useToggleLike } from '#/features/likes/hooks/useToggleLike';
+import { useDeleteLp } from '#/features/lps/hooks/useDeleteLp';
+import { usePatchLp } from '#/features/lps/hooks/usePatchLp';
+import { useGetUsers } from '#/features/users/hooks/useGetUsers';
+import useThrottle from '#/hooks/useThrottle';
 
 import Comments from './components/comments';
-import { useDeleteLp } from './hooks/useDeleteLp';
-import { usePatchLp } from './hooks/usePatchLp';
-import { useToggleLike } from './hooks/useToggleLike';
 
 function Lp() {
   const navigate = useNavigate();
-  const { myInfo } = useAuth();
+  const { data: myInfo } = useGetUsers();
   const { lpId } = useParams<{ lpId: string }>();
   const id = Number(lpId);
 
@@ -32,6 +33,7 @@ function Lp() {
   const { mutate: patchLp } = usePatchLp();
   const { mutate: deleteLp } = useDeleteLp();
   const { mutate: toggleLike } = useToggleLike();
+  const throttledToggleLike = useThrottle(toggleLike, 1000);
 
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState('');
@@ -44,7 +46,7 @@ function Lp() {
   if (isError || !data?.data) return <ErrorMessage />;
 
   const lp = data.data;
-  const isMyLp = lp.authorId === myInfo?.data.id;
+  const isMyLp = lp.author.id === myInfo?.data.id;
   const alreadyLiked = lp.likes.some((u) => u.userId === myInfo?.data.id);
 
   const startEdit = () => {
@@ -62,7 +64,7 @@ function Lp() {
   };
 
   const handleToggleLike = () => {
-    toggleLike({ lpId: id, isLiked: alreadyLiked ?? false });
+    throttledToggleLike({ lpId: id, isLiked: alreadyLiked ?? false });
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

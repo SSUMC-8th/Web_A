@@ -1,37 +1,30 @@
-import { API_AUTH, API_USERS } from '../constants/api';
+import { API_AUTH } from '../constants/api';
 import {
-    RequestSigninDto,
-    RequestSignupDto,
-    ResponseMyInfoDto,
-    ResponseSigninDto,
-    ResponseSignupDto,
+  RequestSigninDto,
+  RequestSignupDto,
+  ResponseSigninDto,
+  ResponseSignupDto,
 } from '../types/auth';
 import { privateAxios, publicAxios } from './axiosInstance';
 
 export const postSignup = async (
-    body: RequestSignupDto,
+  body: RequestSignupDto,
 ): Promise<ResponseSignupDto> => {
-    const { data } = await publicAxios.post(API_AUTH.SIGN_UP, body);
+  const { data } = await publicAxios.post(API_AUTH.SIGN_UP, body);
 
-    return data;
+  return data;
 };
 
 export const postSignin = async (
-    body: RequestSigninDto,
+  body: RequestSigninDto,
 ): Promise<ResponseSigninDto> => {
-    const { data } = await publicAxios.post(API_AUTH.SIGN_IN, body);
+  const { data } = await publicAxios.post(API_AUTH.SIGN_IN, body);
 
-    return data;
-};
-
-export const getMyInfo = async (): Promise<ResponseMyInfoDto> => {
-    const { data } = await privateAxios.get(API_USERS.GET_ME);
-
-    return data;
+  return data;
 };
 
 export const postLogout = async () => {
-    const { data } = await privateAxios.post(API_AUTH.SIGN_OUT);
+  const { data } = await privateAxios.post(API_AUTH.SIGN_OUT);
 
-    return data;
+  return data;
 };

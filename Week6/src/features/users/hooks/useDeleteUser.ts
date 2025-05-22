@@ -1,20 +1,20 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { postLike } from '#/apis/lp';
+import { deleteUsers } from '#/apis/users';
 import { QUERY_KEY } from '#/constants/key';
 
-export const usePostLike = () => {
+export const useDeleteUser = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: postLike,
-    onSuccess: (_, lpId) => {
+    mutationFn: deleteUsers,
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY.lpDetail, lpId],
+        queryKey: [QUERY_KEY.users],
       });
     },
     onError: (err) => {
-      console.error('좋아요 달기 실패', err);
+      console.error('댓글 생성 실패', err);
     },
   });
 };

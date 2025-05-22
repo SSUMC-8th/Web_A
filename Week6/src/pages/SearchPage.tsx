@@ -5,8 +5,8 @@ import { useSearchParams } from 'react-router-dom';
 
 import ErrorMessage from '#/components/ErrorMessage';
 import { SortOrder, SortOrderLabel } from '#/constants/sort';
-import useGetLpList from '#/layout/hooks/useGetLpList';
-import { LpItem } from '#/types/lp';
+import useGetLpList from '#/features/lps/hooks/useGetLpList';
+import { LpItem } from '#/types/lps';
 
 import LpCard from './Home/component/LpCard';
 

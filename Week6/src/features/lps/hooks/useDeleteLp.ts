@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { deleteLp } from '#/apis/lp';
+import { deleteLp } from '#/apis/lps';
 import { QUERY_KEY } from '#/constants/key';
 
 export const useDeleteLp = () => {

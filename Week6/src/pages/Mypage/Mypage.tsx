@@ -3,10 +3,10 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { postImagePrivate } from '#/apis/image';
 import LogoutButton from '#/components/LogoutButton/LogoutButton';
 import { IMAGE_PATH } from '#/constants/images';
-import { useGetUsers } from '#/context/useGetUsers';
+import { useGetUsers } from '#/features/users/hooks/useGetUsers';
+import { usePatchUsers } from '#/features/users/hooks/usePatchUsers';
 
 import LpCreateModal from './components/LpCreateModal';
-import { usePatchUsers } from './hooks/usePatchUsers';
 
 function Mypage() {
   const { data: myInfo } = useGetUsers();

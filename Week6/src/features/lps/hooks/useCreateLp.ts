@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { postImagePrivate } from '#/apis/image';
-import { postLp } from '#/apis/lp';
+import { postLp } from '#/apis/lps';
 import { UploadImageDto } from '#/types/image';
-import { CreateLpDto } from '#/types/lp';
+import { RequestPostLpDto } from '#/types/lps';
 
 export const useCreateLp = () => {
   const queryClient = useQueryClient();
@@ -15,7 +15,7 @@ export const useCreateLp = () => {
     }: {
       file: File | null;
       //CreateLpDto에서 thumbnail 제거
-      lpData: Omit<CreateLpDto, 'thumbnail'>;
+      lpData: Omit<RequestPostLpDto, 'thumbnail'>;
     }) => {
       let imageUrl = '';
 

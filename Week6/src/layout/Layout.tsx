@@ -33,7 +33,7 @@ function Layout() {
 
       <div className="z-0 flex flex-col flex-1">
         <Navbar toggleSidebar={() => setIsSidebarOpen((prev) => !prev)} />
-        <main className="flex-1 p-4 overflow-auto">
+        <main className="flex-1 p-4 ">
           <Outlet />
         </main>
       </div>

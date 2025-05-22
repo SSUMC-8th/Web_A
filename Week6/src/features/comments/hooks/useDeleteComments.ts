@@ -1,20 +1,20 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { deleteLike } from '#/apis/lp';
+import { deleteComment } from '#/apis/comments';
 import { QUERY_KEY } from '#/constants/key';
 
-export const useDeleteLike = () => {
+export const useDeleteComments = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: deleteLike,
-    onSuccess: (_, lpId) => {
+    mutationFn: deleteComment,
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY.lpInfo, lpId],
+        queryKey: [QUERY_KEY.comments, variables.lpId],
       });
     },
     onError: (err) => {
-      console.error('좋아요 취소 실패', err);
+      console.error('댓글 삭제 실패', err);
     },
   });
 };

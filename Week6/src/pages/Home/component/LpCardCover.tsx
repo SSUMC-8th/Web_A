@@ -1,4 +1,4 @@
-import { LpItem } from '#/types/lp';
+import { LpItem } from '#/types/lps';
 
 interface LpCardCoverProps {
   lp: LpItem;

@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { getLpInfo } from '#/apis/lp';
+import { getLp } from '#/apis/lps';
 import { SortOrder } from '#/constants/sort';
-import { ResponseLpDto } from '#/types/lp';
+import { ResponseGetLpDto } from '#/types/lps';
 
 interface useGetLpListProps {
   search?: string | null;
@@ -12,10 +12,10 @@ interface useGetLpListProps {
 }
 
 function useGetLpList({ search, order, enabled }: useGetLpListProps) {
-  const data = useInfiniteQuery<ResponseLpDto, Error>({
+  const data = useInfiniteQuery<ResponseGetLpDto, Error>({
     queryKey: ['lpInfo', search, order],
     queryFn: ({ pageParam = null }) =>
-      getLpInfo({
+      getLp({
         cursor: pageParam as number | null,
         limit: 12,
         search,

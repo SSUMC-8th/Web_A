@@ -16,6 +16,7 @@ import Mypage from '#/pages/Mypage/Mypage';
 import SignupPage from '#/pages/SignUp/SignupPage';
 
 import SearchPage from './pages/SearchPage';
+import Throttlepage from './throttlepage';
 
 const publicRoutes: RouteObject[] = [
   {
@@ -26,6 +27,7 @@ const publicRoutes: RouteObject[] = [
       { path: ROUTES.SEARCH, element: <SearchPage /> },
       { path: ROUTES.LOGIN, element: <LoginPage /> },
       { path: ROUTES.SIGNUP, element: <SignupPage /> },
+      { path: '/test', element: <Throttlepage /> },
       {
         path: API_AUTH.GOOGLE_CALLBACK,
         element: <GoogleLoginRedirectPage />,
