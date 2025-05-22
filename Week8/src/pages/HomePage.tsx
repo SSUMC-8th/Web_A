@@ -11,13 +11,17 @@ import { useCreateLp } from "../hook/mutations/useCreateLp";
 import { uploadAvatar } from "../api/Post/upload";
 import toast from "react-hot-toast";
 import { LpFormValues } from "../types/lp";
+import useDebounce from "../hook/useDebounce";
+import { DEBOUNCE_DELAY_SEC } from "../constants/dealy";
 
 const HomePage = () => {
-  const [search] = useState("");
+  const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [sortOrder, setSortOrder] = useState<
     PAGINATION_ORDER.asc | PAGINATION_ORDER.desc
   >(PAGINATION_ORDER.desc);
+
+  const debouncedValue = useDebounce(search, DEBOUNCE_DELAY_SEC);
 
   const {
     data: infiniteData,
@@ -26,7 +30,7 @@ const HomePage = () => {
     hasNextPage,
     isError,
     fetchNextPage,
-  } = useGetInfiniteLpList(20, search, sortOrder);
+  } = useGetInfiniteLpList(20, debouncedValue, sortOrder);
 
   // ref, InView
   // ref => 특정한 HTML 요소를 감시할 수 있다.
@@ -72,6 +76,12 @@ const HomePage = () => {
   }
   return (
     <>
+      <input
+        className="border p-4 rounded-sm text-white"
+        value={search}
+        placeholder="검색어를 입력하세요"
+        onChange={(e) => setSearch(e.target.value)}
+      ></input>
       {/* 정렬 버튼 */}
       <div className="mb-4 flex gap-2 justify-end">
         <button

@@ -9,6 +9,7 @@ const RoutePaths = Object.freeze({
   GOOGLE_REDIRECT: `/v1/auth/google/redirect`,
   // 기존 VITE_SERVER_API_URL 사용하지 않기때문에, v1까지 붙여줘야한다.
   GOOGLE_CALLBACK: `/v1/auth/google/callback`,
+  THROTTLE: "/throttle",
 });
 
 export default RoutePaths;

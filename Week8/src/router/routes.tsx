@@ -15,6 +15,7 @@ import { AuthProvider } from "../context/TokenContext/AuthProvider";
 import ProtectedLayout from "../layout/ProtectedLayout";
 import GoogleLoginRedirectPage from "../pages/GoogleLoginRedirectPage";
 import LpDetailPage from "../pages/LpDetailPage";
+import ThrottlePage from "../pages/ThrottlePage";
 
 // publicRoutes : 인증 없이 접근 가능한 경로
 const publicRoutes: RouteObject[] = [
@@ -38,6 +39,10 @@ const publicRoutes: RouteObject[] = [
       {
         path: RoutePaths.GOOGLE_CALLBACK,
         element: <GoogleLoginRedirectPage />,
+      },
+      {
+        path: RoutePaths.THROTTLE,
+        element: <ThrottlePage />,
       },
     ],
   },
