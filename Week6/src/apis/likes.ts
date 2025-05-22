@@ -1,5 +1,5 @@
-import { API_LIKES } from '#/constants/api';
-import { ResponseDeleteLikeDto, ResponsePostLikeDto } from '#/types/likes';
+import { API_LIKES } from '@/constants/api';
+import { ResponseDeleteLikeDto, ResponsePostLikeDto } from '@/types/likes';
 
 import { privateAxios } from './axiosInstance';
 

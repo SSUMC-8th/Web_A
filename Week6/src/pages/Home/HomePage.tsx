@@ -2,10 +2,10 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import ErrorMessage from '#/components/ErrorMessage';
-import { SortOrder, SortOrderLabel } from '#/constants/sort';
-import useGetLpList from '#/features/lps/hooks/useGetLpList';
-import { LpItem } from '#/types/lps';
+import ErrorMessage from '@/components/ErrorMessage';
+import { SortOrder, SortOrderLabel } from '@/constants/sort';
+import useGetLpList from '@/features/lps/hooks/useGetLpList';
+import { LpItem } from '@/types/lps';
 
 import LpCard from './component/LpCard';
 

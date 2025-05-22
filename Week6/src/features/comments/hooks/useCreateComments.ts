@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { postComment } from '#/apis/comments';
-import { QUERY_KEY } from '#/constants/key';
+import { postComment } from '@/apis/comments';
+import { QUERY_KEY } from '@/constants/key';
 
 export const useCreateComments = () => {
   const queryClient = useQueryClient();

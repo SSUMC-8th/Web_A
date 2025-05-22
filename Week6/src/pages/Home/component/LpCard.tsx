@@ -2,9 +2,9 @@ import { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import { IMAGE_PATH } from '#/constants/images';
-import ROUTES from '#/constants/routes';
-import { LpItem } from '#/types/lps';
+import { IMAGE_PATH } from '@/constants/images';
+import ROUTES from '@/constants/routes';
+import { LpItem } from '@/types/lps';
 
 import LpCardCover from './LpCardCover';
 import LpCardSkeleton from './LpCardSkeleton';

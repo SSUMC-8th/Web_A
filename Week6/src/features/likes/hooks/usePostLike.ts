@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { postLike } from '#/apis/likes';
-import { QUERY_KEY } from '#/constants/key';
+import { postLike } from '@/apis/likes';
+import { QUERY_KEY } from '@/constants/key';
 
 export const usePostLike = () => {
   const queryClient = useQueryClient();

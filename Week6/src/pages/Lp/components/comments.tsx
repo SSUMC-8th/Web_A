@@ -3,8 +3,8 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { BulletList } from 'react-content-loader';
 
-import { getComments } from '#/apis/comments';
-import { CommentItem, ResponseGetCommentsDto } from '#/types/comments';
+import { getComments } from '@/apis/comments';
+import { CommentItem, ResponseGetCommentsDto } from '@/types/comments';
 
 import ErrorMessage from '../../../components/ErrorMessage';
 import { QUERY_KEY } from '../../../constants/key';

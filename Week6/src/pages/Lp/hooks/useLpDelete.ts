@@ -2,9 +2,9 @@ import { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import ROUTES from '#/constants/routes';
-import { useDeleteLp } from '#/features/lps/hooks/useDeleteLp';
-import { LpItem } from '#/types/lps';
+import ROUTES from '@/constants/routes';
+import { useDeleteLp } from '@/features/lps/hooks/useDeleteLp';
+import { LpItem } from '@/types/lps';
 
 function useLpDelete(lp: LpItem) {
   const navigate = useNavigate();

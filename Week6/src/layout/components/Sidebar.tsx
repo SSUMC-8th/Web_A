@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
-import Modal from '#/components/Modal';
-import ROUTES from '#/constants/routes';
+import Modal from '@/components/Modal';
+import ROUTES from '@/constants/routes';
 
 import { useDeleteUser } from '../../features/users/hooks/useDeleteUser';
 

@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { getLp } from '#/apis/lps';
-import { SortOrder } from '#/constants/sort';
-import { ResponseGetLpDto } from '#/types/lps';
+import { getLp } from '@/apis/lps';
+import { SortOrder } from '@/constants/sort';
+import { ResponseGetLpDto } from '@/types/lps';
 
 interface useGetLpListProps {
   search?: string | null;

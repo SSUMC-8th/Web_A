@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { deleteLike } from '#/apis/likes';
-import { QUERY_KEY } from '#/constants/key';
+import { deleteLike } from '@/apis/likes';
+import { QUERY_KEY } from '@/constants/key';
 
 export const useDeleteLike = () => {
   const queryClient = useQueryClient();

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import { postImagePrivate } from '#/apis/image';
-import { usePatchLp } from '#/features/lps/hooks/usePatchLp';
-import { LpItem } from '#/types/lps';
+import { postImagePrivate } from '@/apis/image';
+import { usePatchLp } from '@/features/lps/hooks/usePatchLp';
+import { LpItem } from '@/types/lps';
 
 function useLpEdit(lp: LpItem) {
   const { mutate: patchLp } = usePatchLp();

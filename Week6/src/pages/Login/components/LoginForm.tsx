@@ -1,4 +1,4 @@
-import { LoginFields } from '#/schemas/login.schema';
+import { LoginFields } from '@/schemas/login.schema';
 
 import useLoginForm from '../hooks/useLoginForm';
 

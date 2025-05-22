@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
-import { IMAGE_PATH } from '#/constants/images';
-import ROUTES from '#/constants/routes';
+import { IMAGE_PATH } from '@/constants/images';
+import ROUTES from '@/constants/routes';
 
 function NavLogo() {
   return (

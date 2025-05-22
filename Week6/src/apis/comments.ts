@@ -1,5 +1,5 @@
-import { API_COMMENTS } from '#/constants/api';
-import { SortOrder } from '#/constants/sort';
+import { API_COMMENTS } from '@/constants/api';
+import { SortOrder } from '@/constants/sort';
 import {
   RequestDeleteCommentDto,
   RequestGetCommentsDto,
@@ -9,7 +9,7 @@ import {
   ResponseGetCommentsDto,
   ResponsePatchCommentDto,
   ResponsePostCommentDto,
-} from '#/types/comments';
+} from '@/types/comments';
 
 import { privateAxios } from './axiosInstance';
 

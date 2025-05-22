@@ -1,10 +1,12 @@
-import { API_AUTH } from '../constants/api';
+import { API_AUTH } from '@constants/api';
+
 import {
   RequestSigninDto,
   RequestSignupDto,
   ResponseSigninDto,
   ResponseSignupDto,
-} from '../types/auth';
+} from '@/types/auth';
+
 import { privateAxios, publicAxios } from './axiosInstance';
 
 export const postSignup = async (

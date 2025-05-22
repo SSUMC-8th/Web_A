@@ -1,5 +1,5 @@
-import ErrorMessage from '#/components/ErrorMessage';
-import LoadingSpinner from '#/components/LoadingSpinner';
+import ErrorMessage from '@/components/ErrorMessage';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 import LpContent from './components/LpContent';
 import LpHeader from './components/LpHeader';

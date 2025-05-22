@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { deleteLike, postLike } from '#/apis/likes';
-import { QUERY_KEY } from '#/constants/key';
-import { useGetUsers } from '#/features/users/hooks/useGetUsers';
+import { deleteLike, postLike } from '@/apis/likes';
+import { QUERY_KEY } from '@/constants/key';
+import { useGetUsers } from '@/features/users/hooks/useGetUsers';
 
 interface LikeParams {
   lpId: number;

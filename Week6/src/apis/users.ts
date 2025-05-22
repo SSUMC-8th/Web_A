@@ -2,7 +2,7 @@ import {
   RequestPatchUsersDto,
   ResponseGetUsersDto,
   ResponsePatchUsersDto,
-} from '#/types/users';
+} from '@/types/users';
 
 import { API_USERS } from '../constants/api';
 import { privateAxios } from './axiosInstance';

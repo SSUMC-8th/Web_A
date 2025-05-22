@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { postLogout } from '#/apis/auth';
-import { QUERY_KEY } from '#/constants/key';
-import { useAuth } from '#/context/AuthContext';
-import { tokenStorage } from '#/utils/tokenStorage';
+import { postLogout } from '@/apis/auth';
+import { QUERY_KEY } from '@/constants/key';
+import { useAuth } from '@/context/AuthContext';
+import { tokenStorage } from '@/utils/tokenStorage';
 
 const useLogout = () => {
   const queryClient = useQueryClient();

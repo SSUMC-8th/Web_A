@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { postSignin } from '#/apis/auth';
-import { QUERY_KEY } from '#/constants/key';
-import ROUTES from '#/constants/routes';
-import { RequestSigninDto } from '#/types/auth';
-import { tokenStorage } from '#/utils/tokenStorage';
+import { postSignin } from '@/apis/auth';
+import { QUERY_KEY } from '@/constants/key';
+import ROUTES from '@/constants/routes';
+import { RequestSigninDto } from '@/types/auth';
+import { tokenStorage } from '@/utils/tokenStorage';
 
 const useLogin = ({
   setAccessToken,

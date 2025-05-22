@@ -1,4 +1,4 @@
-import useLogout from '#/features/auth/hooks/useLogout';
+import useLogout from '@/features/auth/hooks/useLogout';
 
 function LogoutButton() {
   const { mutate } = useLogout();

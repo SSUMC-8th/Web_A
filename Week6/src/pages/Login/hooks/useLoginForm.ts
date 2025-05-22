@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import { LoginFields, loginSchema } from '#/schemas/login.schema';
+import { LoginFields, loginSchema } from '@/schemas/login.schema';
 
 const useLoginForm = (mutate: (data: LoginFields) => void) => {
   const {

@@ -1,6 +1,6 @@
-import { IMAGE_PATH } from '#/constants/images';
-import ROUTES from '#/constants/routes';
-import { useAuth } from '#/context/AuthContext';
+import { IMAGE_PATH } from '@/constants/images';
+import ROUTES from '@/constants/routes';
+import { useAuth } from '@/context/AuthContext';
 
 import AuthLink from './AuthLink';
 

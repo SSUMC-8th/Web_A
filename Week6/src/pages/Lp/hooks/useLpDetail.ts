@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 
-import { getLpDetail } from '#/apis/lps';
-import { QUERY_KEY } from '#/constants/key';
-import { useGetUsers } from '#/features/users/hooks/useGetUsers';
-import { ResponseGetLpDetailDto } from '#/types/lps';
+import { getLpDetail } from '@/apis/lps';
+import { QUERY_KEY } from '@/constants/key';
+import { useGetUsers } from '@/features/users/hooks/useGetUsers';
+import { ResponseGetLpDetailDto } from '@/types/lps';
 
 function useLpDetail() {
   const { lpId } = useParams<{ lpId: string }>();

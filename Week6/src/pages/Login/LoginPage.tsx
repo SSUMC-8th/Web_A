@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
-import { useAuth } from '#/context/AuthContext';
-import useLogin from '#/features/auth/hooks/useLogin';
+import { useAuth } from '@/context/AuthContext';
+import useLogin from '@/features/auth/hooks/useLogin';
 
 import GoogleLoginButton from './components/GoogleLoginButton';
 import LoginForm from './components/LoginForm';

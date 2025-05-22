@@ -1,5 +1,5 @@
-import { useAuth } from '#/context/AuthContext';
-import { tokenStorage } from '#/utils/tokenStorage';
+import { useAuth } from '@/context/AuthContext';
+import { tokenStorage } from '@/utils/tokenStorage';
 
 export const updateAccessToken = (token: string | null) => {
   const { setAccessToken } = useAuth();

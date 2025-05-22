@@ -1,5 +1,5 @@
-import { API_LPS } from '#/constants/api';
-import { SortOrder } from '#/constants/sort';
+import { API_LPS } from '@/constants/api';
+import { SortOrder } from '@/constants/sort';
 import {
   RequestGetLpDto,
   RequestPostLpDto,
@@ -8,7 +8,7 @@ import {
   ResponseGetLpDto,
   ResponsePatchLpDetailDto,
   ResponsePostLpDto,
-} from '#/types/lps';
+} from '@/types/lps';
 
 import { privateAxios, publicAxios } from './axiosInstance';
 

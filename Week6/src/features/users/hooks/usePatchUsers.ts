@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { patchUsers } from '#/apis/users';
-import { QUERY_KEY } from '#/constants/key';
+import { patchUsers } from '@/apis/users';
+import { QUERY_KEY } from '@/constants/key';
 
 export const usePatchUsers = () => {
   const queryClient = useQueryClient();

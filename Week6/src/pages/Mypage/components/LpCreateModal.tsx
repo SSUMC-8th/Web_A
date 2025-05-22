@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { IMAGE_PATH } from '#/constants/images';
-import { useCreateLp } from '#/features/lps/hooks/useCreateLp';
+import { IMAGE_PATH } from '@/constants/images';
+import { useCreateLp } from '@/features/lps/hooks/useCreateLp';
 
 interface LpCreateModalProps {
   setIsOpen: (open: boolean) => void;

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-import { LOCAL_STORAGE_KEY } from '#/constants/key';
-import ROUTES from '#/constants/routes';
-import { tokenStorage } from '#/utils/tokenStorage';
+import { LOCAL_STORAGE_KEY } from '@/constants/key';
+import ROUTES from '@/constants/routes';
+import { tokenStorage } from '@/utils/tokenStorage';
 
 const GoogleLoginRedirectPage = () => {
   useEffect(() => {

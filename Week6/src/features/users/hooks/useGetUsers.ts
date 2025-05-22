@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getUsers } from '#/apis/users';
-import { QUERY_KEY } from '#/constants/key';
-import { useAuth } from '#/context/AuthContext';
-import { ResponseGetUsersDto } from '#/types/users';
+import { getUsers } from '@/apis/users';
+import { QUERY_KEY } from '@/constants/key';
+import { useAuth } from '@/context/AuthContext';
+import { ResponseGetUsersDto } from '@/types/users';
 
 export const useGetUsers = () => {
   const { accessToken } = useAuth();

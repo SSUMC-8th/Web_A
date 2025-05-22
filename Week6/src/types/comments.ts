@@ -1,4 +1,4 @@
-import { SortOrder } from '#/constants/sort';
+import { SortOrder } from '@/constants/sort';
 
 import { CommonResponse } from './common';
 

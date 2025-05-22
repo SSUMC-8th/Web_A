@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { patchLpDetail } from '#/apis/lps';
-import { QUERY_KEY } from '#/constants/key';
+import { patchLpDetail } from '@/apis/lps';
+import { QUERY_KEY } from '@/constants/key';
 
 export const usePatchLp = () => {
   const queryClient = useQueryClient();

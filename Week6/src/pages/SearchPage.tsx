@@ -1,12 +1,14 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
+import useGetLpList from '@features/lps/hooks/useGetLpList';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 
-import ErrorMessage from '#/components/ErrorMessage';
-import { SortOrder, SortOrderLabel } from '#/constants/sort';
-import useGetLpList from '#/features/lps/hooks/useGetLpList';
-import { LpItem } from '#/types/lps';
+import { SortOrder, SortOrderLabel } from '@constants/sort';
+
+import ErrorMessage from '@components/ErrorMessage';
+
+import { LpItem } from '@/types/lps';
 
 import LpCard from './Home/component/LpCard';
 

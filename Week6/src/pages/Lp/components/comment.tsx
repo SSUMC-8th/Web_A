@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import { useDeleteComments } from '#/features/comments/hooks/useDeleteComments';
-import { usePatchComments } from '#/features/comments/hooks/usePatchComments';
-import { useGetUsers } from '#/features/users/hooks/useGetUsers';
-import { CommentItem } from '#/types/comments';
+import { useDeleteComments } from '@/features/comments/hooks/useDeleteComments';
+import { usePatchComments } from '@/features/comments/hooks/usePatchComments';
+import { useGetUsers } from '@/features/users/hooks/useGetUsers';
+import { CommentItem } from '@/types/comments';
 
 interface CommentProps {
   lpId: number;

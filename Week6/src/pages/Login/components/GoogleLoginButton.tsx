@@ -1,4 +1,4 @@
-import { API_AUTH } from '#/constants/api';
+import { API_AUTH } from '@/constants/api';
 
 const GoogleLoginButton = () => {
   const handleGoogleLogin = () => {
