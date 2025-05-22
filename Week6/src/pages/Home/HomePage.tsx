@@ -44,6 +44,7 @@ function HomePage() {
   return (
     <div>
       <div className="flex justify-end mb-4">
+        {/* 최신 순, 오래된 순 select 태그 */}
         <select
           value={order}
           aria-label="정렬"
@@ -58,14 +59,15 @@ function HomePage() {
         </select>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <main className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {lpList.map((lp) => (
           <LpCard key={lp.id} lp={lp} />
         ))}
+        {/* 무한스크롤 sentinelRef */}
         {hasNextPage && (
           <div ref={sentinelRef} className="h-10 col-span-full" />
         )}
-      </div>
+      </main>
     </div>
   );
 }

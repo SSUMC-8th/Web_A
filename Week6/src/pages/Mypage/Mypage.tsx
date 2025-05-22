@@ -11,19 +11,18 @@ import LpCreateModal from './components/LpCreateModal';
 function Mypage() {
   const { data: myInfo } = useGetUsers();
   const user = myInfo?.data;
+
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-
   const [name, setName] = useState(user?.name ?? '');
   const [bio, setBio] = useState(user?.bio ?? '');
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState(
     user?.avatar ?? IMAGE_PATH.PROFILE,
   );
+  const { mutate: patchUser, isPending } = usePatchUsers();
 
   const toggleModal = () => setIsOpenModal((prev) => !prev);
-
-  const { mutate: patchUser, isPending } = usePatchUsers();
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -66,6 +65,7 @@ function Mypage() {
     setPreviewUrl(user?.avatar ?? IMAGE_PATH.PROFILE);
   };
 
+  // 유저 정보 변경 시 동기화
   useEffect(() => {
     setName(user?.name ?? '');
     setBio(user?.bio ?? '');

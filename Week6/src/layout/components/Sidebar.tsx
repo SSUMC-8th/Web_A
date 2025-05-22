@@ -40,7 +40,7 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }: SidebarProps) => {
     <div
       ref={ref}
       className={clsx(
-        'bg-white text-black w-64 p-4 transition-transform duration-300 fixed xl:relative h-full z-30 ',
+        'bg-white text-black w-64 p-4 transition-transform duration-300 fixed xl:relative h-full z-30 flex flex-col',
         isSidebarOpen ? 'translate-x-0' : '-translate-x-full',
       )}
     >
@@ -53,12 +53,17 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }: SidebarProps) => {
           <Link to={ROUTES.MYPAGE}>마이페이지</Link>
         </li>
       </ul>
+
+      {/* 빈 공간 밀어내기 */}
+      <div className="flex-1" />
+
       <button
-        className="p-2 text-sm text-white bg-red-600 rounded-md"
+        className="p-2 mb-4 text-sm text-white bg-red-600 rounded-md"
         onClick={openModal}
       >
         탈퇴하기
       </button>
+
       {isModalOpen && (
         <Modal
           message="정말 탈퇴하시겠습니까?"
