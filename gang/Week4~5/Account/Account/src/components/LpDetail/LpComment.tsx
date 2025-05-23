@@ -1,9 +1,9 @@
 import { EllipsisVertical, Pencil, Trash2 } from "lucide-react";
 import { CommentDetail } from "../../types/comment";
 import { useState } from "react";
-import { defaultProfileImage } from "../Registration/ProfileImage";
 import usePatchComment from "../../hooks/mutations/usePatchComment";
 import useDeleteComment from "../../hooks/mutations/useDeleteComment";
+import { DEFAULT_PROFILE_IMAGE } from "../../constants/key";
 
 interface ILpComment {
   comment: CommentDetail;
@@ -11,7 +11,7 @@ interface ILpComment {
 }
 
 export default function LpComment({ comment, userId }: ILpComment) {
-  const avatar = comment.author?.avatar ?? defaultProfileImage;
+  const avatar = comment.author?.avatar ?? DEFAULT_PROFILE_IMAGE;
   const bio = comment.author?.bio ?? "";
   const name = comment.author?.name ?? "익명";
   const content = comment.content ?? "내용";

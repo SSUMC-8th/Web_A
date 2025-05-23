@@ -19,9 +19,6 @@ export default function Sidebar({ isOpen, onClose }: ISideBar) {
     >
       {/* 상단 메뉴 */}
       <div className="flex flex-col gap-4">
-        <Link to="/search" onClick={onClose}>
-          🔍 찾기
-        </Link>
         <Link to="/mypage" onClick={onClose}>
           👤 마이페이지
         </Link>
