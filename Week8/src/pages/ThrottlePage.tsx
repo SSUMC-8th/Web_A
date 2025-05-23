@@ -1,17 +1,35 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MainScrollContext } from "../layout/root-layout";
-import throttle from "lodash/throttle";
+
+import useThrottleFn from "../hook/Throttle/useFnThrottle";
 
 const ThrottlePage = () => {
   const [scrollY, setScrollY] = useState(0);
   const mainRef = useContext(MainScrollContext);
 
   // ✅ setScrollY를 throttle 처리
-  const throttledSetScroll = useRef(
+  /*   const throttledSetScroll = useRef(
     throttle((y: number) => {
       setScrollY(y);
     }, 2000)
-  ).current;
+  ).current; */
+
+  /*   useEffect(() => {
+    if (!mainRef?.current) return;
+    const el = mainRef.current;
+
+    const onScroll = () => throttledSetScroll(el.scrollTop);
+
+    el.addEventListener("scroll", onScroll);
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      throttledSetScroll.cancel();
+    };
+  }, [mainRef, throttledSetScroll]); */
+
+  const throttledSetScroll = useThrottleFn((y: number) => {
+    setScrollY(y);
+  }, 2000);
 
   useEffect(() => {
     if (!mainRef?.current) return;
@@ -22,7 +40,6 @@ const ThrottlePage = () => {
     el.addEventListener("scroll", onScroll);
     return () => {
       el.removeEventListener("scroll", onScroll);
-      throttledSetScroll.cancel();
     };
   }, [mainRef, throttledSetScroll]);
 
