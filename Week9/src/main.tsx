@@ -2,6 +2,9 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
+
+import { store } from '@/store/CartStore.ts';
 
 import App from './App.tsx';
 import './index.css';
@@ -10,10 +13,13 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
   // <StrictMode>
-  <QueryClientProvider client={queryClient}>
-    <App />
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <App />
 
-    <ReactQueryDevtools initialIsOpen={true} />
-  </QueryClientProvider>,
+      <ReactQueryDevtools initialIsOpen={true} />
+    </QueryClientProvider>
+    ,
+  </Provider>,
   // </StrictMode>,
 );

@@ -12,6 +12,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* main {
-    scrollbar-gutter: stable;
+/* html {
+  scrollbar-gutter: stable;
 } */
