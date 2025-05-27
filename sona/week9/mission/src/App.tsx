@@ -1,9 +1,14 @@
 import "./App.css";
+import CartList from "./components/CartList";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <>
-      <p className="text-blue-500 bg-red-500">asd</p>
+      <Navbar />
+      <div className="max-w-3xl  mx-auto">
+        <CartList />
+      </div>
     </>
   );
 }
