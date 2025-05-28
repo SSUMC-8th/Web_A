@@ -5,14 +5,9 @@ import { closeModal } from '@/store/modalSlice';
 
 export default function Modal() {
   const dispatch = useAppDispatch();
-  const {
-    isOpen,
-    message,
-    onConfirm,
-    onCancel,
-    confirmText = '예',
-    cancelText = '아니오',
-  } = useAppSelector((state) => state.modal);
+  const { isOpen, message, onConfirm, onCancel } = useAppSelector(
+    (state) => state.modal,
+  );
 
   if (!isOpen) return null;
 
@@ -36,14 +31,14 @@ export default function Modal() {
             onClick={handleConfirm}
             className="flex-1 py-2 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300"
           >
-            {confirmText}
+            예
           </button>
           <button
             type="button"
             onClick={handleCancel}
             className="flex-1 py-2 text-white bg-red-500 rounded-md hover:bg-red-600"
           >
-            {cancelText}
+            아니오
           </button>
         </div>
       </div>
