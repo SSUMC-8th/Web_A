@@ -1,6 +1,6 @@
-import { clearCart } from '@/store/cartSlice';
 import { useAppDispatch } from '@/store/hooks';
-import { closeModal, openModal } from '@/store/modalSlice';
+import { clearCart } from '@/store/slice/cartSlice';
+import { closeModal, openModal } from '@/store/slice/modalSlice';
 
 const dispatch = useAppDispatch();
 

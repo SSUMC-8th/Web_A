@@ -1,5 +1,5 @@
-import { decrease, increase, removeItem } from '@/store/cartSlice';
 import { useAppDispatch } from '@/store/hooks';
+import { decrease, increase, removeItem } from '@/store/slice/cartSlice';
 import type { CartItem } from '@/types/CartItem';
 
 interface CartItemProps {

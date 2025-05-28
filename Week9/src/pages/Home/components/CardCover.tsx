@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 
 import { ROUTES } from '@/constants/routes';
-import { addItem } from '@/store/cartSlice';
 import { useAppDispatch } from '@/store/hooks';
-import { closeModal, openModal } from '@/store/modalSlice';
+import { addItem } from '@/store/slice/cartSlice';
+import { closeModal, openModal } from '@/store/slice/modalSlice';
 import { CartItem } from '@/types/CartItem';
 
 interface CardCoverProps {

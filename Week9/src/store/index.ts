@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import cartReducer from './cartSlice';
-import isLoggedInReducer from './isLoggedInSlice';
-import modalReducer from './modalSlice';
+import cartReducer from './slice/cartSlice';
+import isLoggedInReducer from './slice/isLoggedInSlice';
+import modalReducer from './slice/modalSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +10,7 @@ export const store = configureStore({
     isLoggedIn: isLoggedInReducer,
     modal: modalReducer,
   },
+  // modalSlice에서 onConfirm을 넘기기 위해
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false, // 비직렬화 체크 해제

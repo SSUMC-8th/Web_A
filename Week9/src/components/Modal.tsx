@@ -1,7 +1,7 @@
 import { createPortal } from 'react-dom';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { closeModal } from '@/store/modalSlice';
+import { closeModal } from '@/store/slice/modalSlice';
 
 export default function Modal() {
   const dispatch = useAppDispatch();
