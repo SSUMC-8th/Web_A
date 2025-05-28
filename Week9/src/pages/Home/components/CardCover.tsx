@@ -1,45 +1,43 @@
-import { useState } from 'react';
-
 import { useNavigate } from 'react-router-dom';
 
-import Modal from '@components/Modal';
-
 import { ROUTES } from '@/constants/routes';
+import { addItem } from '@/store/cartSlice';
+import { useAppDispatch } from '@/store/hooks';
+import { closeModal, openModal } from '@/store/modalSlice';
+import { CartItem } from '@/types/CartItem';
 
 interface CardCoverProps {
-  title: string;
-  price: string;
-  amount: number;
+  cart: CartItem;
 }
 
-function CardCover({ title, price, amount }: CardCoverProps) {
+function CardCover({ cart }: CardCoverProps) {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
-
-  const moveToCart = () => navigate(ROUTES.CART);
-  const openModal = () => setIsOpenModal(true);
-  const closeModal = () => setIsOpenModal(false);
+  const handleClick = () => {
+    dispatch(addItem(cart));
+    dispatch(
+      openModal({
+        message: '장바구니로 이동하시겠습니까?',
+        onConfirm: () => {
+          dispatch(closeModal());
+          navigate(ROUTES.CART);
+        },
+      }),
+    );
+  };
 
   return (
     <div className="absolute inset-0 flex flex-col justify-end px-4 py-4 text-white transition-opacity duration-300 bg-black opacity-0 bg-opacity-60 group-hover:opacity-100">
-      <h5 className="text-lg font-semibold">{title}</h5>
-      <p className="text-sm">{price}</p>
-      <p className="text-sm">남은 수량: {amount}</p>
+      <h5 className="text-lg font-semibold">{cart.title}</h5>
+      <p className="text-sm">{cart.price}</p>
+      <p className="text-sm">남은 수량: {cart.amount}</p>
       <button
         className="p-1 text-black bg-white rounded-xl"
-        onClick={openModal}
+        onClick={handleClick}
       >
-        장바구니 담기{' '}
+        장바구니 담기
       </button>
-
-      {isOpenModal && (
-        <Modal
-          message={'장바구니로 이동하시겠습니까?'}
-          onConfirm={moveToCart}
-          onCancel={closeModal}
-        />
-      )}
     </div>
   );
 }

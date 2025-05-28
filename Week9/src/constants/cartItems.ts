@@ -1,13 +1,6 @@
-export type cartItem = {
-  id: string;
-  title: string;
-  singer: string;
-  price: string;
-  img: string;
-  amount: number;
-};
+import { CartItem } from '@/types/CartItem';
 
-const cartItems: cartItem[] = [
+const cartItems: CartItem[] = [
   {
     id: 'recB6qcHPxb62YJ75',
     title: 'Vancouver',

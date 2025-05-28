@@ -4,7 +4,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 
-import { store } from '@/store/CartStore.ts';
+import { store } from '@/store/index.ts';
 
 import App from './App.tsx';
 import './index.css';

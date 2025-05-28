@@ -7,7 +7,7 @@ import {
 import { ROUTES } from '@/constants/routes';
 import Layout from '@/layout/layout';
 import Cart from '@/pages/Cart';
-import Home from '@/pages/Home/Home';
+import Home from '@/pages/Home';
 
 const publicRoutes: RouteObject[] = [
   {

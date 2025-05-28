@@ -1,5 +1,6 @@
 import { Link, Outlet } from 'react-router-dom';
 
+import Modal from '@/components/Modal';
 import { ROUTES } from '@/constants/routes';
 
 function Layout() {
@@ -12,6 +13,7 @@ function Layout() {
 
       <main className="flex-1 p-4 mt-10">
         <Outlet />
+        <Modal />
       </main>
     </div>
   );
