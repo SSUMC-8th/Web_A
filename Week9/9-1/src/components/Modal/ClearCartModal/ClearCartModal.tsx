@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "../../../hooks/useCustomRedux";
-import { clearCart } from "../../../slices/cartSlice";
-import { closeModal } from "../../../slices/modalSlice";
+import { clearCart } from "../../../slices/Cart/cartSlice";
+import { closeModal } from "../../../slices/Modal/modalSlice";
 
 const ClearCartModal = () => {
   const dispatch = useDispatch();

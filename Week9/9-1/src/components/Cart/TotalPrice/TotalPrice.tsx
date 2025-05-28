@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "../../../hooks/useCustomRedux";
-import { openModal } from "../../../slices/modalSlice";
+import { openModal } from "../../../slices/Modal/modalSlice";
 
 const TotalPrice = () => {
   const { total } = useSelector((state) => state.cart);

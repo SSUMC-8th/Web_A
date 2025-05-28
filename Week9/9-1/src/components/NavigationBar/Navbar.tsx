@@ -1,7 +1,7 @@
 import { ShoppingCartIcon } from "lucide-react";
 import { useDispatch, useSelector } from "../../hooks/useCustomRedux";
 import { useEffect } from "react";
-import { calculateTotals } from "../../slices/cartSlice";
+import { calculateTotals } from "../../slices/Cart/cartSlice";
 
 const Navbar = () => {
   const { amount, cartItems } = useSelector((state) => state.cart);

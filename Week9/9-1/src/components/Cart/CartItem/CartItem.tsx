@@ -1,7 +1,7 @@
 import { MinusIcon, PlusIcon } from "lucide-react";
 import type { CartItemProps } from "./CartItem.types";
 import { useDispatch } from "../../../hooks/useCustomRedux";
-import { decrease, increase, removeItem } from "../../../slices/cartSlice";
+import { decrease, increase, removeItem } from "../../../slices/Cart/cartSlice";
 
 const CartItem = ({ lp }: CartItemProps) => {
   const dispatch = useDispatch();
