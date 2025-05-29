@@ -5,13 +5,14 @@ import { useAppSelector } from '@/store/hooks';
 
 function Cart() {
   const cartItems = useAppSelector((state) => state.cart.items);
+  const handleClearCart = useClearCart();
 
   return (
     <div className="max-w-xl p-4 mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">장바구니</h2>
         <button
-          onClick={useClearCart}
+          onClick={handleClearCart}
           className="p-2 text-white transition-transform duration-300 bg-red-500 rounded hover:bg-red-400"
         >
           비우기
