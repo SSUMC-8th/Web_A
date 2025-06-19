@@ -1,0 +1,30 @@
+# 빌드 산출물
+build
+dist
+coverage
+
+# 의존성
+node_modules
+
+# 환경 구성 파일들
+.env
+*.log
+
+# 퍼블릭 파일들
+public
+
+# 버전 관리 제외한 파일들
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# 특정 파일 확장자 제외
+*.min.js
+*.min.css
+
+# IDE 설정
+.vscode
+.idea
+
+# 기타 (원하는 경우)
+*.snap
