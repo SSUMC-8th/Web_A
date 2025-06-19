@@ -3,6 +3,7 @@ import MovieFilter from "../components/MovieFilter";
 import MovieList from "../components/MovieList";
 import useFetch from "../hooks/useFetch";
 import type { MovieFilterT, MovieResponse } from "../types/movie";
+import MovieModal from "../components/MovieModal";
 
 export default function HomePage() {
   const [filter, setFilters] = useState<MovieFilterT>({
@@ -23,9 +24,7 @@ export default function HomePage() {
   return (
     <div className="max-w-7xl mx-auto p-6">
       {isLoading && <p className="text-center mt-10 text-gray-500">로딩 중</p>}
-      {error && (
-        <p className="text-center mt-10 text-red-500">에러 발생: {error}</p>
-      )}
+      {error && <p className="text-center mt-10 text-red-500">{error}</p>}
 
       <MovieFilter onChange={setFilters} />
       {/* 영화*/}
@@ -34,7 +33,7 @@ export default function HomePage() {
           <MovieList key={movie.id} item={movie} />
         ))}
       </div>
+      <MovieModal />
     </div>
   );
-  //검색필터, 영화무비
 }

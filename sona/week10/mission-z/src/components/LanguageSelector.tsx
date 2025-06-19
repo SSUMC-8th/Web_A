@@ -16,14 +16,18 @@ export default function LanguageSelector({
   options,
 }: LanguageOprionProps) {
   return (
-    <select
-      className="w-full border rounded p-2"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-    >
-      {options.map((option) => {
-        return <option value={option.value}>{option.label}</option>;
-      })}
-    </select>
+    <>
+      <label htmlFor="language-select">언어 선택</label>
+      <select
+        id="language-select"
+        className="w-full border rounded p-2"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      >
+        {options.map((option) => {
+          return <option value={option.value}>{option.label}</option>;
+        })}
+      </select>
+    </>
   );
 }
