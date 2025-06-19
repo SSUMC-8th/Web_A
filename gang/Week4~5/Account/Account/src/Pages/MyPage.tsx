@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Lp } from "../types/lptype";
 import LpBoard from "../components/LpBoard/LpBoard";
 import ArrangeButton from "../components/ArrangeButton";
+
 import { DEFAULT_PROFILE_IMAGE } from "../constants/key";
 
 const MyPage = () => {
@@ -19,6 +20,7 @@ const MyPage = () => {
   const { data: lps } = useGetMyLpList({ limit: 20, search: "", order });
 
   const me = data?.data;
+
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const [bio, setBio] = useState<string>("");
@@ -31,13 +33,16 @@ const MyPage = () => {
       setEmail(me.email ?? "");
     }
   }, [me]);
+
   const { mutate:patchUser } = usePatchUsers();
+
   const handlePatch = () => {
     if (!name.trim()) {
       alert("이름을 입력해주세요.");
       return;
     }
     try {
+
       patchUser({
         name,
         bio,
@@ -52,16 +57,21 @@ const MyPage = () => {
   return (
     <div className="flex items-center justify-center h-full bg-black">
       <div className="bg-black h-full w-full shadow-md rounded-xl p-8  ">
+
         <div className="flex flex-col">
           <div className="space-y-4 text-white flex flex-row justify-center items-center gap-2">
             <div>
               <img
+
                 src={me?.avatar || DEFAULT_PROFILE_IMAGE}
+
                 alt="프로필 사진"
                 className="w-32 h-32 rounded-full object-cover "
               />
             </div>
+
             <div className="flex flex-col gap-2 text-white ">
+
               <InfoBoard
                 isEditing={isEditing}
                 name={name}
@@ -70,8 +80,10 @@ const MyPage = () => {
                 setName={setName}
                 setBio={setBio}
                 setEmail={setEmail}
+
                 />{" "}
                   
+
             </div>
             <div className="flex justify-end">
                 {isEditing ? (
@@ -110,6 +122,7 @@ const MyPage = () => {
               </div>
             ))}
           </div>
+
         </div>
       </div>
     </div>

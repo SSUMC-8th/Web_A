@@ -3,12 +3,17 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { postRegister } from "../apis/auth";
 import { useNavigate } from "react-router-dom";
+
 import RegistrationInput from "../components/Registration/RegistrationInput"
+
+
 import { useState } from "react";
 import ProfileImage from "../components/Registration/ProfileImage";
 import { useImageUploader } from "../hooks/useImageUploader";
 import { RegistrationSchema } from "../schema/schema";
+
 import { DEFAULT_PROFILE_IMAGE } from "../constants/key";
+
 
 
 
@@ -42,7 +47,9 @@ const {
     mode: "onBlur",
   });
 
+
 const handleImageChange = useImageUploader(defaultImage, setValue, "avatar");
+
 
 
   const emailValue = watch("email");
@@ -112,11 +119,13 @@ const handleImageChange = useImageUploader(defaultImage, setValue, "avatar");
             <ProfileImage
               previewUrl={avatarValue}
               onImage={handleImageChange}
+
               defaultImage={DEFAULT_PROFILE_IMAGE}
               altText="프로필 이미지"
               id="profile-image"
             />
             <RegistrationInput
+
               register={register}
               errors={errors}
               blankName="name"

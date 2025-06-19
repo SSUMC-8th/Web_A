@@ -13,6 +13,8 @@ export const QueryKeys = {
     newLps: 'newLps',
 }
 
+
 export const DEBOUNCE_SEARCH_TIME = 800;
 
 export const DEFAULT_PROFILE_IMAGE = "https://cdn-icons-png.flaticon.com/512/847/847969.png";
+
