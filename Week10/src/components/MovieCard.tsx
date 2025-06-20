@@ -1,3 +1,4 @@
+import { getPosterUrl } from '@/constants/movie';
 import type { TMovie } from '@/types/Movie';
 
 interface MovieCardProps {
@@ -9,7 +10,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
     <div className="overflow-hidden transition-shadow duration-200 bg-white border border-gray-100 shadow-sm rounded-xl hover:shadow-md">
       <div className="relative aspect-[2/3]">
         <img
-          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          src={getPosterUrl(movie.poster_path)}
           alt={movie.title}
           className="object-cover w-full h-full"
         />

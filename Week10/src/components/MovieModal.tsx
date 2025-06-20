@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import { createPortal } from 'react-dom';
 
+import { getPosterUrl } from '@/constants/movie';
 import type { TMovie } from '@/types/Movie';
 
 interface MovieModalProps {
@@ -38,7 +39,7 @@ const MovieModal = ({ movie, onClose }: MovieModalProps) => {
         {/* 배경 이미지 */}
         <div className="relative h-48 bg-black">
           <img
-            src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+            src={getPosterUrl(movie.backdrop_path, 'ORIGINAL')}
             alt="배경"
             className="object-cover w-full h-full opacity-40"
           />
@@ -53,7 +54,7 @@ const MovieModal = ({ movie, onClose }: MovieModalProps) => {
         {/* 콘텐츠 */}
         <section className="grid grid-cols-1 md:grid-cols-[150px_1fr] gap-6 p-6">
           <img
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            src={getPosterUrl(movie.poster_path)}
             alt={movie.title}
             className="w-full rounded-lg"
           />

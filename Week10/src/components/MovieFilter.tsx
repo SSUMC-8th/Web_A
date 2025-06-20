@@ -62,7 +62,7 @@ function MovieFilter({ onChange }: MovieFilterProps) {
           </label>
           <LanguageSelector
             value={language}
-            onChange={(value) => setLanguage(value as MovieLanguage)}
+            onChange={setLanguage}
             options={LANGUAGE_OPTIONS}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
