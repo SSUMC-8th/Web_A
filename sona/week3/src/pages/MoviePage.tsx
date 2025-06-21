@@ -12,6 +12,7 @@ export default function MoviePage() {
   const { category } = useParams<{
     category: string;
   }>();
+
   const {
     data: MovieData,
     isLoading,
