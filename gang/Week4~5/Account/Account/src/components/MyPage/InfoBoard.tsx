@@ -24,21 +24,27 @@ const InfoBoard = ({
         <div className="m-2">
           <div className="flex flex-row justify-between items-center">
             <textarea
+
               className=" size-15 w-80 text-4xl font-medium p-2 rounded-3xl resize-none text-left  bg-transparent"
+
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="flex flex-row justify-between items-center">
             <textarea
+
               className="size-15 w-80 text-2xl font-medium p-2 rounded-3xl resize-none text-left  bg-transparent "
+
               value={bio ?? ""}
               onChange={(e) => setBio(e.target.value)}
             />
           </div>
           <div className="flex flex-row justify-between items-center">
             <textarea
+
               className="size-15 w-80  text-2xl font-medium p-2 rounded-3xl resize-none text-left  bg-transparent "
+
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />

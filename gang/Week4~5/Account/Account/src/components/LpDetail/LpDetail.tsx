@@ -15,6 +15,7 @@ import usePatchLp from "../../hooks/mutations/usePatchLp";
 import useDeleteLp from "../../hooks/mutations/useDeleteLp";
 import { Tags } from "../../types/lptype";
 import { useAuth } from "../../context/AuthContext";
+
 import { useImageUploader } from "../../hooks/useImageUploader";
 import { DEFAULT_PROFILE_IMAGE } from "../../constants/key";
 import ImageUploader from "../ImageUploader";
@@ -35,23 +36,27 @@ const LpDetail = () => {
     return formatDistanceToNow(new Date(date), { addSuffix: true, locale: ko });
   }
   //잘못된 ID면 이전 페이지
+
   useEffect(() => {
     if (!lpId || isNaN(parsedLpId)) {
       navigate(-1);
     }
   }, [lpId, parsedLpId, navigate]);
 
+
   //lp와 user 정보 
   const { data: lp, isLoading, error } = useGetLpDetail(parsedLpId);
   const { data: me } = useGetMyInfo();
   const stringId = String(lp?.data.id);
   //lp 정보 수정
+
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [thumbnail, setThumbnail] = useState("");
   const [tags, setTags] = useState<Tags[]>([]);
   const [published, setPublished] = useState<boolean>(false);
+
 
   //lp 썸네일 수정
 const handleImageChange = useImageUploader(
@@ -74,6 +79,7 @@ const handleImageChange = useImageUploader(
   }, [lp]);
 
   //lp좋아요 버튼
+
   const { mutate: likeMutate } = usePostLike();
   const { mutate: dislikeMutate } = useDeleteLike();
   const handleLikeLp = () => {
@@ -88,6 +94,25 @@ const handleImageChange = useImageUploader(
       navigate(-1); // 배경 클릭 시 닫기
     }
   };
+  // 수정 완료 핸들러
+  const handleUpdateLp = () => {
+  patchLp({
+    lpId: parsedLpId,
+    body: {
+      title: title,
+      content: content,
+      thumbnail: thumbnail,
+      tags: tags.map((tag) => tag.name), 
+      published,
+    },
+  }, {
+    onSuccess: () => {
+      setIsEditing(false);
+      alert("수정 완료되었습니다!");
+    },
+  });
+};
+
 
   // 수정 완료 핸들러
   const handleUpdateLp = () => {
@@ -110,6 +135,7 @@ const handleImageChange = useImageUploader(
       }
     );
   };
+
 
   // 삭제 핸들러
   const handleDeleteLp = () => {
@@ -151,7 +177,9 @@ const handleImageChange = useImageUploader(
             )}
 
             <div className="flex flex-row gap-2 ml-2">
+
               {(me?.data.id===lp.data.authorId)&&isEditing ? (
+
                 <button
                   onClick={handleUpdateLp}
                   className="bg-green-500 text-white px-3 py-1 rounded"
@@ -172,14 +200,18 @@ const handleImageChange = useImageUploader(
           </div>
 
           {/* 썸네일 */}
+
           {(me?.data.id===lp.data.authorId)&&isEditing ? (
             <ImageUploader previewUrl={"thumbnail"} onImage={handleImageChange} defaultImage={lp.data.thumbnail} altText={lp.data.title} id={stringId}/>
+
           ) : (
             <RotatingThumbnail imageUrl={lp.data.thumbnail} />
           )}
 
           {/* 내용 */}
+
           {(me?.data.id===lp.data.authorId)&&isEditing ? (
+
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}

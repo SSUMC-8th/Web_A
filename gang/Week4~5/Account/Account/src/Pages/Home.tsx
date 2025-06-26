@@ -7,6 +7,7 @@ import { useInView } from "react-intersection-observer";
 import LpBoardSkeleton from "../components/LpBoard/LpBoardSkeleton";
 import { OrderEnum } from "../types/common";
 import ArrangeButton from "../components/ArrangeButton";
+
 import { useDebounce } from "../hooks/useDebounce";
 import { DEBOUNCE_SEARCH_TIME } from "../constants/key";
 import SearchBar from "../components/SearchBar";
@@ -21,6 +22,7 @@ function Home() {
 
   const debounced = useDebounce<string>(searchQuery, DEBOUNCE_SEARCH_TIME);
 
+
   const {
     data: lps,
     isPending,
@@ -28,6 +30,7 @@ function Home() {
     isFetching,
     hasNextPage,
     fetchNextPage,
+
   } = useGetInfiniteLpList({ limit: 20, search: debounced, order });
 
   const { ref, inView } = useInView({
@@ -43,6 +46,7 @@ function Home() {
     console.log("inView:", inView);
     if (inView) {
       throttledFetchNextPage();
+
     }
   }, [inView, throttledFetchNextPage]);
 
@@ -60,11 +64,13 @@ function Home() {
 
   return (
     <div>
+
       <div className="flex justify-center m-2 p-3">
         <div className="w-full max-w-xl">
           <SearchBar value={searchQuery} onChange={setSearchQuery} />
         </div>
       </div>
+
       <div className="w-full flex justify-end px-4 py-2">
         <ArrangeButton order={order} setOrder={setOrder} />
       </div>
@@ -87,8 +93,10 @@ function Home() {
           ))}
       </div>
 
+
       <div className="w-full flex justify-center py-10" ref={ref}>
         {isPending && <LpBoardSkeleton length={20} />}
+
       </div>
     </div>
   );

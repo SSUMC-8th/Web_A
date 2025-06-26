@@ -1,3 +1,4 @@
+
 import ImageUploader, { CommonImageUploaderProps } from "../ImageUploader";
 
 
@@ -15,6 +16,7 @@ const ProfileImage = ({
       defaultImage={defaultImage}
       altText={altText}
       id={id}
+
     />
   );
 };

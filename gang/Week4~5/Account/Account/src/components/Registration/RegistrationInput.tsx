@@ -1,14 +1,19 @@
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { registrationFormFields } from "../../Pages/Registration";
 
+
 interface IRegistrationInput{
+
     register: UseFormRegister<registrationFormFields>;
     errors: FieldErrors<registrationFormFields>;
     blankName: keyof registrationFormFields;
     blankPlaceholder: string;
 }
 
+
 const RegistrationInput = ({register, errors, blankName, blankPlaceholder}:IRegistrationInput)=>{
+
+
   return(
     <>
     <input
@@ -24,4 +29,5 @@ const RegistrationInput = ({register, errors, blankName, blankPlaceholder}:IRegi
         </>
   )
 }
+
 export default RegistrationInput;
